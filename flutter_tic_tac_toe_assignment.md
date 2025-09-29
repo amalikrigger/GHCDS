@@ -31,6 +31,7 @@
 
    - Tap the “+” button and watch the counter update.
    - This demonstrates how `StatefulWidget` and `setState` update UI.
+   - For instructions, see [Flutter Counter Customization](https://github.com/amalikrigger/GHCDS/edit/main/flutter_counter_customizations.md)
 
 ---
 
