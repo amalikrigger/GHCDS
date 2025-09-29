@@ -56,6 +56,72 @@ This changes the button color and icon.
 
 ---
 
+## Add a Reset Button
+Include an extra button to reset the counter:
+
+```dart
+ElevatedButton(
+  onPressed: () {
+    setState(() {
+      _counter = 0;
+    });
+  },
+  child: const Text('Reset Counter'),
+),
+```
+
+---
+
+## Change AppBar Color and Title Style
+```dart
+appBar: AppBar(
+  backgroundColor: Colors.teal,
+  title: const Text('Custom Counter', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+),
+```
+
+---
+
+## Add an Icon Next to the Counter
+```dart
+Row(
+  mainAxisAlignment: MainAxisAlignment.center,
+  children: [
+    const Icon(Icons.star, color: Colors.amber, size: 32),
+    const SizedBox(width: 8),
+    Text('$_counter', style: const TextStyle(fontSize: 36, fontWeight: FontWeight.bold)),
+  ],
+),
+```
+
+---
+
+## Change the Increment Icon
+```dart
+floatingActionButton: FloatingActionButton(
+  onPressed: _incrementCounter,
+  tooltip: 'Increment',
+  child: const Icon(Icons.thumb_up), // Changed icon
+),
+```
+
+---
+
+## Add a Decrement Button
+```dart
+ElevatedButton.icon(
+  onPressed: () {
+    setState(() {
+      if (_counter > 0) _counter--;
+    });
+  },
+  icon: const Icon(Icons.remove),
+  label: const Text('Decrement'),
+),
+```
+
+---
+
 ## Experiment
 
 Try adding:
