@@ -18,6 +18,22 @@
 
 ---
 
+## 💡 Why Should You Care?
+
+Every app on your phone, every website you visit, every online game you play — they all run on **servers**. Netflix has servers. Instagram has servers. Even your school's Wi-Fi has a server managing it.
+
+In this project, **you're building your own server.** Your Raspberry Pi will run a live website that anyone on your network can visit — just like a real website, except you built it and you control it.
+
+This isn't just a school project. These are the same skills used by:
+- **Software engineers** at companies like Google, Apple, and Netflix
+- **Cybersecurity analysts** who monitor systems for threats
+- **IT professionals** who keep networks and servers running
+- **Game developers** who run multiplayer game servers
+
+Even if you're not planning a career in tech, understanding how the internet actually works gives you a huge advantage in almost any field.
+
+---
+
 ## 🧰 What You Need
 
 - [Raspberry Pi](https://www.raspberrypi.com/) (any modern model) + microSD card (16 GB or bigger)
@@ -57,6 +73,8 @@ The Raspberry Pi is a tiny computer, but it has no operating system out of the b
 
 Updates keep your Pi secure and make sure everything works.
 
+> **🤔 What is a Terminal?** The Terminal is a way to talk to your computer by typing commands instead of clicking buttons. It might look intimidating at first (like something from a hacker movie), but it's actually just a different way to do the same things you do with your mouse. Think of it like texting your computer instead of tapping on icons. Every command you type tells the computer to do one specific thing.
+
 1. Click the **Terminal** icon on the top bar (it looks like a black rectangle)
 2. Type this command and press Enter:
 
@@ -66,11 +84,20 @@ sudo apt update && sudo apt -y full-upgrade && sudo reboot
 
 3. Your Pi will restart. Wait for it to come back to the desktop.
 
-> **What just happened?** You told your Pi to check for updates (`update`), install them (`full-upgrade`), and then restart (`reboot`). The `sudo` part means "run this as the administrator."
+> **What just happened?** Let's break that long command down piece by piece:
+> - `sudo` = "Super User DO" — it means "run this as the administrator." Your Pi won't let you install things without this, just like how your phone asks for a password before installing apps.
+> - `apt update` = Check online for any available updates (like checking the App Store for updates)
+> - `&&` = "and then do this next thing" — it chains commands together
+> - `apt -y full-upgrade` = Download and install all updates. The `-y` means "yes, do it without asking me to confirm each one"
+> - `sudo reboot` = Restart the computer so the updates take effect
+>
+> **⏳ This step can take 5–15 minutes.** That's normal — just let it run. Go get a snack.
 
 ---
 
 ### Step 3 — Install the Tools We Need
+
+> **🌍 Real-World Connection:** Almost every major website and app uses these same tools. Instagram's backend was built with Python. Flask is used by companies like Pinterest and LinkedIn for parts of their websites. You're learning the same technology the pros use.
 
 We're going to use **[Python](https://www.python.org/)** (a programming language) to run a mini web server. We need two add-ons:
 - **[Flask](https://flask.palletsprojects.com/)** — lets Python serve web pages
@@ -119,6 +146,8 @@ This creates a folder called `pi-health-web` and moves you into it.
 Now the fun part. We're going to create one Python file that does everything: reads your Pi's stats and shows them on a web page.
 
 1. Open the file in the text editor:
+
+> **🤔 What is `nano`?** Nano is a simple text editor that runs inside the Terminal. It's like Notepad, but it lives in the Terminal instead of opening a separate window. Don't worry — we'll switch to a friendlier editor (Thonny) on Day 3.
 
 ```bash
 nano system_monitor.py
@@ -256,6 +285,8 @@ if __name__ == "__main__":
 > - The page calls `/api/stats` every 2 seconds to get fresh CPU, memory, disk, and temperature numbers
 > - The JavaScript on the page updates the numbers without refreshing
 
+> **🌍 Real-World Connection:** This is exactly how apps like Weather or Stocks on your phone work. The app (like your web page) calls a server (like your Python code) every few seconds asking "what's the latest data?" and then updates what you see on screen. You just built that same pattern from scratch.
+
 ---
 
 ### 🌐 Mini Lesson — The 3 Languages of Every Website
@@ -340,9 +371,19 @@ http://localhost:5000
 
 ### What is SSH?
 
-SSH stands for **Secure Shell**. It lets you type commands on your Pi from a different computer, as if you were sitting in front of it. This is how real developers and engineers work with servers and robots — remotely.
+Imagine you could pick up your phone, type a command, and control a computer that's in another room — or another country. That's **SSH** (Secure Shell).
 
-> 📖 **Learn more:** [Raspberry Pi Remote Access Documentation](https://www.raspberrypi.com/documentation/computers/remote-access.html)
+It lets you type commands on your Pi from a different computer, as if you were sitting right in front of it. No monitor, no keyboard, no mouse needed — just a Wi-Fi connection.
+
+**This is how the real world works:**
+- IT professionals fix servers in data centers without being in the building
+- NASA engineers send commands to computers on the International Space Station
+- Game server admins manage Minecraft and Discord servers from their laptops
+- Your school's IT department manages every computer in the building from one desk
+
+After today, you'll be able to control your Pi from your phone or laptop. That's a real superpower.
+
+> 📖 **Want to go deeper?** [Raspberry Pi Remote Access Documentation](https://www.raspberrypi.com/documentation/computers/remote-access.html)
 
 ---
 
@@ -404,7 +445,7 @@ hostname -I
 
 This prints your Pi's **IP address** — something like `192.168.1.50`. **Write this number down.** You'll need it in a minute.
 
-> **What's an IP address?** Every device on a network gets a number so other devices can find it. It's like a phone number for your Pi.
+> **What's an IP address?** Think of your Wi-Fi network like a neighborhood. Every device (your phone, your laptop, the Pi) gets its own house number so they can find each other. That number is the IP address. When you type it into a browser, you're basically saying "take me to that house."
 
 ---
 
@@ -487,6 +528,8 @@ Your dashboard loads — from a server you started remotely. That's real enginee
 
 ---
 
+> **🎮 Think about it:** Have you ever noticed how some websites look old and boring, while others look sleek and modern? The difference is usually just CSS — the *exact same data* displayed with better styling. That's what you're about to do. Same Pi, same stats, totally different vibe.
+
 ### What's Changing?
 
 Right now your dashboard works, but it looks basic. We're going to upgrade the **HTML and CSS only** — the Python backend stays exactly the same. This is how real web development works: you can completely change how a site looks without changing how it works.
@@ -522,6 +565,8 @@ You should see your Python code from Day 1 in the editor window.
 ### Step 3 — Paste the New Dashboard
 
 Click where the old `PAGE` block was (your cursor should be on a blank line before `def get_temperature_c():`).
+
+> **😅 Don't panic!** This is a lot of code, but you don't need to understand every single line right now. You're going to paste it, see it work, and then we'll walk through the important parts together. Professional developers copy and paste code all the time — the skill is knowing *what* the code does, not memorizing it.
 
 **Copy everything in the box below and paste it into Thonny** (Ctrl+V or Edit → Paste):
 
@@ -966,6 +1011,8 @@ http://YOUR-PI-IP-ADDRESS:5000
 
 ---
 
+> **🏆 You've already done the hard part.** Everything from here is about playing and experimenting. There are no wrong answers — if you break something, just undo your change and try again. Real developers spend most of their time experimenting just like this.
+
 ### Challenge 1 — Change the Background Colors
 
 Find this line in the CSS:
@@ -1089,3 +1136,16 @@ Then in the HTML, add a new card or line that displays it using JavaScript.
 
 **"I made a change but the page looks the same"**
 → Stop the server (Ctrl+C), restart it, and hard-refresh the browser (Ctrl+Shift+R).
+
+**"I get 'command not found' when I try to run something"**
+→ You probably forgot to activate the virtual environment. Run `source ~/pihealth/bin/activate` first. You need to do this every time you open a new Terminal window.
+
+**"I get 'Address already in use' when starting the server"**
+→ Your server is already running in another Terminal window. Find that window and press Ctrl+C to stop it first, then try again.
+
+**"The code won't paste into Nano"**
+→ In the Terminal, paste is usually **Ctrl+Shift+V** (not Ctrl+V). Or right-click and choose Paste.
+
+**"I accidentally messed up the code and nothing works"**
+→ Don't worry — that happens to every programmer! You can always delete the file and start over:
+→ `rm ~/pi-health-web/system_monitor.py` then redo Step 5.
