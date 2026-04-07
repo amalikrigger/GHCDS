@@ -75,6 +75,16 @@ Check out [thinkinbits.site/projects](https://www.thinkinbits.site/projects.html
 
 ---
 
+## 📄 Capstone Proposal
+
+Before you start building, you need to submit a **project proposal** for approval. Use the template below to outline your idea, the skills you'll integrate, and your plan.
+
+📥 **[Capstone Proposal Template (Google Doc)](https://docs.google.com/document/d/1F9wF1Yv46TU7EEFWq7X4HmodsxqZIj9PUfmu4n2sRGU/edit?usp=sharing)** — Make a copy and fill it out.
+
+> A downloadable version is also available in this folder: [capstone_proposal_template.docx](capstone_proposal_template.docx)
+
+---
+
 ## 📝 What You'll Submit
 
 ### 1. Demo Video (2-5 minutes)
