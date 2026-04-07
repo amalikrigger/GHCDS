@@ -811,7 +811,31 @@ Save all your files. The server should auto-restart (nodemon). Refresh the brows
 
 ---
 
-## 📋 Grading Rubric (25 points)
+## 📤 How to Submit
+
+Upload the following to **Schoology**:
+
+| # | What to Screenshot / Submit |
+|---|---|
+| 1 | **Day 1:** Screenshot of your VS Code project structure (file tree showing your project files) |
+| 2 | **Day 2:** Screenshot of your chatbot running at localhost:3000 with at least 3 back-and-forth messages visible |
+| 3 | **Day 3:** Your written answers to critical thinking questions |
+| 4 | **Day 4:** Screenshot of your transformed chatbot running with at least 3 messages showing the new personality |
+| 5 | Your personality choice and system instruction text |
+| 6 | Your written reflection (3–5 sentences) |
+
+**How to upload:**
+
+1. Go to the assignment in Schoology
+2. Click **Submit Assignment**
+3. Click **"Upload"** — do **NOT** click "Create" (Create is for text only and won't let you attach files)
+4. Select your files and click **Submit**
+
+> **Need help taking screenshots?** See the [How to Take & Submit Screenshots](../fundamentals/how_to_screenshot.md) guide.
+
+---
+
+## �📋 Grading Rubric (25 points)
 
 | Category | Points | What I'm Looking For |
 |---|---|---|

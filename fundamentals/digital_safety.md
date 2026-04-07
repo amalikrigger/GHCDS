@@ -253,9 +253,40 @@ AI can now:
 ## 📝 Deliverables
 
 1. **Password audit:** Create 3 strong passphrases (don't submit real passwords — make new examples) and explain why each is strong
-2. **Phishing analysis:** Find or create 2 example phishing emails and annotate the red flags in each
+2. **Phishing analysis:** Find or create 2 example phishing emails and annotate the red flags in each (screenshots if using real examples — blur any personal info)
 3. **Security action:** Enable 2FA on at least one of your accounts and take a screenshot of the confirmation (blur sensitive info)
 4. **Reflection** (3-5 sentences): What's the biggest security mistake you've been making? What will you change?
+
+---
+
+## 📤 How to Submit
+
+Upload the following to **Schoology**:
+
+| # | What to Screenshot / Submit |
+|---|---|
+| 1 | Your 3 strong passphrases with explanations of why each is strong |
+| 2 | Your 2 phishing email examples with red flags annotated (screenshot if using real examples — blur personal info) |
+| 3 | Screenshot of your 2FA confirmation screen after enabling it on an account (blur sensitive info) |
+| 4 | Your written reflection (3–5 sentences) |
+
+**How to upload:**
+
+1. Go to the assignment in Schoology
+2. Click **Submit Assignment**
+3. Click **"Upload"** — do **NOT** click "Create" (Create is for text only and won't let you attach files)
+4. Select youril examples with red flags annotated (screenshot if using real examples — blur personal info) |
+| 3 | Screenshot of your 2FA confirmation screen after enabling it on an account (blur sensitive info) |
+| 4 | Your written reflection (3–5 sentences) |
+
+**How to upload:**
+
+1. Go to the assignment in Schoology
+2. Click **Submit Assignment**
+3. Click **"Upload"** — do **NOT** click "Create" (Create is for text only and won't let you attach files)
+4. Select your files and click **Submit**
+
+> **Need help taking screenshots?** See the [How to Take & Submit Screenshots](how_to_screenshot.md) guide.
 
 ---
 

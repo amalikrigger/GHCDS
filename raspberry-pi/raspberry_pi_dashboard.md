@@ -358,8 +358,9 @@ http://localhost:5000
 
 ### 📝 Day 1 Deliverables
 
-1. Screenshot of your health monitor page running in the browser
+1. Screenshot of your health monitor page running in the browser on the Pi
 2. Screenshot of the Terminal showing the server is running
+3. Screenshot from a different device (phone, laptop, or Chromebook) showing your dashboard loaded via `http://YOUR-PI-IP:5000` on the GHCDS network
 
 ---
 
@@ -1084,6 +1085,34 @@ Then in the HTML, add a new card or line that displays it using JavaScript.
 
 1. Screenshot of your customized dashboard (different colors, your name, etc.)
 2. A short reflection (3–5 sentences): What did you change? What was the hardest part? What would you add if you had more time?
+
+---
+
+## 📤 How to Submit
+
+Upload the following **screenshots** to **Schoology**:
+
+| Day | What to Screenshot |
+|---|---|
+| **Day 1** | Your health monitor page running in the browser on the Pi |
+| **Day 1** | The Terminal showing the server is running |
+| **Day 1** | Your dashboard loaded from a different device (phone, laptop, or Chromebook) on the GHCDS network |
+| **Day 2** | Your Terminal showing a successful SSH login |
+| **Day 2** | The `uname -a` output while connected via SSH |
+| **Day 3** | Your upgraded dashboard running in the browser |
+| **Day 3** | Your Terminal or Thonny showing the server running |
+| **Day 4** | Your customized dashboard (different colors, your name, etc.) |
+
+Also submit your **Day 4 written reflection** (3–5 sentences).
+
+**How to upload:**
+
+1. Go to the assignment in Schoology
+2. Click **Submit Assignment**
+3. Click **"Upload"** — do **NOT** click "Create" (Create is for text only and won't let you attach files)
+4. Select all your screenshot files and click **Submit**
+
+> **Need help taking screenshots?** See the [How to Take & Submit Screenshots](../fundamentals/how_to_screenshot.md) guide.
 
 ---
 

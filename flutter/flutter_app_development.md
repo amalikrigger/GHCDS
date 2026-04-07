@@ -936,7 +936,33 @@ ElevatedButton.icon(
 
 ---
 
-## 📋 Grading Rubric (25 points)
+## 📤 How to Submit
+
+Upload the following to **Schoology**:
+
+| # | What to Screenshot / Submit |
+|---|---|
+| 1 | **Day 1:** Screenshot of the default counter app running on the emulator |
+| 2 | **Day 1:** Written explanation — What is the difference between StatelessWidget and StatefulWidget? |
+| 3 | **Day 2:** Screenshot of your customized counter app (showing your UI changes) |
+| 4 | **Day 2:** Written list of 3+ changes you made and explanation of how setState works |
+| 5 | **Day 3:** Screenshot of Tic-Tac-Toe game running with a win/draw popup visible |
+| 6 | **Day 3:** Written explanation of how Row and Column widgets helped with the layout |
+| 7 | **Day 4:** Screenshot of your customized Tic-Tac-Toe game showing your enhancements |
+| 8 | **Day 4:** Written reflection (3–5 sentences) |
+
+**How to upload:**
+
+1. Go to the assignment in Schoology
+2. Click **Submit Assignment**
+3. Click **"Upload"** — do **NOT** click "Create" (Create is for text only and won't let you attach files)
+4. Select your files and click **Submit**
+
+> **Need help taking screenshots?** See the [How to Take & Submit Screenshots](../fundamentals/how_to_screenshot.md) guide.
+
+---
+
+## �📋 Grading Rubric (25 points)
 
 | Category | Points | What I'm Looking For |
 |---|---|---|

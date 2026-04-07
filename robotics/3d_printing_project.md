@@ -226,8 +226,31 @@ Create a presentation (in **PowerPoint, Google Slides, or Canva**) that walks so
 
 1. **Your finished 3D print** (bring it to class)
 2. **A photo** of your 3D print
-3. **Your PowerPoint/Slides/Canva link** with the printer guide
-4. **Where you got your model** — link to Thingiverse/Printables page, or screenshot of your Tinkercad design
+3. **A screenshot** of the slicer software showing your model on the build plate
+4. **Your PowerPoint/Slides/Canva link** with the printer guide
+5. **Where you got your model** — link to Thingiverse/Printables page, or screenshot of your Tinkercad design
+
+---
+
+## 📤 How to Submit
+
+Upload the following to **Schoology**:
+
+| # | What to Screenshot / Submit |
+|---|---|
+| 1 | Photo of your finished 3D print |
+| 2 | Screenshot of the slicer software showing your model on the build plate |
+| 3 | Your PowerPoint/Slides/Canva presentation (upload the file, or paste the link in the comments) |
+| 4 | Link to your model source (Thingiverse/Printables page) OR screenshot of your Tinkercad design |
+
+**How to upload:**
+
+1. Go to the assignment in Schoology
+2. Click **Submit Assignment**
+3. Click **"Upload"** — do **NOT** click "Create" (Create is for text only and won't let you attach files)
+4. Select your files and click **Submit**
+
+> **Need help taking screenshots?** See the [How to Take & Submit Screenshots](../fundamentals/how_to_screenshot.md) guide.
 
 ---
 

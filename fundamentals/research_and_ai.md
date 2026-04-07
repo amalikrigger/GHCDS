@@ -200,9 +200,40 @@ When you need to learn about something new, follow this process:
 ## 📝 Deliverables
 
 1. **Search challenge:** Your answers to the 3 search challenge questions, including the exact search queries you used
-2. **Source evaluation:** Find one reliable and one unreliable source about ANY tech topic. Explain why each is reliable or not using the SIFT method
+2. **Source evaluation:** Find one reliable and one unreliable source about ANY tech topic. Explain why each is reliable or not using the SIFT method. Include screenshots of both sources.
 3. **AI study session:** Use an AI tool to help you understand a concept from another class. Screenshot the conversation and write 2-3 sentences about what you learned that you didn't understand before
 4. **Reflection** (3-5 sentences): How has this lesson changed how you'll search for information or use AI?
+
+---
+
+## 📤 How to Submit
+
+Upload the following to **Schoology**:
+
+| # | What to Screenshot / Submit |
+|---|---|
+| 1 | Your search challenge answers (the 3 questions + the exact search queries you used) |
+| 2 | Screenshots of your reliable and unreliable sources, with your SIFT explanation |
+| 3 | Screenshot of your AI study session conversation |
+| 4 | Your written reflection (3–5 sentences) |
+
+**How to upload:**
+
+1. Go to the assignment in Schoology
+2. Click **Submit Assignment**
+3. Click **"Upload"** — do **NOT** click "Create" (Create is for text only and won't let you attach files)
+4. Select your reliable and unreliable sources, with your SIFT explanation |
+| 3 | Screenshot of your AI study session conversation |
+| 4 | Your written reflection (3–5 sentences) |
+
+**How to upload:**
+
+1. Go to the assignment in Schoology
+2. Click **Submit Assignment**
+3. Click **"Upload"** — do **NOT** click "Create" (Create is for text only and won't let you attach files)
+4. Select your files and click **Submit**
+
+> **Need help taking screenshots?** See the [How to Take & Submit Screenshots](how_to_screenshot.md) guide.
 
 ---
 

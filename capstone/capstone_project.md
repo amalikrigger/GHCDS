@@ -127,7 +127,30 @@ Your code should be:
 
 ---
 
-## 📋 Grading Rubric (100 points)
+## 📤 How to Submit
+
+Upload the following to **Schoology**:
+
+| # | What to Screenshot / Submit |
+|---|---|
+| 1 | Demo video of your project working (screen recording or filmed) |
+| 2 | Your presentation file (PowerPoint/Google Slides/Canva link) |
+| 3 | Project files — GitHub repository link OR ZIP file with organized code and README |
+| 4 | Screenshot(s) of your project running / working |
+| 5 | Screenshots of your build process (key steps, terminal output, etc.) |
+
+**How to upload:**
+
+1. Go to the assignment in Schoology
+2. Click **Submit Assignment**
+3. Click **"Upload"** — do **NOT** click "Create" (Create is for text only and won't let you attach files)
+4. Select your files and click **Submit**
+
+> **Need help taking screenshots?** See the [How to Take & Submit Screenshots](../fundamentals/how_to_screenshot.md) guide.
+
+---
+
+## �📋 Grading Rubric (100 points)
 
 | Category | Points | What I'm Looking For |
 |---|---|---|

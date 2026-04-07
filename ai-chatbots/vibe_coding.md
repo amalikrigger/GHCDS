@@ -219,9 +219,43 @@ AI code often has bugs. Always:
 ## 📝 Deliverables
 
 1. **Your finished project** — the actual working code (push to GitHub or submit as ZIP)
-2. **A screenshot** of your AI conversation showing at least 5 back-and-forth messages where you guided the AI
-3. **Code walkthrough** — pick 3 sections of your code and explain what each does (in your own words, not AI's explanation)
-4. **Reflection** (3-5 sentences): What was the hardest part about working WITH AI? Did it do anything wrong that you had to fix? What would you build next?
+2. **A screenshot** of your project running in the browser or app
+3. **A screenshot** of your AI conversation showing at least 5 back-and-forth messages where you guided the AI
+4. **Code walkthrough** — pick 3 sections of your code and explain what each does (in your own words, not AI's explanation)
+5. **Reflection** (3-5 sentences): What was the hardest part about working WITH AI? Did it do anything wrong that you had to fix? What would you build next?
+
+---
+
+## 📤 How to Submit
+
+Upload the following to **Schoology**:
+
+| # | What to Screenshot / Submit |
+|---|---|
+| 1 | Your finished project code (push to GitHub or submit as ZIP) |
+| 2 | Screenshot of your project running in the browser or app |
+| 3 | Screenshot of your AI conversation showing at least 5 back-and-forth messages where you guided the AI |
+| 4 | Your code walkthrough (3 sections explained in your own words) |
+| 5 | Your written reflection (3–5 sentences) |
+
+**How to upload:**
+
+| # | What to Screenshot / Submit |
+|---|---|
+| 1 | Your finished project code (push to GitHub or submit as ZIP) |
+| 2 | Screenshot of your project running in the browser or app |
+| 3 | Screenshot of your AI conversation showing at least 5 back-and-forth messages where you guided the AI |
+| 4 | Your code walkthrough (3 sections explained in your own words) |
+| 5 | Your written reflection (3–5 sentences) |
+
+**How to upload:**
+
+1. Go to the assignment in Schoology
+2. Click **Submit Assignment**
+3. Click **"Upload"** — do **NOT** click "Create" (Create is for text only and won't let you attach files)
+4. Select your files and click **Submit**
+
+> **Need help taking screenshots?** See the [How to Take & Submit Screenshots](../fundamentals/how_to_screenshot.md) guide.
 
 ---
 

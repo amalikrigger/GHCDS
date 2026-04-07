@@ -215,8 +215,32 @@ Once your teacher approves your first version, you can use AI tools to level it 
 ## 📝 Deliverables
 
 1. The URL where your page is hosted (e.g., `http://YOUR-PI-IP:5000/`)
-2. At least two screenshots: your webpage in a browser, and your project folder showing your files
-3. A short reflection (3-5 sentences): What did you build? What was the hardest part? What would you add with more time?
+2. Screenshot of your webpage loaded in a browser on the Pi
+3. Screenshot of your webpage loaded from a different device (phone, laptop, or Chromebook) on the GHCDS network
+4. Screenshot of your project folder showing your files
+5. A short reflection (3-5 sentences): What did you build? What was the hardest part? What would you add with more time?
+
+---
+
+## 📤 How to Submit
+
+Upload the following to **Schoology**:
+
+| # | What to Screenshot / Submit |
+|---|---|
+| 1 | Your webpage loaded in a browser on the Pi |
+| 2 | Your webpage loaded from a different device (phone, laptop, or Chromebook) on the GHCDS network |
+| 3 | Your project folder showing your files |
+| 4 | Your written reflection (3–5 sentences) |
+
+**How to upload:**
+
+1. Go to the assignment in Schoology
+2. Click **Submit Assignment**
+3. Click **"Upload"** — do **NOT** click "Create" (Create is for text only and won't let you attach files)
+4. Select your screenshot files and click **Submit**
+
+> **Need help taking screenshots?** See the [How to Take & Submit Screenshots](../fundamentals/how_to_screenshot.md) guide.
 
 ---
 
