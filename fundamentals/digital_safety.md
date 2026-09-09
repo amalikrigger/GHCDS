@@ -1,5 +1,5 @@
 <!-- ===========================================================================
-TEACHER PLANNING BLOCK — delete nothing, this never renders on the site.
+TEACHER PLANNING BLOCK. Delete nothing, this never renders on the site.
 
 UNIT / FOLDER   : fundamentals
 FILE NAME       : digital_safety.md
@@ -55,7 +55,7 @@ AFTER TEACHING IT (fill in, this is the most valuable part)
 
 ### Lock down your own accounts, then learn to handle the keys your code depends on
 
-> **Grades:** 7th–12th &nbsp;|&nbsp; **Time:** 2 class periods &nbsp;|&nbsp; **Difficulty:** Beginner
+> **Grades:** 7th to 12th &nbsp;|&nbsp; **Time:** 2 class periods &nbsp;|&nbsp; **Difficulty:** Beginner
 >
 > You already have accounts worth stealing. Over two days you will make your passwords hard to crack, turn on the one setting that stops most break-ins, learn to spot a fake message even when it is written perfectly, and then learn how programmers keep **secrets** out of their code. That last part is the reason you will not leak a password in every project you build this year.
 
@@ -176,11 +176,11 @@ Turn it on somewhere that matters. Email first if you can, because password rese
 
 ### Step 4: Spot the phish
 
-Phishing is someone pretending to be a company or a person you trust so you hand over something. It is how most people actually get hacked, not through movie-style code cracking.
+Phishing is someone pretending to be a company or a person you trust so you hand over something. It is how most people actually get hacked. The movie version, where someone breaks the encryption, almost never happens.
 
 Older scam emails were easy to spot because the grammar was broken. That tell is gone. AI writes clean, personalized messages at scale, sometimes from an account belonging to someone you know. So you check structure instead of tone.
 
-**🚩 The sender address, not the display name.** The name says Apple Support. The address says `support@apple-security-update-2026.com`.
+**🚩 Read the sender address itself.** The display name is free to type. The name says Apple Support and the address says `support@apple-security-update-2026.com`.
 
 **🚩 Urgency and threats.** "Your account will be DELETED in 24 hours." Real companies do not work this way.
 
@@ -410,7 +410,7 @@ Upload the following to **Schoology**:
 |---|---|---|
 | Accounts Secured | 10 | Strong passphrases, two-factor actually enabled with proof, phishing red flags correctly identified |
 | Secrets Handling | 5 | Base answers correct, or a working `.env` and `.gitignore` for the stretch |
-| Understanding | 5 | Reflection shows you know why these steps work, not just that you did them |
+| Understanding | 5 | Reflection explains in your own words why these steps work |
 | Deliverables | 5 | Everything above submitted, on time |
 
 **Bonus:**
