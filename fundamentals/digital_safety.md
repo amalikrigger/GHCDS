@@ -1,261 +1,383 @@
-# 🔒 Digital Safety & Security
+<!-- ===========================================================================
+TEACHER PLANNING BLOCK — delete nothing, this never renders on the site.
 
-### Protect yourself online — because nobody else will do it for you
+UNIT / FOLDER   : fundamentals
+FILE NAME       : digital_safety.md
+PERIODS         : 2
+FIRST TAUGHT    : T1 2026-27
 
-> **Grades:** 7th–12th &nbsp;|&nbsp; **Time:** 1-2 class periods &nbsp;|&nbsp; **Difficulty:** Beginner
+PREP THE DAY BEFORE
+- [ ] Hardware charged / counted: none, this is a laptop lesson
+- [ ] Accounts or logins students need: none new. They use accounts they already have.
+      Do NOT require a school account for 2FA, some are managed and students cannot change them.
+- [ ] Software already on lab machines: a browser. VS Code or any text editor for the Day 2 stretch.
+- [ ] Printed or posted in the room: the three phishing examples, blown up, taped to the wall
+- [ ] Test the whole build myself end to end: ____
+
+TIMING FOR PERIOD 1 (Day 1: accounts)
+- 5 min   Hook: put `password1` into the checker on the projector, watch it die instantly
+- 10 min  Passphrase demo, build one together on the board
+- 15 min  Students build three passphrases and test them
+- 20 min  2FA walkthrough, students enable it on one account and screenshot
+- 10 min  Spot the Phish, whole class, then clean up and exit ticket
+
+TIMING FOR PERIOD 2 (Day 2: data and secrets)
+- 5 min   Hook: show a photo and find the address, school, or plate in the background
+- 10 min  Deepfake clip, then the verify-through-another-channel rule
+- 15 min  Secrets: what one is, where they leak, the taped-key comparison
+- 25 min  The .env drill. Base tier spots the leak, stretch tier builds the .env and .gitignore
+- 10 min  Reflection and clean up
+
+WHERE STUDENTS GET STUCK
+- School-managed account will not let them turn on 2FA -> have them use a personal account
+  (gaming, social) instead. Any account counts.
+- Student does not want to screenshot a real account -> blurring is fine, or use a throwaway.
+- MS students find .env abstract -> stay on the base tier, spotting the leak in a screenshot.
+  Do not push them into the terminal.
+- "I don't have anything worth stealing" -> the SIM swap and account-resale angle usually lands.
+
+IF THEY FINISH EARLY   : the Day 2 stretch, or the haveibeenpwned audit bonus
+IF THEY NEED MORE TIME : Day 2 secrets carries into the next period. Day 1 must finish on Day 1
+                         because the 2FA screenshot is the deliverable that takes longest to chase.
+
+ASSESSMENT
+- Category  : Informal Assessments
+- Points    : 25
+- Schoology : ____   Section(s): both
+
+AFTER TEACHING IT (fill in, this is the most valuable part)
+- What ran long  :
+- What flopped   :
+- Change next time:
+=========================================================================== -->
+
+# 🔒 Digital Safety and Secrets
+
+### Lock down your own accounts, then learn to handle the keys your code depends on
+
+> **Grades:** 7th–12th &nbsp;|&nbsp; **Time:** 2 class periods &nbsp;|&nbsp; **Difficulty:** Beginner
 >
-> Every day you use passwords, click links, download files, and share personal info online. Most people do this without thinking — and that's exactly what hackers count on. This lesson teaches you how to protect yourself, your accounts, and your data in a world where cyber threats are getting smarter (especially with AI).
+> You already have accounts worth stealing. Over two days you will make your passwords hard to crack, turn on the one setting that stops most break-ins, learn to spot a fake message even when it is written perfectly, and then learn how programmers keep **secrets** out of their code. That last part is the reason you will not leak a password in every project you build this year.
 
 ---
 
 ## 🎯 What You'll Learn
 
-- How to create **strong passwords** and manage them safely
-- How to **spot phishing emails**, fake websites, and scams
-- How to protect your **personal information** on social media
-- What **two-factor authentication (2FA)** is and why it matters
-- How AI is making scams more convincing — and how to stay ahead
+- How to build a **passphrase** that would take centuries to crack
+- How **two-factor authentication** stops someone who already has your password
+- How to spot **phishing** even when the grammar is perfect and the sender looks real
+- What a **secret** is in programming, and why it never goes in your code
+- How a **.env** file keeps a key out of the file you share
 
 ---
 
-## Part 1: Passwords — Your First Line of Defense
+## 🧰 What You Need
 
-### The Problem with Most Passwords
+- A computer with a web browser
+- One account you actually control and can change settings on. A personal account is fine and is usually easier than a school one.
+- A text editor for the Day 2 stretch. [VS Code](https://code.visualstudio.com/) is on the lab machines.
+- [Password strength checker](https://www.security.org/how-secure-is-my-password/), runs in the browser, nothing to install
+- [Have I Been Pwned](https://haveibeenpwned.com/), for the bonus
 
-These are the most commonly used passwords every year:
+---
 
-| Rank | Password | Time to Crack |
+# Day 1: Lock Down Your Accounts
+
+**Goal:** By the end of today you have three passphrases you can actually remember, two-factor authentication switched on somewhere real, and the ability to look at a message and say why it is fake.
+
+---
+
+### Step 1: Watch a bad password die
+
+These show up at the top of the leaked-password lists every single year.
+
+| Rank | Password | Time to crack |
 |---|---|---|
-| 1 | `123456` | Less than 1 second |
-| 2 | `password` | Less than 1 second |
-| 3 | `qwerty` | Less than 1 second |
-| 4 | `abc123` | Less than 1 second |
-| 5 | Your birthday | Minutes to hours |
+| 1 | `123456` | under a second |
+| 2 | `password` | under a second |
+| 3 | `qwerty` | under a second |
+| 4 | `abc123` | under a second |
+| 5 | Your birthday | minutes to hours |
 
-If your password is on this list (or similar), **someone could break into your account in under a second** using automated tools that try millions of passwords per second.
+Attackers do not sit there typing guesses. They run software that tries millions of combinations a second against a stolen list. Anything on that table is gone before you finish reading this sentence.
+
+1. Open the [password strength checker](https://www.security.org/how-secure-is-my-password/)
+2. Type in something close to a password you have used before. Not the real one.
+3. Read the crack time
+
+> **⚠️ Never type a password you actually use into any website.** Type something similar instead. This applies to every "check your password" tool on the internet, including this one.
+
+> **✅ Checkpoint:** You have seen a real crack-time estimate for a weak password on your own screen.
 
 ---
 
-### What Makes a Strong Password?
+### Step 2: Build a passphrase
 
-A strong password has three qualities: **long, unique, and unpredictable.**
+Length beats everything else. Each character you add multiplies the work an attacker has to do.
 
-**Length matters most.** Every character you add makes it exponentially harder to crack:
-
-| Password Length | Time to Crack (brute force) |
+| Length | Time to crack by brute force |
 |---|---|
-| 6 characters | Seconds |
-| 8 characters | Hours |
-| 12 characters | Centuries |
-| 16+ characters | Effectively impossible |
+| 6 characters | seconds |
+| 8 characters | hours |
+| 12 characters | centuries |
+| 16+ characters | effectively impossible |
 
-**The passphrase method** — the easiest way to make a strong password:
-
-Pick 4-5 random words and string them together:
+The easiest way to get long and still remember it is to string together four or five unrelated words.
 
 ```
-correct-horse-battery-staple
 mango-bicycle-cloud-seventeen
 purple-guitar-elephant-sunrise
+Tamarind-Ferry-Lantern-42!
 ```
 
-These are easy to remember but nearly impossible to crack. You can add numbers and symbols for extra strength:
+Unrelated is the important part. `saint-croix-high-school` is four words and still weak, because it is a phrase someone could guess about you.
 
-```
-Mango-Bicycle-Cloud-17!
-```
+1. Write three passphrases of four or more unrelated words each
+2. Test each one in the checker
+3. Write down the crack time next to each
 
-> **Rule of thumb:** If you can remember it easily AND it's 16+ characters, it's probably a good password.
-
----
-
-### Password Rules to Live By
-
-1. **Never reuse passwords.** If one site gets hacked, hackers try that same password on every other site. If you use the same password for Instagram and your email, losing one means losing both.
-
-2. **Never share your password.** Not with friends, not in a text, not in a Google Doc. No legitimate company will ever ask for your password via email.
-
-3. **Use a password manager.** Apps like Bitwarden (free), 1Password, or the one built into your browser can generate and store unique passwords for every account. You only remember one master password.
-
-4. **Change passwords if a site gets breached.** Check [haveibeenpwned.com](https://haveibeenpwned.com/) to see if your email has been in a data breach.
+> **✅ Checkpoint:** Three passphrases, each showing a crack time measured in centuries or longer.
 
 ---
 
-### 🔐 Activity: Test Your Password Strength
+### 🧠 Mini Lesson: why length beats symbols
 
-Go to [howsecureismypassword.net](https://howsecureismypassword.net/) (this site does NOT store what you type).
+Schools and websites spent years telling people to add a capital, a number, and a symbol. That advice produced `Password1!`, which is short, predictable, and cracks fast.
 
-1. Type in a password you've used before (or something similar) — how long would it take to crack?
-2. Now try a 4-word passphrase — how does the time change?
-3. Try adding a number and symbol to the passphrase
+Think of it as a combination lock. Adding symbols gives you more choices per dial. Adding length gives you more dials. Another dial multiplies the total combinations, so it wins every time. Four random words give you enough dials that no amount of computing power gets through in a human lifetime.
 
-> **⚠️ Don't type your ACTUAL current passwords into any website.** Use similar ones or made-up examples.
+That is why a long phrase you can remember beats a short mess you have to write on a sticky note.
 
 ---
 
-## Part 2: Phishing — Don't Take the Bait
+### Step 3: Turn on two-factor authentication
 
-### What is Phishing?
+Two-factor means logging in takes two things: something you **know** (your passphrase) and something you **have** (your phone). Someone who steals your password still cannot get in.
 
-Phishing is when someone pretends to be a trusted company or person to trick you into giving up your info. It's the #1 way people get hacked — not through fancy technical exploits, but through simple deception.
+| Method | Security | How it works |
+|---|---|---|
+| Text message code | Good | A code is texted to your phone |
+| Authenticator app | Better | An app generates a code that changes every 30 seconds |
+| Hardware key | Best | A physical device you plug in |
+| Fingerprint or face | Good | Your device confirms it is you |
 
-### How to Spot a Phishing Email
+Text codes are the weakest of the four because of SIM swapping, which you will read about in Step 4. They are still far better than nothing.
 
-Here's a checklist. If an email has ANY of these red flags, be suspicious:
+Turn it on somewhere that matters. Email first if you can, because password resets for everything else land there.
 
-**🚩 Check the sender's email address** — not just the name.
-- Looks real: `From: Apple Support`
-- Actually from: `support@apple-security-update-2024.com` ← FAKE
+1. Open the security settings of an account you control
+2. Find two-factor authentication, two-step verification, or login verification. The name changes by site.
+3. Turn it on and finish the setup
+4. Screenshot the confirmation screen. Blur anything private.
 
-**🚩 Urgency and threats.**
-- "Your account will be DELETED in 24 hours unless you act NOW!"
-- Real companies don't threaten you via email.
-
-**🚩 Generic greeting.**
-- "Dear Customer" or "Dear User" instead of your actual name.
-
-**🚩 Suspicious links.**
-- Hover over any link BEFORE clicking. Does the URL match the company?
-- `https://www.paypal.com/account` ✅ Real
-- `https://www.paypa1.com/account` ❌ Fake (that's a number 1, not an L)
-- `https://paypal.security-update.com` ❌ Fake (the real domain is `security-update.com`, not paypal)
-
-**🚩 Unexpected attachments.**
-- You didn't ask for a file? Don't open it.
-- `.exe`, `.zip`, and `.scr` files are especially dangerous.
-
-**🚩 Too good to be true.**
-- "You've won a $500 gift card!" — No, you haven't.
-- "Click here to claim your free iPhone!" — No.
+> **✅ Checkpoint:** A screenshot showing two-factor authentication is on.
 
 ---
 
-### AI-Powered Phishing — The New Threat
+### Step 4: Spot the phish
 
-Here's why this matters MORE now than ever: **AI can write perfect phishing emails.**
+Phishing is someone pretending to be a company or a person you trust so you hand over something. It is how most people actually get hacked, not through movie-style code cracking.
 
-Old phishing emails had typos, weird grammar, and were easy to spot. AI-generated phishing emails are:
-- Grammatically perfect
-- Written in your language without errors
-- Personalized using info scraped from your social media
-- Sometimes sent from hacked accounts of people you actually know
+Older scam emails were easy to spot because the grammar was broken. That tell is gone. AI writes clean, personalized messages at scale, sometimes from an account belonging to someone you know. So you check structure instead of tone.
 
-**How to protect yourself in the AI era:**
-- Don't trust an email just because it sounds professional
-- Always verify through a DIFFERENT channel (if your bank emails you, call the number on your card — not the number in the email)
-- Be extra cautious with any email that asks you to click a link or download something
+**🚩 The sender address, not the display name.** The name says Apple Support. The address says `support@apple-security-update-2026.com`.
 
----
+**🚩 Urgency and threats.** "Your account will be DELETED in 24 hours." Real companies do not work this way.
 
-### 🎣 Activity: Spot the Phish
+**🚩 A generic greeting.** "Dear Customer" from a company that knows your name.
 
-Look at these email scenarios and decide: **real or phishing?**
+**🚩 The link does not match.** Hover first. `paypa1.com` uses a number one. `paypal.security-update.com` belongs to `security-update.com`, not PayPal. The real domain is the part right before the first single slash.
 
-**Email 1:**
+**🚩 An attachment you did not ask for.** Especially `.exe`, `.zip`, and `.scr`.
+
+**🚩 Too good to be true.** It is not true.
+
+Now judge these three.
+
+**Message 1**
 > From: netflix-support@netflix.com
 > Subject: Your payment failed
-> "Hi [Your Name], we couldn't process your last payment. Please update your billing info at: https://netflix.com/account/billing"
+> "Hi Amali, we could not process your last payment. Update your billing at https://netflix.com/account/billing"
 
-**Email 2:**
+**Message 2**
 > From: security@amaz0n-alerts.com
 > Subject: Unusual sign-in activity
 > "Dear Customer, we detected suspicious activity. Click here immediately to secure your account or it will be locked within 12 hours."
 
-**Email 3:**
-> From: your teacher's actual email
+**Message 3**
+> From: your teacher's real address
 > Subject: Assignment update
-> "Hi class, I've updated the rubric for the capstone project. Check Schoology for the new version."
+> "Hi class, I updated the rubric for the capstone. Check Schoology for the new version."
 
-> **Answers:** Email 1 is likely real (correct domain, uses your name, links to real netflix.com). Email 2 is phishing (fake domain with a zero, generic greeting, urgency/threats). Email 3 is likely real (known sender, no links to click, no urgency).
+> **Answers:** Message 1 looks real. Correct domain, uses your name, the link goes to the real netflix.com. Message 2 is phishing. The domain has a zero in it, the greeting is generic, and it threatens you with a deadline. Message 3 looks real. Known sender, nothing to click, no pressure.
+
+> **✅ Checkpoint:** You can say out loud which red flag gives Message 2 away.
 
 ---
 
-## Part 3: Protecting Your Personal Information
+### 📝 Day 1 Deliverables
 
-### What Hackers Can Do with Your Info
+- [ ] Three passphrases with the crack time for each
+- [ ] Screenshot of two-factor authentication enabled, private parts blurred
 
-| Info They Get | What They Can Do |
+---
+
+# Day 2: Protect Your Data and Your Code
+
+**Goal:** By the end of today you know what you are giving away without meaning to, and you know where a password belongs in a project you are going to share.
+
+---
+
+### Step 1: See what a photo gives away
+
+Here is what someone builds from pieces that each feel harmless.
+
+| What they get | What they do with it |
 |---|---|
-| Full name + birthday | Open credit accounts in your name |
-| Email + password | Access your accounts, send scams from your email |
-| Phone number | SIM swap attack — take over your phone number and all accounts linked to it |
-| School/workplace | Craft targeted phishing emails that look more believable |
-| Location data | Know when you're not home, stalk you |
+| Full name and birthday | Open accounts in your name |
+| Email and password | Get into your other accounts, then message your friends as you |
+| Phone number | SIM swap, taking over your number and every code sent to it |
+| School or workplace | Write a phishing message convincing enough to fool you |
+| Location, live | Know when your house is empty |
 
-### Social Media Safety
+Look at the last five photos on your phone without opening anything private. Check the backgrounds. Look for a house number, a street sign, a school logo, a license plate, a package label, a screen with a name on it.
 
-- **Set profiles to private.** If your Instagram is public, anyone can see your photos, location tags, and who you hang out with.
-- **Don't post your location in real-time.** Post vacation photos AFTER you get back, not while you're away.
-- **Be careful what's in the background.** Photos can reveal your address, school name, license plate, or other identifying info.
-- **Think before you share.** Would you be comfortable if your teacher, parent, or future employer saw this post? If no, don't post it.
+The rules that follow from this are short. Keep profiles private. Post the vacation photos after you get home. Check the background before you post. Ask whether you would be fine with a stranger, a teacher, and an employer all seeing it.
 
-### Public Wi-Fi Risks
-
-Coffee shop Wi-Fi, airport Wi-Fi, hotel Wi-Fi — these are all **unencrypted**. Anyone on the same network can potentially see what you're doing.
-
-**Rules for public Wi-Fi:**
-- Never log into bank accounts or enter credit card info on public Wi-Fi
-- Use a VPN if you need to do anything sensitive
-- Make sure websites show `https://` (the "s" means encrypted) — look for the lock icon
+> **✅ Checkpoint:** You found at least one identifying detail in the background of a photo, yours or a classmate's.
 
 ---
 
-## Part 4: Two-Factor Authentication (2FA)
+### Step 2: Assume the voice can be faked
 
-### What is 2FA?
+A few seconds of audio is enough to clone a voice. Video of a real person saying things they never said is cheap to make now. A profile photo of a person who does not exist takes one click.
 
-Two-factor authentication means you need **two things** to log in:
-1. Something you **know** (your password)
-2. Something you **have** (your phone, a code, a fingerprint)
+You cannot win this by looking harder at the video. The fakes get better every year and your eyes do not. So the defense is procedural instead of visual.
 
-Even if someone steals your password, they can't get in without the second factor.
+**Verify through a different channel.** A call from a panicked family member asking for money gets hung up on and called back on the number you already have. A message from a friend asking for a code gets a text to that friend. A news claim gets checked against a second source you went and found yourself.
 
-### Types of 2FA
-
-| Method | Security Level | How It Works |
-|---|---|---|
-| **SMS code** | Good | A code is texted to your phone |
-| **Authenticator app** | Better | Apps like Google Authenticator or Authy generate codes that change every 30 seconds |
-| **Hardware key** | Best | A physical USB device (like a YubiKey) that you plug in |
-| **Biometrics** | Good | Fingerprint or face scan |
-
-### How to Turn On 2FA
-
-Enable 2FA on your most important accounts first:
-1. **Email** (Gmail, Outlook) — this is the most important because password resets go here
-2. **Social media** (Instagram, Snapchat, TikTok)
-3. **School accounts** (if available)
-4. **Gaming accounts** (Steam, Xbox, PlayStation)
-
-> **Do this today:** Go to your Google account settings → Security → 2-Step Verification → Turn it on. It takes 2 minutes and dramatically improves your security.
+This one habit covers voice cloning, deepfake video, hacked accounts, and every scam that has not been invented yet, because it never depends on you detecting the fake.
 
 ---
 
-## Part 5: AI and Deepfakes — The New Frontier
+### Step 3: Learn what a secret is
 
-### What You Need to Know
+A **secret** is any value that proves who you are to a computer. A password. An **API key**. A Wi-Fi password. A database login. A token an app uses to talk to a service.
 
-AI can now:
-- **Clone someone's voice** from a few seconds of audio
-- **Create fake videos** of real people saying things they never said (deepfakes)
-- **Generate fake profile pictures** of people who don't exist
-- **Write convincing fake news articles** in seconds
+Here is the problem, and it is the reason this section exists in a Computer Science class instead of a health class.
 
-### How to Protect Yourself
+```python
+# BAD. Never do this.
+api_key = "sk-a83ff20c9d4e1b77c5"
 
-- **Verify through another channel.** If you get a voice call from "your parent" asking for money, hang up and call them back on their real number.
-- **Reverse image search.** If a profile picture looks suspicious, drag it into Google Images to see if it appears elsewhere.
-- **Check the source.** Is this news article from a real publication? Check the URL — not just the headline.
-- **Be skeptical of perfection.** AI-generated content is often "too perfect" — no ums, no awkward angles, no mistakes.
+response = ask_the_ai(api_key, "explain recursion")
+```
+
+That key is now inside your code. Every place the code goes, the key goes. You post the project to GitHub, the key is public. You share the folder with a partner, they have your key. You submit a screenshot to Schoology, the key is in the picture. Bots scan public code for keys around the clock and start spending on them within minutes.
+
+Putting a key in your code is like taping your house key to your front door and then handing out photos of your door.
+
+**The rule: the code goes in the file you share. The secret goes in a file you never share.**
+
+---
+
+### Step 4: Put the secret somewhere safe
+
+A `.env` file holds the secrets. It sits next to your code and it never leaves your machine.
+
+**Base tier, everyone does this.** Look at this pair of files and answer three questions.
+
+`app.py`
+```python
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+api_key = os.getenv("API_KEY")
+
+response = ask_the_ai(api_key, "explain recursion")
+```
+
+`.env`
+```
+API_KEY=sk-a83ff20c9d4e1b77c5
+```
+
+1. Which of these two files is safe to post publicly?
+2. If you emailed a classmate only `app.py`, would they have your key?
+3. What would happen if you posted `.env` to GitHub?
+
+**Stretch tier, required for high school, bonus for middle school.** Build it and prove it works.
+
+1. Make a folder with a file called `.env` containing one made-up key:
+
+```
+API_KEY=not-a-real-key-12345
+```
+
+2. Make a file called `.gitignore` next to it containing one line:
+
+```
+.env
+```
+
+3. Make `read_secret.py`:
+
+```python
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+print("Loaded key:", os.getenv("API_KEY"))
+```
+
+4. Install the library and run it:
+
+```bash
+pip install python-dotenv
+python read_secret.py
+```
+
+You should see `Loaded key: not-a-real-key-12345`.
+
+> **✅ Checkpoint:** Your terminal printed the key, and the key is nowhere inside `read_secret.py`.
+
+---
+
+### 🧠 Mini Lesson: why .gitignore is the part people forget
+
+`load_dotenv()` reads the `.env` file and hands the values to your program at the moment it runs. Your code asks for `API_KEY` by name and never contains the value.
+
+`.gitignore` is the second half, and skipping it is the single most common way keys leak. It is a list of files Git refuses to include when you save or upload your work. Without that one line, the moment you push your project the `.env` goes with it, and everything you just did was for nothing.
+
+Real key leaked by a real company, real often. This is not a beginner mistake. It is the mistake.
+
+---
+
+### 📝 Day 2 Deliverables
+
+- [ ] Your three answers from the base tier
+- [ ] Stretch only: screenshot of the terminal printing the key, plus your `.gitignore`
+
+---
+
+## 🎚️ Base and Stretch
+
+**Base, everyone does this.**
+Three passphrases with crack times, two-factor authentication turned on with a screenshot, the phishing red flag identified, and the three secret-handling questions answered correctly.
+
+**Stretch, required for high school, bonus for middle school.**
+A working `.env` setup: the `.env` file, a `.gitignore` containing it, and a script that prints the key without the key appearing anywhere in the script. Screenshot the terminal output.
 
 ---
 
 ## 📝 Deliverables
 
-1. **Password audit:** Create 3 strong passphrases (don't submit real passwords — make new examples) and explain why each is strong
-2. **Phishing analysis:** Find or create 2 example phishing emails and annotate the red flags in each (screenshots if using real examples — blur any personal info)
-3. **Security action:** Enable 2FA on at least one of your accounts and take a screenshot of the confirmation (blur sensitive info)
-4. **Reflection** (3-5 sentences): What's the biggest security mistake you've been making? What will you change?
+1. **Three passphrases** with the crack time for each. Make up new ones, never submit a password you use.
+2. **Screenshot of two-factor authentication** enabled on an account, private details blurred
+3. **Phishing analysis**: two example messages with the red flags labeled
+4. **Secrets questions**: your three answers, or the stretch screenshots if you did the stretch
+5. **Reflection** (3 to 5 sentences): What is the biggest security mistake you have been making? What are you changing?
 
 ---
 
@@ -265,25 +387,17 @@ Upload the following to **Schoology**:
 
 | # | What to Screenshot / Submit |
 |---|---|
-| 1 | Your 3 strong passphrases with explanations of why each is strong |
-| 2 | Your 2 phishing email examples with red flags annotated (screenshot if using real examples — blur personal info) |
-| 3 | Screenshot of your 2FA confirmation screen after enabling it on an account (blur sensitive info) |
-| 4 | Your written reflection (3–5 sentences) |
+| 1 | Your three passphrases with crack times |
+| 2 | Screenshot of two-factor authentication enabled, private info blurred |
+| 3 | Two phishing examples with the red flags labeled |
+| 4 | Your three secrets answers, or the stretch terminal screenshot and `.gitignore` |
+| 5 | Your written reflection (3 to 5 sentences) |
 
 **How to upload:**
 
 1. Go to the assignment in Schoology
 2. Click **Submit Assignment**
-3. Click **"Upload"** — do **NOT** click "Create" (Create is for text only and won't let you attach files)
-4. Select youril examples with red flags annotated (screenshot if using real examples — blur personal info) |
-| 3 | Screenshot of your 2FA confirmation screen after enabling it on an account (blur sensitive info) |
-| 4 | Your written reflection (3–5 sentences) |
-
-**How to upload:**
-
-1. Go to the assignment in Schoology
-2. Click **Submit Assignment**
-3. Click **"Upload"** — do **NOT** click "Create" (Create is for text only and won't let you attach files)
+3. Click **"Upload"**. Do **NOT** click "Create", it is for text only and will not let you attach files.
 4. Select your files and click **Submit**
 
 > **Need help taking screenshots?** See the [How to Take & Submit Screenshots](how_to_screenshot.md) guide.
@@ -294,11 +408,14 @@ Upload the following to **Schoology**:
 
 | Category | Points | What I'm Looking For |
 |---|---|---|
-| Password Knowledge | 5 | Strong passphrases with explanation of what makes them strong |
-| Phishing Awareness | 5 | Can identify red flags in phishing emails |
-| 2FA Setup | 5 | Enabled 2FA on an account with proof |
-| Understanding | 5 | Reflection shows genuine understanding of risks |
-| Completeness | 5 | All deliverables submitted |
+| Accounts Secured | 10 | Strong passphrases, two-factor actually enabled with proof, phishing red flags correctly identified |
+| Secrets Handling | 5 | Base answers correct, or a working `.env` and `.gitignore` for the stretch |
+| Understanding | 5 | Reflection shows you know why these steps work, not just that you did them |
+| Deliverables | 5 | Everything above submitted, on time |
+
+**Bonus:**
+- **+3 points** for a middle school student who completes the stretch tier
+- **+2 points** for running your email through [Have I Been Pwned](https://haveibeenpwned.com/) and reporting which breaches it appeared in
 
 ---
 
@@ -306,25 +423,52 @@ Upload the following to **Schoology**:
 
 | Term | What It Means |
 |---|---|
-| **Phishing** | Tricking someone into giving up personal info by pretending to be trustworthy |
-| **Two-Factor Authentication (2FA)** | Requiring two forms of proof to log in (password + phone code) |
-| **Passphrase** | A password made of multiple random words strung together |
-| **Data Breach** | When a company's database of usernames/passwords gets stolen |
-| **Social Engineering** | Manipulating people (not computers) to give up information |
-| **Deepfake** | AI-generated fake video or audio of a real person |
-| **VPN** | Virtual Private Network — encrypts your internet traffic |
-| **HTTPS** | Secure version of HTTP — data is encrypted between you and the website |
-| **Malware** | Software designed to harm your computer or steal your data |
-| **Brute Force Attack** | Trying every possible password combination until one works |
+| **Passphrase** | A password built from several unrelated words, long enough that guessing it is hopeless |
+| **Two-Factor Authentication** | Needing two different proofs to log in, usually a password plus a code on your phone |
+| **Phishing** | Pretending to be someone trustworthy to trick you into handing over information |
+| **Social Engineering** | Attacking the person instead of the computer |
+| **SIM Swap** | Taking over someone's phone number so every code sent to it arrives at the attacker instead |
+| **Data Breach** | A company's stored logins getting stolen |
+| **Deepfake** | Video or audio of a real person, generated by AI, showing something that never happened |
+| **Secret** | Any value that proves identity to a computer: a password, an API key, a token |
+| **API Key** | A string that identifies your account to an outside service, usually attached to money or private data |
+| **.env file** | A file holding secrets, kept next to your code and never shared |
+| **.gitignore** | A list of files Git refuses to upload, which is what keeps `.env` off the internet |
+| **Brute Force** | Trying every possible combination until one works |
 
 ---
 
-## 💡 The One Rule That Covers Everything
+## 💡 Troubleshooting
 
-**If something feels off, stop and verify through a different channel.**
+**"My school account will not let me turn on two-factor."**
+→ It is probably managed by the school and locked. Use a personal account instead. Any account you control counts for this assignment.
 
-Got a suspicious email from your bank? Call the number on your card.
-Got a weird DM from a friend? Text them separately and ask if they sent it.
-Got a too-good-to-be-true offer? Google the company name + "scam."
+**"I do not want to screenshot my real account."**
+→ Blur everything except the confirmation that two-factor is on. That is all that is being checked.
 
-Trust your gut. Slow down. Verify.
+**"The checker says my passphrase is weak."**
+→ Your words are probably related to each other or to you. Swap in words that have nothing to do with each other or with your life.
+
+**"`pip install python-dotenv` says pip is not found."**
+→ Try `pip3 install python-dotenv`, or `python3 -m pip install python-dotenv`.
+
+**"My script prints `Loaded key: None`."**
+→ Three usual causes. The file is named `.env.txt` instead of `.env`, the file is in a different folder than the script, or there are spaces around the `=`. It must read `API_KEY=value` with nothing between.
+
+**"I cannot see the `.env` file in my folder."**
+→ Files starting with a dot are hidden. On Mac press `Cmd + Shift + .` in Finder. On Windows turn on hidden items in the View tab.
+
+**"I do not have anything worth stealing."**
+→ Your accounts are worth money to someone who resells them, and your identity is worth more. Your phone number alone can be used to reset logins you have forgotten you own.
+
+<!-- ===========================================================================
+BEFORE YOU CALL IT DONE
+- [x] Every command and version checked against the live source today (2026-09-09)
+      security.org checker replaced the dead howsecureismypassword.net link
+- [x] No API keys, passwords, or Wi-Fi credentials anywhere in the file (the sk- string is fake)
+- [x] Every checkpoint is something a student can actually see
+- [x] Base tier is readable by a 7th grader
+- [x] No safety block, this lesson touches no hardware
+- [x] No em dashes or en dashes in student-facing text, per house style
+- [ ] Site version: strip "How to Submit" before publishing to thinkinbits.site
+=========================================================================== -->

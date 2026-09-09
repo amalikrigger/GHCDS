@@ -240,16 +240,6 @@ Upload the following to **Schoology**:
 
 **How to upload:**
 
-| # | What to Screenshot / Submit |
-|---|---|
-| 1 | Your finished project code (push to GitHub or submit as ZIP) |
-| 2 | Screenshot of your project running in the browser or app |
-| 3 | Screenshot of your AI conversation showing at least 5 back-and-forth messages where you guided the AI |
-| 4 | Your code walkthrough (3 sections explained in your own words) |
-| 5 | Your written reflection (3–5 sentences) |
-
-**How to upload:**
-
 1. Go to the assignment in Schoology
 2. Click **Submit Assignment**
 3. Click **"Upload"** — do **NOT** click "Create" (Create is for text only and won't let you attach files)
