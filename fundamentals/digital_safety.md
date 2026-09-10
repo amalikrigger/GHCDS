@@ -101,8 +101,10 @@ Every year, security researchers publish the most common passwords found in leak
 
 Nobody is sitting at a keyboard typing guesses at your account. They run software against a stolen list at millions of tries per second. Anything on that table fell over before you finished reading this sentence.
 
-1. Open the [password strength checker](https://www.security.org/how-secure-is-my-password/)
-2. Type in something close to a password you have used before. Not the real one.
+Students use the live meter on the class website, which computes in the browser and sends nothing anywhere. There is also a well known public version at [security.org](https://www.security.org/how-secure-is-my-password/), worth showing them so they know it exists.
+
+1. Open the meter on the lesson page
+2. Type something close to a password they have used. Never the real one.
 3. Read the crack time
 
 > **⚠️ Never type a password you actually use into any website.** Type something similar instead. This applies to every "check your password" tool on the internet, including this one.
@@ -307,22 +309,29 @@ API_KEY=sk-a83ff20c9d4e1b77c5
 2. If you emailed a classmate only `app.py`, would they have your key?
 3. What would happen if you posted `.env` to GitHub?
 
-**Stretch tier, required for high school, bonus for middle school.** Build it and prove it works.
+**Stretch tier, required for high school, bonus for middle school.**
 
-1. Make a folder with a file called `.env` containing one made-up key:
+Rewritten 2026-09-10 for students who have never opened a terminal. The whole thing happens
+inside VS Code, using its built-in terminal, so `cd` never comes up and the dotfile problem
+disappears. Finder and File Explorer both refuse to create a file starting with a dot, which
+is the single most common place beginners stall.
 
+**Step A.** Open VS Code, File > Open Folder, make `secret-test` on the Desktop, open it.
+The sidebar should read SECRET-TEST and be empty.
+
+**Step B.** New File three times, names typed exactly:
+
+`.env`
 ```
 API_KEY=not-a-real-key-12345
 ```
 
-2. Make a file called `.gitignore` next to it containing one line:
-
+`.gitignore`
 ```
 .env
 ```
 
-3. Make `read_secret.py`:
-
+`read_secret.py`
 ```python
 import os
 from dotenv import load_dotenv
@@ -331,18 +340,42 @@ load_dotenv()
 print("Loaded key:", os.getenv("API_KEY"))
 ```
 
-4. Install the library and run it:
+Save each one. A white dot on the tab means unsaved, and that catches people out.
+
+**Step C.** Terminal > New Terminal. It opens already inside the folder. Check Python:
 
 ```bash
-pip install python-dotenv
-python read_secret.py
+python3 --version
 ```
 
-You should see `Loaded key: not-a-real-key-12345`.
+**Step D.** Install the library:
 
-> **✅ Checkpoint:** Your terminal printed the key, and the key is nowhere inside `read_secret.py`.
+```bash
+pip3 install python-dotenv
+```
 
----
+Looking for `Successfully installed`, or `already satisfied` if someone installed it on that
+machine before. If `pip3` is missing, try `pip`, then `python3 -m pip`.
+
+**Step E.** Run it:
+
+```bash
+python3 read_secret.py
+```
+
+Expected: `Loaded key: not-a-real-key-12345`. Then point at `read_secret.py` and note the key
+is printed on screen and is nowhere in that file.
+
+**The four errors they will actually hit**
+
+| What they see | What it means |
+|---|---|
+| `Loaded key: None` | File is named `.env.txt`, or there are spaces around the `=` |
+| `ModuleNotFoundError: No module named 'dotenv'` | Step D did not finish |
+| `can't open file` | Wrong folder or a misspelled filename |
+| Nothing happens | Enter not pressed, or the file was never saved |
+
+Getting an error and reading the last line of it is the actual skill being taught here.
 
 ### 🧠 Mini Lesson: why .gitignore is the part people forget
 
