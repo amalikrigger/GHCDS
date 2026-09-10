@@ -53,11 +53,11 @@ AFTER TEACHING IT (fill in, this is the most valuable part)
 
 # 🔒 Digital Safety and Secrets
 
-### Lock down your own accounts, then learn to handle the keys your code depends on
+### Become a hard target, then learn how to actually keep a secret
 
 > **Grades:** 7th to 12th &nbsp;|&nbsp; **Time:** 2 class periods &nbsp;|&nbsp; **Difficulty:** Beginner
 >
-> You already have accounts worth stealing. Over two days you will make your passwords hard to crack, turn on the one setting that stops most break-ins, learn to spot a fake message even when it is written perfectly, and then learn how programmers keep **secrets** out of their code. That last part is the reason you will not leak a password in every project you build this year.
+> You already own things worth stealing. Not your phone. Your accounts, which someone can resell in bulk without ever meeting you. Over two days you will make your passwords genuinely expensive to crack, switch on the one setting that stops most break-ins cold, learn to spot a fake message that has perfect spelling, and find out how programmers keep **secrets** out of code they put on the internet. That last part is why you will not accidentally publish a password in every project you build this year.
 
 ---
 
@@ -89,7 +89,7 @@ AFTER TEACHING IT (fill in, this is the most valuable part)
 
 ### Step 1: Watch a bad password die
 
-These show up at the top of the leaked-password lists every single year.
+Every year, security researchers publish the most common passwords found in leaked databases. Every year, it is basically this list. People are wonderfully predictable.
 
 | Rank | Password | Time to crack |
 |---|---|---|
@@ -99,7 +99,7 @@ These show up at the top of the leaked-password lists every single year.
 | 4 | `abc123` | under a second |
 | 5 | Your birthday | minutes to hours |
 
-Attackers do not sit there typing guesses. They run software that tries millions of combinations a second against a stolen list. Anything on that table is gone before you finish reading this sentence.
+Nobody is sitting at a keyboard typing guesses at your account. They run software against a stolen list at millions of tries per second. Anything on that table fell over before you finished reading this sentence.
 
 1. Open the [password strength checker](https://www.security.org/how-secure-is-my-password/)
 2. Type in something close to a password you have used before. Not the real one.
@@ -113,7 +113,7 @@ Attackers do not sit there typing guesses. They run software that tries millions
 
 ### Step 2: Build a passphrase
 
-Length beats everything else. Each character you add multiplies the work an attacker has to do.
+Length beats cleverness. Every character you add multiplies the work, and multiplying gets out of hand fast, which is the one time that works in your favor.
 
 | Length | Time to crack by brute force |
 |---|---|
@@ -142,15 +142,15 @@ Unrelated is the important part. `saint-croix-high-school` is four words and sti
 
 ### 🧠 Mini Lesson: why length beats symbols
 
-Schools and websites spent years telling people to add a capital, a number, and a symbol. That advice produced `Password1!`, which is short, predictable, and cracks fast.
+Schools and websites spent twenty years demanding a capital, a number, and a symbol. What they got was `Password1!`, roughly two hundred million times. Everyone follows the rule the same lazy way, so attackers just try the lazy way first.
 
-Think of it as a combination lock. Adding symbols gives you more choices per dial. Adding length gives you more dials. Another dial multiplies the total combinations, so it wins every time. Four random words give you enough dials that no amount of computing power gets through in a human lifetime.
+Picture a combination lock. Symbols give you more numbers on each dial. Length gives you more dials. Adding a dial multiplies everything that came before it, which is why length wins and it is not close. Four random words give you enough dials that no amount of computing power gets through in a human lifetime.
 
 That is why a long phrase you can remember beats a short mess you have to write on a sticky note.
 
 ---
 
-### Step 3: Turn on two-factor authentication
+### Step 3: Make a stolen password useless
 
 Two-factor means logging in takes two things: something you **know** (your passphrase) and something you **have** (your phone). Someone who steals your password still cannot get in.
 
@@ -228,7 +228,7 @@ Now judge these three.
 
 ---
 
-### Step 1: See what a photo gives away
+### Step 1: What your photos tell strangers
 
 Here is what someone builds from pieces that each feel harmless.
 
@@ -250,9 +250,9 @@ The rules that follow from this are short. Keep profiles private. Post the vacat
 
 ### Step 2: Assume the voice can be faked
 
-A few seconds of audio is enough to clone a voice. Video of a real person saying things they never said is cheap to make now. A profile photo of a person who does not exist takes one click.
+A few seconds of audio is enough to clone a voice. Video of a real person saying things they never said is cheap now. A profile photo of a person who has never existed takes one click.
 
-You cannot win this by looking harder at the video. The fakes get better every year and your eyes do not. So the defense is procedural instead of visual.
+You cannot win this by squinting harder. The fakes improve every year and your eyes have not had an upgrade since you were born. So the defense has to be a habit rather than a skill.
 
 **Verify through a different channel.** A call from a panicked family member asking for money gets hung up on and called back on the number you already have. A message from a friend asking for a code gets a text to that friend. A news claim gets checked against a second source you went and found yourself.
 
@@ -260,7 +260,7 @@ This one habit covers voice cloning, deepfake video, hacked accounts, and every 
 
 ---
 
-### Step 3: Learn what a secret is
+### Step 3: What actually counts as a secret
 
 A **secret** is any value that proves who you are to a computer. A password. An **API key**. A Wi-Fi password. A database login. A token an app uses to talk to a service.
 
@@ -275,7 +275,7 @@ response = ask_the_ai(api_key, "explain recursion")
 
 That key is now inside your code. Every place the code goes, the key goes. You post the project to GitHub, the key is public. You share the folder with a partner, they have your key. You submit a screenshot to Schoology, the key is in the picture. Bots scan public code for keys around the clock and start spending on them within minutes.
 
-Putting a key in your code is like taping your house key to your front door and then handing out photos of your door.
+Putting a key in your code is like taping your house key to your front door, then posting a photo of your door, then being surprised.
 
 **The rule: the code goes in the file you share. The secret goes in a file you never share.**
 
@@ -423,31 +423,31 @@ Upload the following to **Schoology**:
 
 | Term | What It Means |
 |---|---|
-| **Passphrase** | A password built from several unrelated words, long enough that guessing it is hopeless |
+| **Passphrase** | Several unrelated words stuck together, long enough that guessing it is hopeless and short enough that you remember it |
 | **Two-Factor Authentication** | Needing two different proofs to log in, usually a password plus a code on your phone |
 | **Phishing** | Pretending to be someone trustworthy to trick you into handing over information |
-| **Social Engineering** | Attacking the person instead of the computer |
-| **SIM Swap** | Taking over someone's phone number so every code sent to it arrives at the attacker instead |
+| **Social Engineering** | Attacking the person instead of the computer, because the person is easier |
+| **SIM Swap** | Stealing someone's phone number so that every security code sent to it lands on the attacker's phone |
 | **Data Breach** | A company's stored logins getting stolen |
 | **Deepfake** | Video or audio of a real person, generated by AI, showing something that never happened |
 | **Secret** | Any value that proves identity to a computer: a password, an API key, a token |
 | **API Key** | A string that identifies your account to an outside service, usually attached to money or private data |
 | **.env file** | A file holding secrets, kept next to your code and never shared |
 | **.gitignore** | A list of files Git refuses to upload, which is what keeps `.env` off the internet |
-| **Brute Force** | Trying every possible combination until one works |
+| **Brute Force** | Trying every possible combination until one works, which is fast when your password is short and hopeless when it is long |
 
 ---
 
 ## 💡 Troubleshooting
 
 **"My school account will not let me turn on two-factor."**
-→ It is probably managed by the school and locked. Use a personal account instead. Any account you control counts for this assignment.
+→ It is school managed and locked down, which is IT doing its job. Use a personal account instead. Anything you actually control counts.
 
 **"I do not want to screenshot my real account."**
 → Blur everything except the confirmation that two-factor is on. That is all that is being checked.
 
 **"The checker says my passphrase is weak."**
-→ Your words are probably related to each other or to you. Swap in words that have nothing to do with each other or with your life.
+→ Your words are related to each other, or to you, or to something on your desk right now. The meter can tell. Pick words that have no business being in the same sentence.
 
 **"`pip install python-dotenv` says pip is not found."**
 → Try `pip3 install python-dotenv`, or `python3 -m pip install python-dotenv`.
@@ -459,7 +459,7 @@ Upload the following to **Schoology**:
 → Files starting with a dot are hidden. On Mac press `Cmd + Shift + .` in Finder. On Windows turn on hidden items in the View tab.
 
 **"I do not have anything worth stealing."**
-→ Your accounts are worth money to someone who resells them, and your identity is worth more. Your phone number alone can be used to reset logins you have forgotten you own.
+→ Your accounts sell in bulk, and your identity is worth more than your accounts. Your phone number by itself can reset logins you have completely forgotten you own. You are not the target. You are inventory, and inventory is easier.
 
 <!-- ===========================================================================
 BEFORE YOU CALL IT DONE

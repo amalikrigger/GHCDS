@@ -56,11 +56,11 @@ AFTER TEACHING IT (fill in, this is the most valuable part)
 
 # 🔍 Research and AI
 
-### Find real answers, catch the fake ones, and use AI without letting it think for you
+### Find the real answer, catch the confident fake, and use AI without handing it your brain
 
 > **Grades:** 7th to 12th &nbsp;|&nbsp; **Time:** 2 class periods &nbsp;|&nbsp; **Difficulty:** Beginner
 >
-> The internet holds the answer to almost anything you will ever need to know. It also holds a confident, well written, completely wrong answer to the same question. Over two days you will learn to search like someone who knows what they are doing, check whether a source deserves your trust, and use AI as a tool that makes you smarter instead of one that does your thinking and leaves you unable to explain your own work.
+> The internet has the answer to almost anything you will ever need to know. It also has a confident, beautifully written, completely wrong answer to the same question, usually higher up the page. Over two days you will learn to search like someone who knows what they are doing, work out whether a source has earned your trust, and use AI in the way that makes you sharper instead of the way that leaves you standing in front of a class unable to explain your own work.
 
 ---
 
@@ -90,13 +90,13 @@ AFTER TEACHING IT (fill in, this is the most valuable part)
 
 ### Step 1: Stop typing questions
 
-Most people type a whole sentence into the search bar.
+Most people type the entire question into the search bar, politely, as though the search engine might be offended otherwise.
 
 ```
 What is the best programming language to learn to get a job in 2026?
 ```
 
-That works, and it is slow. Search engines throw away most of those words anyway. Here are five operators that do the actual work.
+That works, and it is slow, and the search engine throws away most of those words before it does anything. Here are five operators that do the real work.
 
 | Operator | What you type | What it does |
 |---|---|---|
@@ -142,7 +142,7 @@ Four moves, in order, before you believe anything.
 | **F** | Find better coverage | Search the same claim. Does anyone credible say it too. |
 | **T** | Trace to the original | Articles cite studies. Go read the study. Summaries get it wrong constantly. |
 
-**T** is the one people skip and it is where the errors hide. An article says "a study found teenagers who code earn more." You trace it, and the study surveyed 200 adults in one city. The claim was not wrong exactly, it was just much smaller than the headline made it sound.
+**T** is the one everybody skips, and it is where the errors are hiding. An article says "a study found teenagers who code earn more." You trace it back and the study surveyed 200 adults in one city. Nobody technically lied. The claim just quietly grew on its way to the headline.
 
 **Red flags that should slow you down**
 
@@ -205,7 +205,7 @@ Age rules are real and they are not the same across tools. Checked 9 September 2
 
 ---
 
-### Step 2: Know where the line is
+### Step 2: Where the line actually is
 
 Same assignment, two ways of using the same tool.
 
@@ -213,7 +213,7 @@ Same assignment, two ways of using the same tool.
 ```
 Write my essay about the American Revolution.
 ```
-You learned nothing, you submitted work that is not yours, and you cannot answer a single follow up question about it.
+You learned nothing, you handed in work that is not yours, and you cannot survive one follow up question. Mr. Krigger asks follow up questions.
 
 **This is learning:**
 ```
@@ -261,7 +261,7 @@ Walk me through setting up a Raspberry Pi web server. For every step,
 explain why the step is there.
 ```
 
-That last pattern is the highest value one in the list. Instructions you can follow without understanding teach you nothing you can reuse.
+That last pattern is worth more than the other four combined. Instructions you can follow without understanding are instructions you will need again next week, and the week after.
 
 > **✅ Checkpoint:** Two of these patterns run on something real, and you understand something you did not understand at the start of the period.
 
@@ -269,15 +269,15 @@ That last pattern is the highest value one in the list. Instructions you can fol
 
 ### 🧠 Mini Lesson: why a confident answer can still be invented
 
-An AI does not look things up and report back. It predicts what text should come next, one piece at a time, based on patterns in an enormous amount of writing it was trained on.
+An AI is not looking anything up. It is predicting what text should come next, one piece at a time, from patterns in an enormous pile of writing it was trained on. It is an extremely well read autocomplete.
 
-That is why it writes so well and why it can be so wrong. Fluent writing and true writing are produced by the same machinery, so it has no internal signal telling it which one it just did. When it does not know something, it does not stop. It produces the most plausible looking text, which is exactly what a correct answer would also look like.
+That is why it writes so well and why it can be so wrong. Sounding right and being right come out of the same machinery, so nothing inside it flags which one just happened. When it does not know something it does not stop, or hesitate, or go quiet. It produces the most plausible looking text available, which is unfortunately what a correct answer also looks like.
 
 This is called a **hallucination**. It will cite studies that were never published, quote people who never said it, and give you a street address for a business that does not exist, all in the same confident tone it uses for things that are true.
 
 Three other limits worth knowing. It has a **knowledge cutoff**, a date its training stopped, so it can be confidently out of date on prices, versions, and current events. It reflects the **bias** in what it was trained on. And if you let it answer everything for you, your own ability quietly stops developing, which is the slowest and most expensive problem on this list.
 
-The fix for all four is the same and you already learned it yesterday. Trace it to the original.
+The fix for all four is the same, and you learned it yesterday. Trace it back to the original.
 
 ---
 
@@ -376,12 +376,12 @@ Upload the following to **Schoology**:
 | **SIFT** | Stop, Investigate, Find better coverage, Trace to the original |
 | **Primary Source** | The original: the study itself, the official data, the person who was there |
 | **Secondary Source** | Somebody's account of a primary source, like a news article about a study |
-| **Hallucination** | AI stating something false in the same confident tone it uses for true things |
-| **Knowledge Cutoff** | The date an AI's training data stops, after which it does not know what happened |
+| **Hallucination** | AI stating something false in exactly the tone it uses for things that are true |
+| **Knowledge Cutoff** | The date an AI's training stopped. Anything after it, the model is guessing with total confidence. |
 | **Bias** | A slant an AI inherits from the writing it was trained on |
 | **Prompt** | What you type to an AI tool |
-| **Content Farm** | A site that publishes low effort articles to collect ad clicks |
-| **Paywall** | A page that requires payment to read, which is a real research obstacle and not a reason to use a worse source |
+| **Content Farm** | A site that exists to collect ad clicks, with articles as the packaging |
+| **Paywall** | A page you have to pay to read. A genuine obstacle, and still not a reason to fall back on a worse source |
 
 ---
 
@@ -391,19 +391,19 @@ Upload the following to **Schoology**:
 → Check the domain is spelled exactly right and drop the `https://` and `www.`. It should read `site:nhc.noaa.gov`, with no space after the colon.
 
 **"I cannot find the Virgin Islands salary number."**
-→ Good. That is the real answer for a lot of territory specific data. Write down where you looked and say you could not find it.
+→ Good. That is the honest answer for a lot of territory specific data, and finding out that something is not published is a real result. Write down where you looked.
 
 **"The AI gave me a source but the link is dead."**
-→ Write that down, it is exactly what the assignment is looking for. Then search the title separately to see whether the source ever existed.
+→ Write it down immediately, because that is exactly what this assignment is hunting for. Then search the title on its own and find out whether the source ever existed at all.
 
 **"I am under 18, so what do I use?"**
-→ Microsoft Copilot. The school supplies it and the minimum age is 13. Ask Mr. Krigger if you cannot get into it.
+→ Microsoft Copilot. The school pays for it and the minimum age is 13. If you cannot get in, come find Mr. Krigger rather than quietly borrowing someone's account.
 
 **"The article I need is behind a paywall."**
 → Check whether your library gives you access, look for the original study the article is describing, or note the paywall and use a different source. Do not pay for anything for this class.
 
 **"Everything the AI told me checked out."**
-→ Then say so and show your checking. Being unable to find a mistake is a legitimate result, as long as you actually looked.
+→ Then say so, and show your working. Failing to find a mistake is a real result when you genuinely looked for one. It is not a real result when you did not.
 
 <!-- ===========================================================================
 BEFORE YOU CALL IT DONE
