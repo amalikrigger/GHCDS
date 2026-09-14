@@ -31,8 +31,9 @@ IF THEY NEED MORE TIME : proposal can go home and come back before the due date,
 ASSESSMENT
 - Category  : Informal Assessments
 - Points    : 10
-- Schoology : Returning students due Fri 18 Sep 2026, 11:59pm. Everyone else due Fri 23 Oct 2026,
-              11:59pm (end of Block 2, when track work opens). Section(s): both
+- Schoology : Returning students due at their next class: MS Computer due Tue 22 Sep 2026,
+              11:59pm; Comp Sci/Robotics (HS) due Wed 23 Sep 2026, 11:59pm. Everyone else due
+              Fri 23 Oct 2026, 11:59pm (end of Block 2, when track work opens). Section(s): both
 
 AFTER TEACHING IT (fill in, this is the most valuable part)
 - What ran long  :
