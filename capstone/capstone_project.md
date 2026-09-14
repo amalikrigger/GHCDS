@@ -1,194 +1,177 @@
-# 🚀 Capstone Project: Build Something Real
+<!-- ===========================================================================
+TEACHER PLANNING BLOCK. Delete nothing, this never renders on the site.
 
-### Combine everything you've learned into one final project
+UNIT / FOLDER   : capstone
+FILE NAME       : capstone_project.md
+PERIODS         : Blocks 3 and 4 (roughly Oct 26 - Nov 24), longer for returning students who start Sep 21
+FIRST TAUGHT    : T1 2026-27
 
-> **Grades:** 7th–12th &nbsp;|&nbsp; **Time:** 2-4 weeks &nbsp;|&nbsp; **Difficulty:** Varies (you choose)
+PREP THE DAY BEFORE
+- [ ] Hardware charged / counted: whatever the day's tracks need, varies by student
+- [ ] Accounts or logins students need: none new beyond what each track already requires
+- [ ] Software already on lab machines: whatever each track requires
+- [ ] Printed or posted in the room: none
+- [ ] Test the whole build myself end to end: not applicable, this is open build time
+
+TIMING
+This isn't a single-period lesson. It's the open build block. Circulate, hold short check-ins,
+and use the safety rules below any time a student is on the RoboMaster, laser cutter, or a printer.
+
+WHERE STUDENTS GET STUCK
+- Project drifts from the proposal -> fine, as long as it's explained in the written document.
+  The problem is silence, not the change.
+- Finished early -> move into their Should-have list, that's what it's for.
+- Nothing to show yet -> photograph the process, a messy workbench mid-build still counts as evidence.
+
+IF THEY FINISH EARLY   : Should-have features from their own proposal
+IF THEY NEED MORE TIME : that's what the Won't-have list already protects against. Revisit it.
+
+ASSESSMENT
+- Category  : Formal Assessments
+- Points    : 100
+- Schoology : Due Fri 20 Nov 2026, 11:59pm, both sections. Showcase week of Mon 16 Nov.
+              Returning students may start Sep 21; new students start when their track project opens.
+              Section(s): both
+
+AFTER TEACHING IT (fill in, this is the most valuable part)
+- What ran long  :
+- What flopped   :
+- Change next time:
+=========================================================================== -->
+
+# 🚀 Capstone: Build Something Real
+
+### The project you proposed. Now you build it, in public.
+
+> **Grades:** 7th–12th &nbsp;|&nbsp; **Time:** The rest of the trimester &nbsp;|&nbsp; **Difficulty:** Varies, it's your project
 >
-> This is your chance to take what you've learned all year — web development, Python, Raspberry Pi, robotics, 3D printing, app development — and combine them into something that's yours. Something you're proud of. Something that works.
+> This is what everything else this trimester built toward. You picked a track, wrote a proposal, and got it approved. Now you build it for real, and you show it at the trimester showcase where people who aren't Mr. Krigger get to see it. If your build drifts from your proposal along the way, that's normal, just say what changed and why in your written document.
 
 ---
 
-## 🎯 The Goal
+## 🎯 What You'll Learn
 
-Design and build **one project** that uses **at least three different skills** from this class. Then present it with a demo video and a slide deck.
+- Whatever your track teaches at real depth: robot programming, fabrication and design, software development, or content production
+- How to run a project against a deadline you set yourself, and adjust when reality disagrees with your plan
 
-That's it. The rest is up to you.
+## 🧰 What You Need
+
+- Your approved proposal
+- Your track's certification and the tools that come with it
+- Any materials you flagged in your proposal, gathered and ready
+
+<!-- Safety block: capstone can touch the RoboMaster, laser cutter, or 3D printers, keep this. -->
+
+## ⚠️ Safety Rules: If Your Project Uses the Machines
+
+These are non-negotiable. Breaking them on purpose means you lose access to the tool.
+
+1. **Eye protection near the blaster field.**
+2. **Never fire at a person's face.**
+3. **Nothing cutting or printing unattended.**
+4. **Batteries charged at the station.**
+5. **Report damage, a burn smell, or an injury right away.** You will not be in trouble for reporting something.
 
 ---
 
-## 🧰 Skills You Can Combine
+## The Goal
 
-Your project must integrate **at least 3** of these:
+Build the project from your approved proposal. Combine two or more skills from class, or push one skill somewhere genuinely hard.
 
-| Skill | Examples |
+If your project changes along the way, that's fine. Say what changed and why in your written document. Silently shipping something different from what you proposed is the one thing that actually costs you points here, not the changing itself.
+
+## 🎚️ Base and Stretch
+
+**Base · everyone.**
+A working project that does what your proposal said, or an explained change. Two or more skills integrated, or one taken deep. The written explanation document. Project files, photos, or build evidence in one place. Shown at the trimester showcase.
+
+**Stretch · required for high school, bonus for middle school.**
+Push past your Must-have into a Should-have feature from your proposal, or take your project to a more finished, public-facing version.
+
+> **Returning students:** your Stretch tier isn't optional. You're building at a higher bar, either a real step up from a strong previous capstone or a new build that pushes into unfamiliar territory.
+
+## The Written Document
+
+One page, not a slide deck. This is how you show you actually understand what you built, and it's what you'll be asked about if someone stops by your table at the showcase.
+
+| Section | What goes there |
 |---|---|
-| **Raspberry Pi** | Sensors, GPIO, web servers, automation, camera |
-| **Python** | Scripts, APIs, automation, data processing, drone/robot control |
-| **Web Development** | HTML, CSS, JavaScript, Flask |
-| **Mobile / UI Apps** | Flutter, Dart, frontend work |
-| **Robotics / Drones** | RoboMaster, Tello, coded movement |
-| **3D Printing / Design** | Tinkercad, custom models, printed enclosures |
-| **AI Integration** | Chatbots, Gemini API, system instructions |
-| **Documentation** | PowerPoint/Canva presentations, diagrams, guides |
-| **Version Control** | GitHub repo with README |
+| What it does | Two or three sentences |
+| How it works | The actual mechanism, what talks to what |
+| Skills used | Which ones, and if it's one skill pushed deep, what made it hard |
+| Problems you hit | At least one real one, and what actually fixed it |
+| What you'd add with more time | Be honest, not aspirational |
 
-> **Example combinations:**
-> - Pi + Python + Web Dev = A weather dashboard that reads a temperature sensor and displays it on a live webpage
-> - 3D Printing + Pi + Python = A custom-printed case for a Pi that runs an automated plant watering system
-> - Flutter + AI + Web Dev = A mobile app that uses Gemini to generate study guides from photos of notes
-> - Robotics + Python + 3D Printing = A custom mount for the RoboMaster camera, programmed to follow a path and record video
+## The Showcase
+
+Finished work from every track, shown in public, week of Nov 16. Bring your project and be ready to run it for someone who's never seen it before.
+
+Since your work gets published on the site, bring at least one photo or a short clip of it actually working. Not a produced video, just evidence.
 
 ---
 
-## 🤝 Can I Combine This with the Custom Website Project?
+## 📝 Deliverables
 
-**Yes** — if your idea is ambitious enough. If you propose a capstone that includes hosting a custom website on your Pi, you can submit it for both assignments. Talk to your teacher first to get approval.
-
----
-
-## 💡 Need Inspiration?
-
-### See What Your Classmates Built
-Check out [thinkinbits.site/projects](https://www.thinkinbits.site/projects.html) — students have built Chess, Tetris, Snake, Candy Crush, Flappy Bird, Solitaire, Blackjack, a sushi personality quiz, and more. Your capstone should be at least as ambitious as these, ideally combining hardware or multiple technologies.
-
-### Raspberry Pi Ideas
-- [Raspberry Pi Tutorials](https://www.raspberrypi.com/tutorials/)
-- [Raspberry Pi Projects](https://projects.raspberrypi.org/en)
-- [Pi My Life Up](https://pimylifeup.com/category/projects/)
-- [Super Slim Smart Mirror](https://www.raspberrypi.com/tutorials/how-to-build-a-super-slim-smart-mirror/)
-
-### Maker / Hardware Ideas
-- [Instructables](https://www.instructables.com/) — DIY projects with step-by-step guides
-- [DIY Hydroponics with Pi](https://www.instructables.com/DIY-Hydroponics-With-Raspberry-Pi/)
-- [Automatic Plant Watering System](https://www.instructables.com/Automatic-Plant-Watering-System-Using-a-Microbit/)
-- [3D Printed LED Mood Lamp](https://www.instructables.com/3D-Printed-LED-Mood-Lamp/)
-- [Tinkercad Projects](https://www.tinkercad.com/projects)
-
-### Robotics
-- [VEX Robotics](https://www.vexrobotics.com/)
-- [DJITelloPy GitHub](https://github.com/damiafuentes/DJITelloPy)
-
-### Video Inspiration
-- [Raspberry Pi Project Showcase](https://www.youtube.com/watch?v=cXfX1yYbAno)
-- [Creative Tech Ideas](https://www.youtube.com/watch?v=0S6IHp83zws)
-- [ForgeCoreCo Channel](https://www.youtube.com/@ForgeCoreCo)
-
----
-
-## 📄 Capstone Proposal
-
-Before you start building, you need to submit a **project proposal** for approval. Use the template below to outline your idea, the skills you'll integrate, and your plan.
-
-📥 **[Capstone Proposal Template (Google Doc)](https://docs.google.com/document/d/1F9wF1Yv46TU7EEFWq7X4HmodsxqZIj9PUfmu4n2sRGU/edit?usp=sharing)** — Make a copy and fill it out.
-
-> A downloadable version is also available in this folder: [capstone_proposal_template.docx](capstone_proposal_template.docx)
-
----
-
-## 📝 What You'll Submit
-
-### 1. Demo Video (2-5 minutes)
-
-Record a video showing your project in action. Include:
-- What it does and why you built it
-- A live demo showing it working
-- The key features
-- Any problems you solved along the way
-
-> **Tip:** Use your phone to record. Keep it under 5 minutes — be clear and focused.
-
-### 2. Presentation (PowerPoint, Google Slides, or Canva)
-
-Your slides must include:
-
-| Slide | Content |
-|---|---|
-| **Title** | Project name and your name |
-| **What It Does** | One-sentence summary, then a brief explanation |
-| **How It Works** | Diagram or flow showing the pieces and how they connect |
-| **Skills Used** | Which 3+ skills from the class you integrated |
-| **Build Process** | Key steps you took to build it (with photos/screenshots) |
-| **Problems & Solutions** | Issues you ran into and how you solved them |
-| **Future Improvements** | What you'd add with more time |
-| **Credits** | Tutorials, libraries, or resources you used |
-
-> **Make it look good.** This is your final presentation — put effort into the design. Use screenshots, photos, and diagrams. No walls of text.
-
-### 3. Project Files & Code
-
-Submit either:
-- A **GitHub repository** with a README explaining how to set up and run your project
-- OR a **ZIP file** with organized folders and a README.md
-
-Your code should be:
-- **Commented** — explain what key sections do
-- **Organized** — files in logical folders
-- **Runnable** — someone should be able to follow your README and get it working
-
----
+1. **The working project**: photos, a short clip, or files, whatever fits your track
+2. **The written explanation document**: as a PDF or DOCX
+3. **Whatever your track produces**: a code repository, the physical object, a published piece
 
 ## 📤 How to Submit
 
 Upload the following to **Schoology**:
 
-| # | What to Screenshot / Submit |
+| # | What to Submit |
 |---|---|
-| 1 | Demo video of your project working (screen recording or filmed) |
-| 2 | Your presentation file (PowerPoint/Google Slides/Canva link) |
-| 3 | Project files — GitHub repository link OR ZIP file with organized code and README |
-| 4 | Screenshot(s) of your project running / working |
-| 5 | Screenshots of your build process (key steps, terminal output, etc.) |
+| 1 | Photos or a short clip of your project working |
+| 2 | The written explanation document (PDF or DOCX) |
+| 3 | Your track's output: code repo link, ZIP of files, or the published piece |
 
 **How to upload:**
 
 1. Go to the assignment in Schoology
 2. Click **Submit Assignment**
-3. Click **"Upload"** — do **NOT** click "Create" (Create is for text only and won't let you attach files)
+3. Click **"Upload"**. Do **NOT** click "Create"
 4. Select your files and click **Submit**
 
-> **Need help taking screenshots?** See the [How to Take & Submit Screenshots](../fundamentals/how_to_screenshot.md) guide.
-
----
-
-## �📋 Grading Rubric (100 points)
+## 📋 Grading Rubric (100 points)
 
 | Category | Points | What I'm Looking For |
 |---|---|---|
-| Functionality & Completeness | 25 | Does the project work? Does it do what you said it would? |
-| Integration of Skills | 20 | Uses 3+ different skills/domains from this class |
-| Presentation & Documentation | 15 | Slides are clear, well-designed, and tell the story of your project |
-| Problem Solving & Debugging | 15 | Shows you hit real problems and worked through them |
-| Creativity & Ambition | 10 | Original idea, extra effort, went beyond the minimum |
-| Code & Structure | 10 | Organized, commented, includes a README |
-| Demo Video | 5 | Project shown clearly, features demonstrated |
+| It works | 35 | Runs, does what your proposal said |
+| Skills integration | 25 | 2+ skills genuinely combined, or 1 pushed to real depth |
+| Explains it (written document) | 25 | Complete and accurate, and you can answer questions about it cold |
+| Creativity & ambition | 15 | Original idea, real effort, went beyond the minimum |
 
-**Extra credit (up to +5 points):** Exceptional ambition, polish, or integration of 5+ skill areas.
+Same rubric as the proposal folder resource in Schoology, always visible there.
 
----
+## 🧠 Vocabulary to Know
 
-## 💪 Tips for Success
-
-- **Start with a plan.** Write down what you want to build before you start coding. What skills will you use? What's the MVP (minimum viable product) — the simplest version that works?
-- **Build the MVP first.** Get the basic version working before adding extra features. A simple project that works is better than an ambitious project that doesn't.
-- **Document as you go.** Take screenshots and notes while building — don't try to remember everything at the end.
-- **Ask for help early.** If you're stuck for more than 20 minutes, ask. Don't waste days on something your teacher can help you solve in 5 minutes.
-- **Look at what others built.** Check [thinkinbits.site/projects](https://www.thinkinbits.site/projects.html) and the inspiration links above. You don't need to reinvent the wheel — you can build on existing ideas.
-
----
-
-## 🗓️ Suggested Timeline
-
-| Week | What to Do |
+| Term | What It Means |
 |---|---|
-| **Week 1** | Pick your idea, get it approved, plan your approach, start building |
-| **Week 2** | Build the core functionality (MVP), test it, debug |
-| **Week 3** | Add features, polish the design, start your slides |
-| **Week 4** | Record demo video, finalize slides, clean up code, submit |
+| **Iteration** | Building a rough version, then improving it, rather than trying to get it perfect the first time |
+| **Scope creep** | A project quietly growing past what was originally planned, usually one small addition at a time |
+| **Integration** | Making two or more skills genuinely work together, not just sitting next to each other |
 
-> **Don't wait until the last week to start building.** The students who do best on this project start early and iterate.
+## 💡 Troubleshooting
 
----
+**"My project isn't working like my proposal said."**
+→ Tell Mr. Krigger early, not the week of the showcase. Explaining a change on time is normal. Explaining it for the first time in your written document is not.
 
-**This is your final project. Make it count. Build something you're proud to show off.**
+**"I finished early."**
+→ Move into your Should-have list. That's exactly what it's there for.
 
-**I'm here to help — don't hesitate to ask. Good luck!**
+**"I'm stuck and it's been more than 20 minutes."**
+→ Ask. Don't spend three days on something that's a five minute conversation.
+
+**"I don't have anything to photograph or record yet."**
+→ Photograph the process, not just the finished thing. A messy workbench mid-build is still evidence your project is real.
+
+<!-- ===========================================================================
+BEFORE YOU CALL IT DONE
+- [ ] Every command and version checked against the live source today
+- [ ] No API keys, passwords, or Wi-Fi credentials anywhere in the file
+- [ ] Safety block present, this lesson touches hardware
+- [ ] Base tier is readable by a 7th grader
+- [ ] Every placeholder replaced
+- [ ] Site version stands alone: points and Schoology steps live here and in Schoology, not on the site
+=========================================================================== -->
