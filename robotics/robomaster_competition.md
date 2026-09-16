@@ -93,15 +93,14 @@ Two separate things, and they stay separate on purpose.
 
 **You build one game.** Your crew designs, builds, and owns exactly one event in the competition. It might use a program. It might not. A game like Capture the Flag or Robot Soccer does not need one, and forcing code into a game that does not want it just makes the game worse. Build the game that is actually good.
 
-**You enter other games too**, including a set of autonomous events that run all term no matter what anyone designs:
+**You enter other games too.** Between all the games your classmates design, there will be plenty of autonomous ones to enter. Two are guaranteed no matter what anyone builds, because they are already the class you took to get here:
 
 | Event | What it is |
 |---|---|
 | **Precision Return** | Loop the room, stop on the mark, autonomous |
-| **Line Sprint** | Fastest clean run along a taped line, autonomous |
 | **Figure 8 Grand Prix, auto division** | The Navigate the Room figure 8, timed, autonomous |
 
-**Every crew must enter at least one of these three**, hands off, with a working program. That is where the coding requirement actually lives. It is why the Programmer role always has a real job, even on a crew whose own game has no code in it, and why every student always has somewhere to ship code.
+**Every crew must enter at least one autonomous event, hands off, with a working program.** It can be one of these two, a game another crew designed that happens to have an autonomous part, or one your crew proposes yourselves on top of your own game. These two exist as a floor, not a menu, so the requirement is always possible to meet even in the unlikely case that nobody's own game uses code. That is where the coding requirement actually lives. It is why the Programmer role always has a real job, even on a crew whose own game has no code in it, and why every student always has somewhere to ship code.
 
 ---
 
