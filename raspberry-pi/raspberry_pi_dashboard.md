@@ -1,113 +1,163 @@
-# 🖥️ Raspberry Pi Health Dashboard
+<!-- ===========================================================================
+TEACHER PLANNING BLOCK — delete nothing, this never renders on the site.
 
-### Build a live system monitor from scratch — then make it look amazing
+UNIT / FOLDER   : raspberry-pi
+FILE NAME       : raspberry_pi_dashboard.md
+PERIODS         : 3
+FIRST TAUGHT    : T1 2026
+REWRITTEN       : 2026-09-16, to the LESSON_TEMPLATE standard. Replaces the
+                  4-day April 2026 version. See knowledge/decisions.md for the
+                  full review of what was wrong with it.
 
-> **Grades:** 7th–12th &nbsp;|&nbsp; **Time:** 4 class periods &nbsp;|&nbsp; **Difficulty:** Beginner
+WHAT CHANGED FROM THE OLD VERSION, AND WHY
+- SD card flashing is gone. The lab Pis are already imaged with monitor
+  stations, so Day 1 starts with code instead of a 15-minute apt upgrade.
+- The Wi-Fi configuration step is gone. It edited
+  /etc/wpa_supplicant/wpa_supplicant.conf, which Raspberry Pi OS stopped using
+  in Bookworm. The Pis already join GHCDS.
+- No default pi/raspberry login anywhere. Students run whoami. Every path uses
+  ~ instead of /home/pi.
+- The HTML lives in its own file from minute one instead of inside a Python
+  triple-quoted string. That kills the old Day 3 "select 300 lines in Thonny
+  and delete them" maneuver, and it is the same mental model the custom
+  website assignment needs.
+- Day 3's upgrade is delete-and-retype the HTML file. No selection surgery.
+- Deliverables are files plus two screenshots plus a reflection, not eight
+  screenshots.
+- Base and Stretch added. The Stretch is a new stat wired end to end.
+
+PREP THE DAY BEFORE
+- [ ] Pis counted and powered at monitor stations: ____ of ____
+- [ ] CONFIRM ON ONE PI, then fix this file if it differs:
+        whoami                      -> username is: ____________
+        cat /etc/os-release         -> OS is: ____________
+        source ~/pihealth/bin/activate ; python3 -c "import flask, psutil"
+        (if that errors, the Step 2 fallback in Day 1 is the path students take)
+- [ ] Accounts or logins students need: none
+- [ ] Software already on lab machines: a terminal with ssh (Day 2 only)
+- [ ] Posted in the room: the Pi IP sticky-note rule, and the Ctrl+C rule
+- [ ] Test the whole build myself end to end: ____________
+
+TIMING FOR DAY 1
+- 5 min   Hook. Load the finished dashboard on the projector from my own Pi.
+- 8 min   Together: whoami, hostname -I, activate the venv
+- 12 min  Students build the 6-line hello server and load it. Everyone gets a
+          win inside the first 20 minutes.
+- 8 min   Mini lesson: request and response
+- 20 min  Students build the real server.py and index.html, see live numbers
+- 5 min   Screenshot, clean up
+
+WHERE STUDENTS GET STUCK
+- Forgot the venv -> "ModuleNotFoundError: flask". Say: look at your prompt.
+  Does it start with (pihealth)?
+- Second terminal, server already running -> "Address already in use". Say:
+  find the other window, Ctrl+C.
+- Typed the IP from someone else's sticky note -> loads a classmate's page.
+  This is funny once and then it is a debugging lesson about IP addresses.
+- Saved index.html into ~/pi-dashboard instead of ~/pi-dashboard/static ->
+  404. Say: run ls static.
+- Temperature shows -- on some models. Not a bug. Say so before they ask.
+
+IF THEY FINISH EARLY   : Day 3 challenges 1 through 4, then the Stretch.
+IF THEY NEED MORE TIME : Day 2 SSH is the cut. The dashboard still loads from a
+                         phone without it, which is the part that matters.
+
+ASSESSMENT
+- Category  : Formal Assessments
+- Points    : 25
+- Schoology : due date ____________   Sections: both (MS 01YR and Comp Sci 01T1)
+- Exit ticket quiz is a separate Schoology item: raspberry_pi_dashboard_quiz.md
+
+AFTER TEACHING IT (fill in, this is the most valuable part)
+- What ran long  :
+- What flopped   :
+- Change next time:
+=========================================================================== -->
+
+# 🖥️ Raspberry Pi Web Server
+
+### Turn a computer the size of a deck of cards into a live website
+
+> **Grades:** 7th–12th &nbsp;|&nbsp; **Time:** 3 class periods &nbsp;|&nbsp; **Difficulty:** Beginner
 >
-> By the end of this project, you'll have a Raspberry Pi running a website that shows its CPU, memory, disk, and temperature — live — with a professional-looking dashboard you built yourself. Other devices on your network can visit it too.
+> Right now the Raspberry Pi in front of you is just a small computer. By the end of today it will be a **server**: it will have a web address, and anyone on the school network can type that address into their phone and see a page you built. By the end of the week that page will be showing the Pi's own CPU, memory, disk and temperature, updating live, and it will look good.
 
 ---
 
 ## 🎯 What You'll Learn
 
-- How to set up a Raspberry Pi from scratch
-- What a **web server** is and how to run one
-- Basics of **Python**, **HTML**, **CSS**, and **JavaScript**
-- How to connect to your Pi remotely using **SSH**
-- How to read system stats with code
-
----
-
-## 💡 Why Should You Care?
-
-Every app on your phone, every website you visit, every online game you play — they all run on **servers**. Netflix has servers. Instagram has servers. Even your school's Wi-Fi has a server managing it.
-
-In this project, **you're building your own server.** Your Raspberry Pi will run a live website that anyone on your network can visit — just like a real website, except you built it and you control it.
-
-This isn't just a school project. These are the same skills used by:
-- **Software engineers** at companies like Google, Apple, and Netflix
-- **Cybersecurity analysts** who monitor systems for threats
-- **IT professionals** who keep networks and servers running
-- **Game developers** who run multiplayer game servers
-
-Even if you're not planning a career in tech, understanding how the internet actually works gives you a huge advantage in almost any field.
+- What a **web server** actually is, and how to run one in six lines of code
+- How a page asks a server for data using an **API**, and gets **JSON** back
+- How to reach one computer from another using **SSH**
+- How HTML, CSS and JavaScript split the work of a web page between them
+- How to change something on the server and watch it appear in the browser
 
 ---
 
 ## 🧰 What You Need
 
-- [Raspberry Pi](https://www.raspberrypi.com/) (any modern model) + microSD card (16 GB or bigger)
-- Power supply + HDMI cable + monitor + keyboard + mouse
-- Wi-Fi or Ethernet connection
-- Another device on the same network (laptop, phone, or Chromebook) — optional but fun
+- A Raspberry Pi at a monitor station, already set up and connected to GHCDS
+- A phone, laptop or Chromebook on the same network, for Day 2
+- A second computer in the lab with a terminal, for the SSH step on Day 2
+- No accounts. No downloads. Nothing to sign up for.
 
 ---
 
-# Day 1: Set Up Your Pi + Run Your First Server
+## ⚠️ Before You Touch the Pi
 
-**Goal:** Go from a blank SD card to a working web page on your Pi.
-
----
-
-### Step 1 — Flash the Operating System
-
-The Raspberry Pi is a tiny computer, but it has no operating system out of the box. We need to install one.
-
-1. On any computer, download and install **[Raspberry Pi Imager](https://www.raspberrypi.com/software/)**
-2. Plug your microSD card into that computer
-3. Open Raspberry Pi Imager
-4. Click **Choose OS** → pick **Raspberry Pi OS (64-bit)**
-5. Click **Choose Storage** → pick your microSD card
-6. *(Optional)* Click the **gear ⚙️** icon to pre-set your Wi-Fi name and password
-7. Click **Write** and wait for it to finish
-8. Put the microSD card into your Pi, plug in the monitor/keyboard/mouse, and power it on
-9. Follow the on-screen setup wizard (language, Wi-Fi, etc.)
-
-> 📖 **Need more help?** See the official [Raspberry Pi Getting Started Guide](https://www.raspberrypi.com/documentation/computers/getting-started.html)
-
-> **✅ Checkpoint:** You should see the Raspberry Pi desktop on your monitor.
+1. **Power comes out last.** Shut the Pi down from the menu before unplugging it. Yanking the power while it is writing to the SD card is the one reliable way to destroy your work.
+2. **The SD card stays in.** It is the Pi's whole hard drive. Do not pop it out to see what happens.
+3. **Nothing goes on the SD card slot, the pins, or the ports except what belongs there.** The exposed pins along the edge are live.
+4. **Never type a password into a file.** Not your Pi password, not the Wi-Fi password, not anything. You will be asked for a password in the terminal on Day 2. That is the only place it goes.
+5. **If something goes wrong**, stop and tell Mr. Krigger. A Pi that will not boot is a ten-second fix if you say so and a lost week if you do not.
 
 ---
 
-### Step 2 — Update Your Pi
+# Day 1: Make Your Pi a Server
 
-Updates keep your Pi secure and make sure everything works.
+**Goal:** At the start of today your Pi is a computer. At the end of today it is a website.
 
-> **🤔 What is a Terminal?** The Terminal is a way to talk to your computer by typing commands instead of clicking buttons. It might look intimidating at first (like something from a hacker movie), but it's actually just a different way to do the same things you do with your mouse. Think of it like texting your computer instead of tapping on icons. Every command you type tells the computer to do one specific thing.
+---
 
-1. Click the **Terminal** icon on the top bar (it looks like a black rectangle)
-2. Type this command and press Enter:
+### Step 1 — Find out who you are and where you are
+
+Open the **Terminal** on the Pi. It is the black rectangle icon on the top bar.
+
+> **🤔 What is a Terminal?** It is a way to talk to the computer by typing instead of clicking. Same computer, same files, different door. Think of it as texting your Pi instead of tapping icons.
+
+Type this and press Enter:
 
 ```bash
-sudo apt update && sudo apt -y full-upgrade && sudo reboot
+whoami
 ```
 
-3. Your Pi will restart. Wait for it to come back to the desktop.
+That prints your username on this Pi. Write it down. You will need it on Day 2.
 
-> **What just happened?** Let's break that long command down piece by piece:
-> - `sudo` = "Super User DO" — it means "run this as the administrator." Your Pi won't let you install things without this, just like how your phone asks for a password before installing apps.
-> - `apt update` = Check online for any available updates (like checking the App Store for updates)
-> - `&&` = "and then do this next thing" — it chains commands together
-> - `apt -y full-upgrade` = Download and install all updates. The `-y` means "yes, do it without asking me to confirm each one"
-> - `sudo reboot` = Restart the computer so the updates take effect
->
-> **⏳ This step can take 5–15 minutes.** That's normal — just let it run. Go get a snack.
+Now type:
+
+```bash
+hostname -I
+```
+
+That prints your Pi's **IP address**, something like `10.0.4.71`. **Write it on a sticky note and put it on your monitor.** Everything on Day 2 depends on it.
+
+> **What is an IP address?** Your network is a neighborhood and every device on it gets a house number. That is the IP address. When someone types it into a browser they are saying "take me to that house."
+
+> **✅ Checkpoint:** You have two things written down: your username and your Pi's IP address.
 
 ---
 
-### Step 3 — Install the Tools We Need
+### Step 2 — Turn on your Python workspace
 
-> **🌍 Real-World Connection:** Almost every major website and app uses these same tools. Instagram's backend was built with Python. Flask is used by companies like Pinterest and LinkedIn for parts of their websites. You're learning the same technology the pros use.
-
-We're going to use **[Python](https://www.python.org/)** (a programming language) to run a mini web server. We need two add-ons:
-- **[Flask](https://flask.palletsprojects.com/)** — lets Python serve web pages
-- **[psutil](https://psutil.readthedocs.io/)** — lets Python read CPU, memory, and temperature info
-
-1. Open **Terminal** and type these commands one at a time:
+Type:
 
 ```bash
-sudo apt -y install python3-pip python3-venv
+source ~/pihealth/bin/activate
 ```
+
+Your prompt should now start with `(pihealth)`.
+
+**If you got an error instead**, the workspace does not exist yet. Run these three commands one at a time:
 
 ```bash
 python3 -m venv ~/pihealth
@@ -121,756 +171,197 @@ source ~/pihealth/bin/activate
 pip install flask psutil
 ```
 
-> **What just happened?**
-> - We installed tools for Python packages
-> - We created a **[virtual environment](https://docs.python.org/3/tutorial/venv.html)** — think of it like a clean workspace just for this project
-> - We activated it (your terminal prompt now starts with `(pihealth)`)
-> - We installed Flask and psutil inside that workspace
+> **What just happened?** You made a **virtual environment**, which is a clean workspace that holds the extra Python tools for one project and nothing else. Then you installed two of them: **Flask**, which lets Python run a website, and **psutil**, which lets Python read the computer's own CPU and memory numbers.
 
-> **✅ Checkpoint:** Your terminal prompt should show `(pihealth)` at the beginning.
+> **✅ Checkpoint:** Your prompt starts with `(pihealth)`. It will stop doing that every time you open a new Terminal window, and you will have to run the `source` line again. This catches everyone at least once.
 
 ---
 
-### Step 4 — Create Your Project Folder
+### Step 3 — Make your project folder
 
 ```bash
-mkdir -p ~/pi-health-web && cd ~/pi-health-web
+mkdir -p ~/pi-dashboard/static && cd ~/pi-dashboard
 ```
 
-This creates a folder called `pi-health-web` and moves you into it.
+You just made this:
+
+```
+pi-dashboard/
+├── server.py       ← the Python that runs the server (next step)
+└── static/         ← the files your server hands out
+    └── index.html  ← your actual web page (Step 6)
+```
+
+The `~` means your home folder. Whatever your username is, `~` points at the right place, which is why we never type the full path.
 
 ---
 
-### Step 5 — Write Your First Web Server
-
-Now the fun part. We're going to create one Python file that does everything: reads your Pi's stats and shows them on a web page.
-
-1. Open the file in the text editor:
-
-> **🤔 What is `nano`?** Nano is a simple text editor that runs inside the Terminal. It's like Notepad, but it lives in the Terminal instead of opening a separate window. Don't worry — we'll switch to a friendlier editor (Thonny) on Day 3.
+### Step 4 — Write the smallest web server that works
 
 ```bash
-nano system_monitor.py
+nano server.py
 ```
 
-2. **Copy and paste this entire code block** into the editor:
+> **🤔 What is `nano`?** A text editor that lives inside the Terminal. Like Notepad with no window.
+
+Type or paste exactly this:
 
 ```python
-from flask import Flask, jsonify, render_template_string
-import psutil
-import subprocess
+from flask import Flask
 
 app = Flask(__name__)
 
-PAGE = """
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Pi Health Monitor</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 20px;
-        background-color: #f0f0f0;
-      }
-      h1 {
-        color: #333;
-      }
-      .card {
-        background: white;
-        border-radius: 10px;
-        padding: 20px;
-        max-width: 400px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      }
-      .stat {
-        font-size: 18px;
-        margin: 10px 0;
-      }
-      .label {
-        font-weight: bold;
-      }
-      .success {
-        margin-top: 20px;
-        padding: 10px;
-        background: #d4edda;
-        border-radius: 8px;
-        color: #155724;
-        font-family: monospace;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Raspberry Pi Health Monitor</h1>
-    <p>This page updates every 2 seconds.</p>
-    <div class="card">
-      <div class="stat"><span class="label">CPU Usage:</span> <span id="cpu">--</span>%</div>
-      <div class="stat"><span class="label">Memory Used:</span> <span id="mem">--</span>%</div>
-      <div class="stat"><span class="label">Disk Used:</span> <span id="disk">--</span>%</div>
-      <div class="stat"><span class="label">Temperature:</span> <span id="temp">--</span> °C</div>
-      <div class="success">✅ You have successfully finished Day 1!</div>
-    </div>
-
-    <script>
-      async function loadStats() {
-        try {
-          const response = await fetch('/api/stats');
-          const data = await response.json();
-          document.getElementById('cpu').textContent = Math.round(data.cpu);
-          document.getElementById('mem').textContent = Math.round(data.mem_percent);
-          document.getElementById('disk').textContent = Math.round(data.disk_percent);
-          document.getElementById('temp').textContent =
-            data.temp_c === null ? '--' : data.temp_c.toFixed(1);
-        } catch (e) {
-          console.error(e);
-        }
-      }
-      loadStats();
-      setInterval(loadStats, 2000);
-    </script>
-  </body>
-</html>
-"""
-
-
-def get_temperature_c():
-    """Try to read the Pi's temperature."""
-    try:
-        temps = psutil.sensors_temperatures()
-        for entries in temps.values():
-            for e in entries:
-                if getattr(e, 'current', None) is not None:
-                    return float(e.current)
-    except Exception:
-        pass
-    try:
-        out = subprocess.check_output(["vcgencmd", "measure_temp"], text=True)
-        if "temp=" in out:
-            return float(out.split("=")[1].split("'")[0])
-    except Exception:
-        pass
-    return None
-
-
 @app.route("/")
-def index():
-    return render_template_string(PAGE)
+def home():
+    return "<h1>My Pi is a web server.</h1>"
 
-
-@app.route("/api/stats")
-def stats():
-    cpu = psutil.cpu_percent(interval=0.2)
-    vm = psutil.virtual_memory()
-    du = psutil.disk_usage('/')
-    temp_c = get_temperature_c()
-    return jsonify({
-        "cpu": cpu,
-        "mem_percent": vm.percent,
-        "disk_percent": du.percent,
-        "temp_c": temp_c
-    })
-
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+app.run(host="0.0.0.0", port=5000)
 ```
 
-3. Save the file: press **Ctrl + O**, then **Enter**
-4. Exit the editor: press **Ctrl + X**
+Save with **Ctrl + O**, then Enter. Exit with **Ctrl + X**.
 
-> **What just happened?** You created a Python program that does two things:
-> - When someone visits your Pi's web page, it sends them the HTML (the page layout)
-> - The page calls `/api/stats` every 2 seconds to get fresh CPU, memory, disk, and temperature numbers
-> - The JavaScript on the page updates the numbers without refreshing
-
-> **🌍 Real-World Connection:** This is exactly how apps like Weather or Stocks on your phone work. The app (like your web page) calls a server (like your Python code) every few seconds asking "what's the latest data?" and then updates what you see on screen. You just built that same pattern from scratch.
+> **Pasting into the Terminal is Ctrl + Shift + V**, not Ctrl + V. This trips up everyone once.
 
 ---
 
-### 🌐 Mini Lesson — The 3 Languages of Every Website
-
-Every website you've ever visited is built with three languages working together. You just used all three in the code you pasted:
-
-**[HTML](https://developer.mozilla.org/en-US/docs/Web/HTML) = The Structure (skeleton)**
-HTML uses **tags** like `<h1>`, `<div>`, and `<span>` to define *what* is on the page. Look at this line from your code:
-
-```html
-<h1>Raspberry Pi Health Monitor</h1>
-```
-
-The `<h1>` tag means "this is a big heading." The text between the opening tag `<h1>` and the closing tag `</h1>` is what shows up on screen. Other tags you used: `<div>` (a container/box), `<p>` (a paragraph), `<span>` (a small piece of text inside a line).
-
-**[CSS](https://developer.mozilla.org/en-US/docs/Web/CSS) = The Style (clothes and makeup)**
-CSS controls how things *look* — colors, sizes, spacing, fonts. Look at this block from your code:
-
-```css
-.card {
-  background: white;
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-```
-
-This says: "Anything with `class="card"` should have a white background, rounded corners (`border-radius`), spacing inside (`padding`), and a subtle shadow." Try changing `white` to `lightblue` later and see what happens!
-
-**[JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript) = The Behavior (the brain)**
-JavaScript makes the page *do things*. Look at this line:
-
-```javascript
-setInterval(loadStats, 2000);
-```
-
-This tells the browser: "Run the `loadStats` function every 2000 milliseconds (2 seconds)." That's why your numbers update automatically without you refreshing the page.
-
-> **Think of it this way:** HTML is like building a house (walls, rooms, doors). CSS is painting it and choosing furniture. JavaScript is the electricity that makes things move and respond.
-
----
-
-### Step 6 — Run It!
-
-Make sure your virtual environment is active (you should see `(pihealth)` in your prompt). If not, run:
+### Step 5 — Run it
 
 ```bash
-source ~/pihealth/bin/activate
+python3 server.py
 ```
 
-Then start the server:
+The Terminal will print a few lines and then sit there looking like it is frozen. It is not frozen. It is listening.
 
-```bash
-cd ~/pi-health-web
-python3 system_monitor.py
-```
-
-Open **Chromium** (the web browser on your Pi) and go to:
+Open **Chromium** on the Pi and go to:
 
 ```
 http://localhost:5000
 ```
 
-> **✅ Checkpoint:** You should see a white card with CPU, Memory, Disk, and Temperature updating live, plus a green "You have successfully finished Day 1!" message.
+> **✅ Checkpoint:** The browser says **My Pi is a web server.** That is a real server, running on a real computer, serving a real page. It took six lines.
 
-**To stop the server:** Click on the Terminal window and press **Ctrl + C**.
+**To stop it:** click the Terminal window and press **Ctrl + C**. Remember this. You will need it constantly.
 
----
-
-### 📝 Day 1 Deliverables
-
-1. Screenshot of your health monitor page running in the browser on the Pi
-2. Screenshot of the Terminal showing the server is running
-3. Screenshot from a different device (phone, laptop, or Chromebook) showing your dashboard loaded via `http://YOUR-PI-IP:5000` on the GHCDS network
+> **⚠️ You will also see a yellow warning** about a "development server" and not using it in production. Ignore it. It means "this server is built for learning, not for handling a million people at once," which is exactly what you are doing.
 
 ---
 
-# Day 2: Connect to Your Pi Remotely with SSH
+### 🧠 Mini Lesson — What a server actually does
 
-**Goal:** Control your Pi from another computer — no monitor needed.
+A server does one thing, over and over, forever:
 
----
+1. It waits.
+2. Something asks it for a thing. This is a **request**.
+3. It sends that thing back. This is a **response**.
+4. Go to 1.
 
-### What is SSH?
+That is it. That is the whole job. When you typed `http://localhost:5000` into Chromium, the browser sent a request to your Pi. Your six lines of Python caught it, and the line `return "<h1>My Pi is a web server.</h1>"` was the response.
 
-Imagine you could pick up your phone, type a command, and control a computer that's in another room — or another country. That's **SSH** (Secure Shell).
+Netflix does the same thing. So does Instagram, so does your school's grade portal. They have more lines of code and more computers, but the loop is identical: wait, request, response, repeat.
 
-It lets you type commands on your Pi from a different computer, as if you were sitting right in front of it. No monitor, no keyboard, no mouse needed — just a Wi-Fi connection.
-
-**This is how the real world works:**
-- IT professionals fix servers in data centers without being in the building
-- NASA engineers send commands to computers on the International Space Station
-- Game server admins manage Minecraft and Discord servers from their laptops
-- Your school's IT department manages every computer in the building from one desk
-
-After today, you'll be able to control your Pi from your phone or laptop. That's a real superpower.
-
-> 📖 **Want to go deeper?** [Raspberry Pi Remote Access Documentation](https://www.raspberrypi.com/documentation/computers/remote-access.html)
+The `@app.route("/")` line is the part that decides **which** request. `/` means the front page. On Day 1 you will add a second route, and the server will start answering two different questions.
 
 ---
 
-### Step 1 — Enable SSH on Your Pi
+### Step 6 — Build the real thing
 
-1. On your Pi, click the **Raspberry Pi menu** (top-left) → **Preferences** → **Raspberry Pi Configuration**
-2. Click the **Interfaces** tab
-3. Find **SSH** and click **Enable**
-4. Click **OK**
-
-Or if you prefer the terminal:
+Stop your server with **Ctrl + C**, then reopen the file:
 
 ```bash
-sudo raspi-config
+nano server.py
 ```
 
-Go to **Interface Options → SSH → Enable**, then exit.
-
----
-
-### Step 2 — Connect to the GHCDS Classroom Wi-Fi
-
-Your Pi needs to auto-connect to the classroom network every time it boots up.
-
-1. Open Terminal and type:
-
-```bash
-sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
-```
-
-2. Add this block at the bottom of the file (if it's not already there):
-
-```
-network={
-  ssid="GHCDS"
-  key_mgmt=NONE
-}
-```
-
-3. Save: **Ctrl + O**, **Enter**
-4. Exit: **Ctrl + X**
-5. Reboot to confirm it reconnects automatically:
-
-```bash
-sudo reboot
-```
-
-> **What just happened?** You told your Pi the name of your classroom Wi-Fi network. Now every time the Pi turns on, it will automatically connect to `GHCDS` without you having to click anything.
-
----
-
-### Step 3 — Find Your Pi's IP Address
-
-Once your Pi is back on and connected to Wi-Fi, open Terminal and run:
-
-```bash
-hostname -I
-```
-
-This prints your Pi's **IP address** — something like `192.168.1.50`. **Write this number down.** You'll need it in a minute.
-
-> **What's an IP address?** Think of your Wi-Fi network like a neighborhood. Every device (your phone, your laptop, the Pi) gets its own house number so they can find each other. That number is the IP address. When you type it into a browser, you're basically saying "take me to that house."
-
----
-
-### Step 4 — SSH In from Another Computer
-
-On a **different computer** connected to the same Wi-Fi:
-
-**On Mac or Chromebook:** Open Terminal and type:
-
-```bash
-ssh pi@YOUR-PI-IP-ADDRESS
-```
-
-For example:
-
-```bash
-ssh pi@192.168.1.50
-```
-
-**On Windows:** Open PowerShell or Command Prompt and type the same command.
-
-It will ask for a password. Type the password you set during Pi setup (the default is `raspberry`).
-
-> **What just happened?** You're now controlling your Pi from another computer. Everything you type runs on the Pi, not on the computer in front of you.
-
----
-
-### Step 5 — Prove It Works
-
-While connected via SSH, run:
-
-```bash
-uname -a
-```
-
-This shows system info from the Pi. You should see "Linux raspberrypi" in the output.
-
-To leave the SSH session:
-
-```bash
-exit
-```
-
----
-
-### Step 6 — Start Your Server Remotely (Bonus)
-
-Now that you know SSH, you can start your health monitor without touching the Pi:
-
-```bash
-ssh pi@YOUR-PI-IP-ADDRESS
-source ~/pihealth/bin/activate
-cd ~/pi-health-web
-python3 system_monitor.py
-```
-
-Then on your laptop's browser, go to:
-
-```
-http://YOUR-PI-IP-ADDRESS:5000
-```
-
-Your dashboard loads — from a server you started remotely. That's real engineering.
-
-> **✅ Checkpoint:** You can see your Pi's health dashboard in a browser on a different device.
-
----
-
-### 📝 Day 2 Deliverables
-
-1. Screenshot of your Terminal showing a successful SSH login
-2. The IP address or hostname you used to connect
-3. Screenshot of `uname -a` output while connected via SSH
-
----
-
-# Day 3: Make Your Dashboard Look Professional
-
-**Goal:** Replace the plain page with a modern, animated dashboard — and understand the code.
-
----
-
-> **🎮 Think about it:** Have you ever noticed how some websites look old and boring, while others look sleek and modern? The difference is usually just CSS — the *exact same data* displayed with better styling. That's what you're about to do. Same Pi, same stats, totally different vibe.
-
-### What's Changing?
-
-Right now your dashboard works, but it looks basic. We're going to upgrade the **HTML and CSS only** — the Python backend stays exactly the same. This is how real web development works: you can completely change how a site looks without changing how it works.
-
----
-
-### Step 1 — Open Your File in Thonny
-
-**[Thonny](https://thonny.org/)** is a beginner-friendly code editor that's already installed on your Pi. It has a normal window with menus, so it's much easier than editing in the terminal.
-
-1. On your Pi desktop, click **Menu** (top-left raspberry icon) → **Programming** → **Thonny**
-2. In Thonny, click **File → Open**
-3. Navigate to `/home/pi/pi-health-web/` (or wherever your project folder is)
-4. Open **`system_monitor.py`**
-
-You should see your Python code from Day 1 in the editor window.
-
----
-
-### Step 2 — Select and Delete the Old HTML
-
-1. Find the line that says `PAGE = """`
-2. Click right before the `P` in `PAGE`
-3. Scroll down until you find the matching closing `"""`  (it's after all the HTML and before `def get_temperature_c():`)
-4. Hold **Shift** and click right after that closing `"""`
-5. Everything between should now be highlighted in blue
-6. Press **Delete** or **Backspace**
-
-> **What just happened?** You removed the old simple HTML page. Now we'll paste in the upgraded version.
-
----
-
-### Step 3 — Paste the New Dashboard
-
-Click where the old `PAGE` block was (your cursor should be on a blank line before `def get_temperature_c():`).
-
-> **😅 Don't panic!** This is a lot of code, but you don't need to understand every single line right now. You're going to paste it, see it work, and then we'll walk through the important parts together. Professional developers copy and paste code all the time — the skill is knowing *what* the code does, not memorizing it.
-
-**Copy everything in the box below and paste it into Thonny** (Ctrl+V or Edit → Paste):
+Delete everything in it (hold **Ctrl + K** to cut lines until the file is empty), then type or paste this:
 
 ```python
-PAGE = """
-<!DOCTYPE html>
+from flask import Flask, jsonify, send_from_directory
+import psutil
+import subprocess
+import os
+
+STATIC = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static")
+
+app = Flask(__name__)
+
+
+@app.route("/")
+def home():
+    return send_from_directory(STATIC, "index.html")
+
+
+@app.route("/<path:filename>")
+def other_files(filename):
+    return send_from_directory(STATIC, filename)
+
+
+def temperature_c():
+    try:
+        for group in psutil.sensors_temperatures().values():
+            for reading in group:
+                if getattr(reading, "current", None) is not None:
+                    return round(float(reading.current), 1)
+    except Exception:
+        pass
+    try:
+        output = subprocess.check_output(["vcgencmd", "measure_temp"], text=True)
+        return round(float(output.split("=")[1].split("'")[0]), 1)
+    except Exception:
+        return None
+
+
+@app.route("/api/stats")
+def stats():
+    return jsonify({
+        "cpu": psutil.cpu_percent(interval=0.2),
+        "memory": psutil.virtual_memory().percent,
+        "disk": psutil.disk_usage("/").percent,
+        "temperature": temperature_c()
+    })
+
+
+app.run(host="0.0.0.0", port=5000)
+```
+
+Save: **Ctrl + O**, Enter. Exit: **Ctrl + X**.
+
+> **What just happened?** Your server now answers three different requests:
+> - `/` hands over the file `static/index.html`
+> - `/api/stats` hands over four numbers, freshly measured, as text
+> - anything else gets looked up in your `static` folder, which is how images and CSS files will work later
+
+---
+
+### Step 7 — Write the page
+
+```bash
+nano static/index.html
+```
+
+Type or paste:
+
+```html
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pi Health Dashboard</title>
-  <style>
-    /* --- BASE STYLES --- */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      min-height: 100vh;
-      padding: 20px;
-      color: white;
-    }
-
-    h1 {
-      text-align: center;
-      font-size: 2em;
-      margin-bottom: 5px;
-    }
-
-    .subtitle {
-      text-align: center;
-      opacity: 0.8;
-      margin-bottom: 30px;
-      font-size: 0.9em;
-    }
-
-    /* --- CARD GRID --- */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-      max-width: 1000px;
-      margin: 0 auto 30px;
-    }
-
-    .card {
-      background: rgba(255, 255, 255, 0.15);
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      border-radius: 16px;
-      padding: 24px;
-      text-align: center;
-      backdrop-filter: blur(10px);
-      transition: transform 0.2s;
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-    }
-
-    .card h3 {
-      font-size: 1em;
-      margin-bottom: 12px;
-      opacity: 0.9;
-    }
-
-    /* --- CIRCULAR PROGRESS --- */
-    .circle-wrap {
-      width: 120px;
-      height: 120px;
-      margin: 0 auto 12px;
-      position: relative;
-    }
-
-    .circle-wrap svg {
-      width: 120px;
-      height: 120px;
-    }
-
-    .circle-bg {
-      fill: none;
-      stroke: rgba(255,255,255,0.15);
-      stroke-width: 8;
-    }
-
-    .circle-fill {
-      fill: none;
-      stroke-width: 8;
-      stroke-linecap: round;
-      transform: rotate(-90deg);
-      transform-origin: center;
-      transition: stroke-dasharray 0.5s ease;
-    }
-
-    .circle-text {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 1.5em;
-      font-weight: bold;
-    }
-
-    /* --- TEMPERATURE BAR --- */
-    .temp-value {
-      font-size: 2.2em;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-
-    .temp-bar-bg {
-      width: 100%;
-      height: 10px;
-      background: rgba(255,255,255,0.2);
-      border-radius: 5px;
-      overflow: hidden;
-      margin-bottom: 10px;
-    }
-
-    .temp-bar-fill {
-      height: 100%;
-      border-radius: 5px;
-      transition: width 0.5s ease, background 0.5s ease;
-    }
-
-    /* --- STATUS LABEL --- */
-    .status {
-      font-size: 0.9em;
-      font-weight: 600;
-    }
-
-    .ok { color: #6ee7b7; }
-    .warn { color: #fcd34d; }
-    .bad { color: #fca5a5; }
-
-    /* --- FOOTER STATUS BAR --- */
-    .status-bar {
-      max-width: 1000px;
-      margin: 0 auto;
-      background: rgba(255,255,255,0.1);
-      border-radius: 12px;
-      padding: 14px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.85em;
-    }
-
-    .live-dot {
-      width: 8px;
-      height: 8px;
-      background: #6ee7b7;
-      border-radius: 50%;
-      display: inline-block;
-      margin-right: 8px;
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
-    }
-  </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pi Health</title>
 </head>
 <body>
 
-  <h1>Raspberry Pi Health Dashboard</h1>
-  <p class="subtitle">Live stats · updates every 2 seconds</p>
-
-  <div class="grid">
-
-    <!-- CPU Card -->
-    <div class="card">
-      <h3>🔲 CPU Usage</h3>
-      <div class="circle-wrap">
-        <svg viewBox="0 0 120 120">
-          <circle class="circle-bg" cx="60" cy="60" r="50"/>
-          <circle class="circle-fill" id="cpu-ring" cx="60" cy="60" r="50"
-                  stroke="#6ee7b7" stroke-dasharray="0 314"/>
-        </svg>
-        <div class="circle-text" id="cpu-val">--%</div>
-      </div>
-      <div class="status" id="cpu-status">--</div>
-    </div>
-
-    <!-- Memory Card -->
-    <div class="card">
-      <h3>💾 Memory Used</h3>
-      <div class="circle-wrap">
-        <svg viewBox="0 0 120 120">
-          <circle class="circle-bg" cx="60" cy="60" r="50"/>
-          <circle class="circle-fill" id="mem-ring" cx="60" cy="60" r="50"
-                  stroke="#a78bfa" stroke-dasharray="0 314"/>
-        </svg>
-        <div class="circle-text" id="mem-val">--%</div>
-      </div>
-      <div class="status" id="mem-status">--</div>
-    </div>
-
-    <!-- Disk Card -->
-    <div class="card">
-      <h3>💿 Disk Used</h3>
-      <div class="circle-wrap">
-        <svg viewBox="0 0 120 120">
-          <circle class="circle-bg" cx="60" cy="60" r="50"/>
-          <circle class="circle-fill" id="disk-ring" cx="60" cy="60" r="50"
-                  stroke="#22d3ee" stroke-dasharray="0 314"/>
-        </svg>
-        <div class="circle-text" id="disk-val">--%</div>
-      </div>
-      <div class="status" id="disk-status">--</div>
-    </div>
-
-    <!-- Temperature Card -->
-    <div class="card">
-      <h3>🌡️ Temperature</h3>
-      <div class="temp-value" id="temp-val">--°C</div>
-      <div class="temp-bar-bg">
-        <div class="temp-bar-fill" id="temp-bar" style="width:0%"></div>
-      </div>
-      <div class="status" id="temp-status">--</div>
-    </div>
-
-  </div>
-
-  <div class="status-bar">
-    <div><span class="live-dot"></span> System Online</div>
-    <div>Last updated: <span id="timestamp">--</span></div>
-  </div>
+  <h1>Raspberry Pi Health</h1>
+  <p>CPU: <span id="cpu">--</span>%</p>
+  <p>Memory: <span id="memory">--</span>%</p>
+  <p>Disk: <span id="disk">--</span>%</p>
+  <p>Temperature: <span id="temperature">--</span> C</p>
 
   <script>
-    // The circumference of our SVG circle (2 × π × radius 50)
-    const C = 2 * Math.PI * 50;  // ≈ 314
-
-    function setRing(id, pct, color) {
-      var el = document.getElementById(id);
-      el.style.strokeDasharray = (pct / 100) * C + " " + C;
-      el.style.stroke = color;
-    }
-
-    function pick(val, lo, hi) {
-      // Returns "ok", "warn", or "bad" based on thresholds
-      if (val < lo) return "ok";
-      if (val < hi) return "warn";
-      return "bad";
-    }
-
-    function label(level) {
-      if (level === "ok") return "Normal";
-      if (level === "warn") return "Warning";
-      return "Critical";
-    }
-
     async function refresh() {
-      try {
-        var r = await fetch("/api/stats");
-        var d = await r.json();
-
-        var cpu = Math.round(d.cpu);
-        var mem = Math.round(d.mem_percent);
-        var disk = Math.round(d.disk_percent);
-        var temp = d.temp_c;
-
-        // CPU
-        var cpuLvl = pick(cpu, 30, 70);
-        setRing("cpu-ring", cpu, cpuLvl === "ok" ? "#6ee7b7" : cpuLvl === "warn" ? "#fcd34d" : "#fca5a5");
-        document.getElementById("cpu-val").textContent = cpu + "%";
-        document.getElementById("cpu-status").textContent = label(cpuLvl);
-        document.getElementById("cpu-status").className = "status " + cpuLvl;
-
-        // Memory
-        var memLvl = pick(mem, 60, 80);
-        setRing("mem-ring", mem, memLvl === "ok" ? "#a78bfa" : memLvl === "warn" ? "#fcd34d" : "#fca5a5");
-        document.getElementById("mem-val").textContent = mem + "%";
-        document.getElementById("mem-status").textContent = label(memLvl);
-        document.getElementById("mem-status").className = "status " + memLvl;
-
-        // Disk
-        var diskLvl = pick(disk, 70, 85);
-        setRing("disk-ring", disk, diskLvl === "ok" ? "#22d3ee" : diskLvl === "warn" ? "#fcd34d" : "#fca5a5");
-        document.getElementById("disk-val").textContent = disk + "%";
-        document.getElementById("disk-status").textContent = label(diskLvl);
-        document.getElementById("disk-status").className = "status " + diskLvl;
-
-        // Temperature
-        if (temp === null || temp === undefined) {
-          document.getElementById("temp-val").textContent = "--°C";
-          document.getElementById("temp-bar").style.width = "0%";
-          document.getElementById("temp-status").textContent = "Unavailable";
-        } else {
-          temp = Number(temp);
-          document.getElementById("temp-val").textContent = temp.toFixed(1) + "°C";
-          var pct = Math.max(0, Math.min(100, (temp - 20) * 1.5));
-          document.getElementById("temp-bar").style.width = pct + "%";
-          var tLvl = pick(temp, 45, 60);
-          document.getElementById("temp-bar").style.background =
-            tLvl === "ok" ? "#22d3ee" : tLvl === "warn" ? "#fcd34d" : "#fca5a5";
-          document.getElementById("temp-status").textContent = label(tLvl);
-          document.getElementById("temp-status").className = "status " + tLvl;
-        }
-
-        document.getElementById("timestamp").textContent = new Date().toLocaleTimeString();
-      } catch (e) {
-        console.error(e);
+      const response = await fetch("/api/stats");
+      const data = await response.json();
+      for (const name of ["cpu", "memory", "disk", "temperature"]) {
+        document.getElementById(name).textContent =
+          data[name] === null ? "--" : Math.round(data[name]);
       }
     }
 
@@ -880,237 +371,509 @@ PAGE = """
 
 </body>
 </html>
-"""
 ```
 
-4. Save the file: **File → Save** (or **Ctrl + S**)
+Save and exit. Then run it:
 
-> **✅ Checkpoint:** Your code should now have the new `PAGE = """..."""` block with all the fancy HTML, and the Python functions below it should be untouched.
+```bash
+python3 server.py
+```
+
+Reload `http://localhost:5000` in Chromium.
+
+> **✅ Checkpoint:** Four numbers, and they change on their own every two seconds. Open a few browser tabs and watch CPU climb. That is your Pi reporting on itself.
+
+> **Temperature showing `--`?** Some Pi models do not report it. Everything else still works. Not your fault, not a bug.
 
 ---
 
-### Step 4 — Understanding What You Just Pasted
+### 📝 Day 1 Deliverables
 
-That was a lot of code! Let's break down the new skills you just leveled up on.
-
----
-
-**🔵 CSS You Learned — Making Things Look Good**
-
-**[Gradients](https://developer.mozilla.org/en-US/docs/Web/CSS/gradient/linear-gradient)** — Instead of a flat color, you used a smooth blend between two colors:
-
-```css
-background: linear-gradient(135deg, #667eea, #764ba2);
-```
-
-The `135deg` is the angle of the blend. `#667eea` (blue) fades into `#764ba2` (purple). Every color on the web has a **hex code** — a 6-character code that mixes red, green, and blue.
-
-**[CSS Grid](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_grid_layout)** — You arranged the 4 cards in a responsive row:
-
-```css
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
-}
-```
-
-This says: "Make as many columns as will fit, each at least 220px wide, with 20px space between them." Resize your browser window and watch the cards rearrange — that's **[responsive design](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Responsive_Design)**.
-
-**Glassmorphism** — That frosted glass effect on the cards:
-
-```css
-background: rgba(255, 255, 255, 0.15);
-backdrop-filter: blur(10px);
-```
-
-`rgba` is a color with transparency (the `0.15` means 15% visible). [`backdrop-filter: blur`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter) blurs whatever is behind the card. This is a trendy design style used by Apple and many modern apps.
-
-**[Hover animations](https://developer.mozilla.org/en-US/docs/Web/CSS/:hover)** — Cards move up slightly when you hover over them:
-
-```css
-.card:hover {
-  transform: translateY(-4px);
-}
-```
-
-The `:hover` part means "when the mouse is over this element." `translateY(-4px)` shifts it up by 4 pixels.
+- [ ] Screenshot of your dashboard in Chromium on the Pi, with live numbers in it
+- [ ] Your username and your Pi's IP address, written down where you will still have them on Day 2
 
 ---
 
-**🟡 JavaScript You Learned — Making Things Dynamic**
+# Day 2: Reach It From Anywhere on the Network
 
-**[Fetching data from an API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API):**
-
-```javascript
-var r = await fetch("/api/stats");
-var d = await r.json();
-```
-
-This calls your Python server's `/api/stats` endpoint and converts the response from [JSON](https://www.json.org/) (a data format) into a JavaScript object you can use.
-
-**Changing the page without refreshing:**
-
-```javascript
-document.getElementById("cpu-val").textContent = cpu + "%";
-```
-
-`document.getElementById` finds an HTML element by its `id`, and `.textContent` changes what text it displays. This is called **[DOM manipulation](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model)** — the DOM is the browser's live version of your HTML.
-
-**[SVG](https://developer.mozilla.org/en-US/docs/Web/SVG) circles for progress rings:**
-
-```javascript
-el.style.strokeDasharray = (pct / 100) * C + " " + C;
-```
-
-SVG (Scalable Vector Graphics) lets you draw shapes with code. The progress rings are circles where `strokeDasharray` controls how much of the circle is "filled in" vs invisible. Math meets art!
+**Goal:** Prove it is a real server by using it from a computer that is not the Pi.
 
 ---
 
-> **The big picture:** Your project now uses **4 languages working together**: Python (server/data), HTML (structure), CSS (style), and JavaScript (behavior). That's a real full-stack web application.
+### Step 1 — Load your dashboard on your phone
 
----
-
-### Step 5 — Run and Admire
-
-**Option A — Run from Thonny:**
-1. In Thonny, go to **Tools → Options → Interpreter**
-2. Set the interpreter to **`/home/pi/pihealth/bin/python3`**
-3. Click **OK**, then click the green **Run** button (▶)
-
-**Option B — Run from Terminal:**
+Your server has to be running. If you stopped it:
 
 ```bash
 source ~/pihealth/bin/activate
-cd ~/pi-health-web
-python3 system_monitor.py
+cd ~/pi-dashboard
+python3 server.py
 ```
 
-Open your browser to `http://localhost:5000`
-
-> **✅ Checkpoint:** You should see a purple gradient background with 4 frosted-glass cards showing live stats with animated circular progress rings.
-
-Try viewing it from another device too:
+Now take out your phone, make sure it is on the GHCDS network, and type your Pi's IP address and port into the browser:
 
 ```
-http://YOUR-PI-IP-ADDRESS:5000
+http://YOUR-PI-IP:5000
 ```
+
+So if your sticky note says `10.0.4.71`, you type `http://10.0.4.71:5000`.
+
+> **✅ Checkpoint:** Your Pi's dashboard, on your phone, updating live. Nothing is on the internet. Your phone asked your Pi directly, across the room.
+
+> **Loading someone else's numbers?** You typed their IP. It happens. Check your sticky note.
+
+---
+
+### 🧠 Mini Lesson — Why `0.0.0.0` was the important part
+
+Look at the last line of `server.py`:
+
+```python
+app.run(host="0.0.0.0", port=5000)
+```
+
+`0.0.0.0` means **"answer requests from anywhere on the network, not just from me."** If it said `127.0.0.1` instead, the page would work in Chromium on the Pi and your phone would get nothing.
+
+That is also the difference between the two addresses you have now used:
+
+| Address | What it means | Works from |
+|---|---|---|
+| `http://localhost:5000` | this computer, port 5000 | only the Pi itself |
+| `http://10.0.4.71:5000` | the device at that house number, port 5000 | any device on GHCDS |
+
+**Port 5000** is the door number. One computer can run many servers at once as long as each uses a different door.
+
+---
+
+### Step 2 — Look at the raw data
+
+On your phone or in Chromium, go to:
+
+```
+http://YOUR-PI-IP:5000/api/stats
+```
+
+You will see something like this, and nothing else:
+
+```json
+{"cpu":12.5,"disk":31.2,"memory":24.8,"temperature":47.1}
+```
+
+Refresh it. The numbers change.
+
+> **✅ Checkpoint:** You are looking at raw JSON. Screenshot this, you need it for your submission.
+
+---
+
+### 🧠 Mini Lesson — API and JSON
+
+An **API** is a door on a server that hands back data instead of a web page.
+
+Think about ordering food. You do not walk into the kitchen. You tell a waiter what you want, the waiter goes to the kitchen, and the waiter brings back a plate. You never see how the kitchen works and you do not need to.
+
+`/api/stats` is the waiter. Your web page is you. The Python function `stats()` is the kitchen.
+
+**JSON** is what is on the plate. It is just text, arranged so a program can read it:
+
+```json
+{"cpu": 12.5, "memory": 24.8}
+```
+
+A name, a colon, a value, commas between them, curly braces around the whole thing. That is the entire format. Almost every app on your phone is passing JSON back and forth all day.
+
+Now look at your page again. These three lines are the whole conversation:
+
+```javascript
+const response = await fetch("/api/stats");   // ask the waiter
+const data = await response.json();           // take the plate
+setInterval(refresh, 2000);                   // do it again in 2 seconds
+```
+
+---
+
+### Step 3 — Connect to your Pi from a different computer
+
+**SSH** lets you type commands on your Pi while sitting at a different machine. No monitor, no keyboard on the Pi at all.
+
+Go to one of the lab computers. Open its terminal. Type this, using **your** username and **your** Pi's IP:
+
+```bash
+ssh YOUR-USERNAME@YOUR-PI-IP
+```
+
+For example:
+
+```bash
+ssh krigger@10.0.4.71
+```
+
+The first time, it will ask something like `Are you sure you want to continue connecting?` Type **yes** and press Enter. Then it asks for your Pi password. **Type it. Nothing will appear on screen while you type. That is on purpose.** Press Enter.
+
+> **✅ Checkpoint:** Your prompt changed. It now shows your Pi's name, not the lab computer's. Every command you type from here runs on the Pi.
+
+---
+
+### Step 4 — Prove it
+
+Still in the SSH window, run:
+
+```bash
+hostname
+```
+
+```bash
+uptime
+```
+
+The first prints your Pi's name. The second prints how long it has been switched on. Neither of those is the computer you are sitting at.
+
+To leave:
+
+```bash
+exit
+```
+
+---
+
+### Step 5 — Start your server without touching the Pi
+
+SSH back in, then:
+
+```bash
+source ~/pihealth/bin/activate
+cd ~/pi-dashboard
+python3 server.py
+```
+
+Then open a browser on the lab computer and go to `http://YOUR-PI-IP:5000`.
+
+You just started a server on a computer across the room and loaded its page. That is the actual job of a large number of actual people.
+
+> **Heads up:** when you close the SSH window, the server stops with it. That is normal. There are ways around it, and that is a good thing to ask about if you are curious.
+
+---
+
+### 🧠 Mini Lesson — SSH
+
+**SSH** stands for **Secure Shell**. Two halves:
+
+- **Shell** is the thing that reads your typed commands. The Terminal is a shell.
+- **Secure** means everything you type is scrambled on the way over, so anyone watching the network sees noise.
+
+That second half is the whole reason it exists. Before SSH, people used a tool called Telnet that sent passwords across the network in plain readable text. If you were on the same network, you could just read them.
+
+This is how IT staff fix servers they will never physically see, how your school's tech department reaches every machine in the building from one desk, and how anyone who runs a game server does anything at all.
+
+---
+
+### 📝 Day 2 Deliverables
+
+- [ ] Screenshot of your dashboard loaded on a **different device**, with the address bar showing your Pi's IP
+- [ ] Screenshot of `/api/stats` showing the raw JSON
+
+---
+
+# Day 3: Make It Yours
+
+**Goal:** Take the plain page and turn it into something you would actually show someone.
+
+---
+
+> **Nothing about the Python changes today.** The server already works. You are only replacing the page it hands out. That is how real web work usually goes: the thing underneath stays put and the thing people see gets redesigned.
+
+### Step 1 — Start the page over
+
+Stop your server with **Ctrl + C**. Then:
+
+```bash
+rm ~/pi-dashboard/static/index.html
+```
+
+```bash
+nano ~/pi-dashboard/static/index.html
+```
+
+You now have an empty file. Nothing to select, nothing to accidentally delete half of.
+
+---
+
+### Step 2 — Paste the new page
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pi Health</title>
+<style>
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    padding: 32px 20px;
+    color: #fff;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: linear-gradient(135deg, #0f2027, #2c5364);
+  }
+
+  h1 { margin: 0 0 4px; font-size: 28px; }
+  .sub { margin: 0 0 28px; opacity: 0.7; font-size: 14px; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+    max-width: 960px;
+  }
+
+  .card {
+    padding: 20px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(10px);
+    transition: transform 0.15s ease;
+  }
+  .card:hover { transform: translateY(-4px); }
+
+  .card h2 { margin: 0 0 12px; font-size: 15px; font-weight: 600; opacity: 0.85; }
+
+  .value { font-size: 42px; font-weight: 700; line-height: 1; }
+  .unit  { font-size: 16px; font-weight: 400; opacity: 0.7; margin-left: 2px; }
+
+  .bar {
+    margin-top: 14px;
+    height: 8px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.15);
+    overflow: hidden;
+  }
+  .fill {
+    width: 0%;
+    height: 100%;
+    border-radius: 999px;
+    background: #4ade80;
+    transition: width 0.4s ease, background 0.4s ease;
+  }
+
+  .warn .fill  { background: #facc15; }
+  .warn .value { color: #facc15; }
+  .hot  .fill  { background: #f87171; }
+  .hot  .value { color: #f87171; }
+</style>
+</head>
+<body>
+
+<h1>🖥️ Raspberry Pi Health</h1>
+<p class="sub">Live from my Pi. Updates every 2 seconds.</p>
+
+<div class="grid">
+
+  <div class="card" id="card-cpu">
+    <h2>⚡ CPU Usage</h2>
+    <div><span class="value" id="cpu">--</span><span class="unit">%</span></div>
+    <div class="bar"><div class="fill" id="bar-cpu"></div></div>
+  </div>
+
+  <div class="card" id="card-memory">
+    <h2>🧠 Memory Used</h2>
+    <div><span class="value" id="memory">--</span><span class="unit">%</span></div>
+    <div class="bar"><div class="fill" id="bar-memory"></div></div>
+  </div>
+
+  <div class="card" id="card-disk">
+    <h2>💽 Disk Used</h2>
+    <div><span class="value" id="disk">--</span><span class="unit">%</span></div>
+    <div class="bar"><div class="fill" id="bar-disk"></div></div>
+  </div>
+
+  <div class="card" id="card-temperature">
+    <h2>🔥 Temperature</h2>
+    <div><span class="value" id="temperature">--</span><span class="unit">&deg;C</span></div>
+    <div class="bar"><div class="fill" id="bar-temperature"></div></div>
+  </div>
+
+</div>
+
+<script>
+  const CARDS = [
+    { key: "cpu",         max: 100, warn: 50, hot: 80 },
+    { key: "memory",      max: 100, warn: 60, hot: 85 },
+    { key: "disk",        max: 100, warn: 70, hot: 90 },
+    { key: "temperature", max: 90,  warn: 60, hot: 75 }
+  ];
+
+  async function refresh() {
+    const response = await fetch("/api/stats");
+    const data = await response.json();
+
+    for (const card of CARDS) {
+      const reading = data[card.key];
+      const box = document.getElementById("card-" + card.key);
+      const value = document.getElementById(card.key);
+      const fill = document.getElementById("bar-" + card.key);
+
+      if (reading === null || reading === undefined) {
+        value.textContent = "--";
+        fill.style.width = "0%";
+        continue;
+      }
+
+      value.textContent = Math.round(reading);
+      fill.style.width = Math.min(100, (reading / card.max) * 100) + "%";
+
+      box.classList.remove("warn", "hot");
+      if (reading >= card.hot) {
+        box.classList.add("hot");
+      } else if (reading >= card.warn) {
+        box.classList.add("warn");
+      }
+    }
+  }
+
+  refresh();
+  setInterval(refresh, 2000);
+</script>
+
+</body>
+</html>
+```
+
+Save: **Ctrl + O**, Enter. Exit: **Ctrl + X**. Then run it:
+
+```bash
+source ~/pihealth/bin/activate
+cd ~/pi-dashboard
+python3 server.py
+```
+
+> **✅ Checkpoint:** A dark blue gradient, four frosted cards, big numbers, and a bar under each one that fills up and turns yellow then red as the number climbs. Hover a card and it lifts.
+
+> **Same page as before?** Hard refresh with **Ctrl + Shift + R**. Browsers keep old copies.
+
+---
+
+### 🧠 Mini Lesson — The three new things you just used
+
+**Gradient.** Instead of one flat color, a smooth blend between two:
+
+```css
+background: linear-gradient(135deg, #0f2027, #2c5364);
+```
+
+`135deg` is the angle. The two `#` codes are **hex colors**, six characters that mix red, green and blue.
+
+**Grid.** Four cards that rearrange themselves depending on screen width:
+
+```css
+grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+```
+
+This says "make as many columns as fit, each at least 220px wide." Drag your browser window narrower and watch four columns become two and then one. Nobody wrote a rule for phones. That one line did it. This is called **responsive design**.
+
+**Classes as switches.** The color change is not JavaScript drawing anything. The CSS already knows what `.hot` looks like. JavaScript just adds and removes the label:
+
+```javascript
+box.classList.add("hot");
+```
+
+That split matters. CSS decides how things look. JavaScript decides when. Keeping those separate is most of what makes a large site possible to work on.
+
+---
+
+### Step 3 — Change things
+
+Stop the server, edit `static/index.html`, save, restart, hard refresh. Repeat. You cannot break anything that a retype will not fix.
+
+**Challenge 1 — Your colors.** Find the `linear-gradient` line and swap the two hex codes.
+
+| Vibe | Try |
+|---|---|
+| Ocean | `#0093E9, #80D0C7` |
+| Sunset | `#FA8BFF, #2BD2FF` |
+| Forest | `#11998e, #38ef7d` |
+| Near black | `#0f0f0f, #1a1a2e` |
+
+Build your own at [coolors.co](https://coolors.co/).
+
+**Challenge 2 — Your icons.** Swap the emoji in the `<h2>` lines. CPU could be `🧠` or `🏎️`. Temperature could be `❄️` if you are feeling optimistic.
+
+**Challenge 3 — Your name.** Under the `<h1>`, change the `.sub` line to say whose Pi this is.
+
+**Challenge 4 — Your thresholds.** In the `CARDS` list, change `warn` and `hot`. Set CPU's `warn` to `5` and watch the card sit in yellow permanently. Then set it back and think about why a monitoring tool that always says "warning" is worse than no monitoring tool.
+
+**Challenge 5 — Your layout.** Change `minmax(220px, 1fr)` to `minmax(400px, 1fr)` and see what happens to the number of columns.
 
 ---
 
 ### 📝 Day 3 Deliverables
 
-1. Screenshot of your new dashboard running in the browser
-2. Screenshot of your Terminal or Thonny showing the server running
-3. The URL you used to access it
+- [ ] Screenshot of your customized dashboard
+- [ ] Your `server.py` and your `static/index.html` files
 
 ---
 
-# Day 4: Explore and Customize
+## 🎚️ Base and Stretch
 
-**Goal:** Make the dashboard your own. Change colors, add features, break stuff and fix it.
+**Base — everyone does this.**
 
----
+A working server on your Pi, serving your own dashboard, loading on a device that is not the Pi, with at least **two visible changes that are yours**. You can explain what `/api/stats` sends back and who asks for it.
 
-> **🏆 You've already done the hard part.** Everything from here is about playing and experimenting. There are no wrong answers — if you break something, just undo your change and try again. Real developers spend most of their time experimenting just like this.
+**Stretch — required for high school, bonus for middle school.**
 
-### Challenge 1 — Change the Background Colors
+**Add a fifth stat, wired all the way through.** Not a new color. A new number that does not exist yet, traveling from the Pi's hardware to the screen.
 
-Find this line in the CSS:
+It takes three edits, one in each layer:
 
-```css
-background: linear-gradient(135deg, #667eea, #764ba2);
-```
-
-Try changing the two hex colors. Here are some combos to try:
-
-| Vibe | Code |
-|---|---|
-| Ocean | `#0093E9, #80D0C7` |
-| Sunset | `#FA8BFF, #2BD2FF` |
-| Forest | `#11998e, #38ef7d` |
-| Dark mode | `#0f0f0f, #1a1a2e` |
-
----
-
-### Challenge 2 — Change the Card Emoji Icons
-
-Find lines like `<h3>🔲 CPU Usage</h3>` and swap the emoji:
-
-- CPU: try `⚡` or `🧠`
-- Memory: try `📊` or `🗄️`
-- Disk: try `💽` or `📁`
-- Temperature: try `🔥` or `❄️`
-
----
-
-### Challenge 3 — Add Your Name
-
-After the `<h1>` tag, add:
-
-```html
-<p class="subtitle">Built by [YOUR NAME] 🚀</p>
-```
-
----
-
-### Challenge 4 — Change the Warning Thresholds
-
-In the JavaScript, find the `pick()` calls:
-
-```javascript
-var cpuLvl = pick(cpu, 30, 70);
-```
-
-The two numbers are the thresholds. CPU below 30 = green, 30–70 = yellow, above 70 = red. Try adjusting them and watch the colors change.
-
----
-
-### Challenge 5 (Advanced) — Add Uptime
-
-In `system_monitor.py`, find the `stats()` function. Add one more line of data:
+**1. Python.** In `server.py`, add a line inside the `jsonify({...})` block. Uptime, in minutes, looks like this:
 
 ```python
-import time  # Add this at the top of the file with the other imports
-
-# Inside the stats() function, add:
-"uptime_minutes": round((time.time() - psutil.boot_time()) / 60)
+"uptime": round((time.time() - psutil.boot_time()) / 60)
 ```
 
-Then in the HTML, add a new card or line that displays it using JavaScript.
+You will need `import time` at the top with the other imports. Restart the server and check `http://YOUR-PI-IP:5000/api/stats`. **If your new name is not in that JSON, stop here and fix it before touching the HTML.**
+
+**2. HTML.** Copy one of the four `<div class="card">` blocks, paste it at the end of the grid, and change all three ids to your new name.
+
+**3. JavaScript.** Add one line to the `CARDS` list with a sensible `max`, `warn` and `hot`.
+
+**Uptime is the worked example, so it is worth fewer points than one you find yourself.** Open the [psutil documentation](https://psutil.readthedocs.io/) and pick something else: how many processes are running, how many bytes have crossed the network, how many CPU cores are working. If you can get it out of psutil, you can put it on your page.
 
 ---
 
-### 📝 Day 4 Deliverables
+## 📝 Deliverables
 
-1. Screenshot of your customized dashboard (different colors, your name, etc.)
-2. A short reflection (3–5 sentences): What did you change? What was the hardest part? What would you add if you had more time?
+1. **Your two files**: `server.py` and `static/index.html`
+2. **Screenshot: your dashboard on a different device**, address bar showing your Pi's IP
+3. **Screenshot: `/api/stats`** showing the raw JSON
+4. **Reflection** (4 to 6 sentences). Answer all three:
+   - What does `/api/stats` send back, and what asks for it?
+   - How often does the page ask, and which line of code decides that?
+   - What did you change, and what was the hardest part?
+5. **High school, and middle school going for bonus:** name the stat you added and say which two files you had to edit to make it appear.
 
 ---
 
 ## 📤 How to Submit
 
-Upload the following **screenshots** to **Schoology**:
+Upload the following to **Schoology**:
 
-| Day | What to Screenshot |
+| # | What to Submit |
 |---|---|
-| **Day 1** | Your health monitor page running in the browser on the Pi |
-| **Day 1** | The Terminal showing the server is running |
-| **Day 1** | Your dashboard loaded from a different device (phone, laptop, or Chromebook) on the GHCDS network |
-| **Day 2** | Your Terminal showing a successful SSH login |
-| **Day 2** | The `uname -a` output while connected via SSH |
-| **Day 3** | Your upgraded dashboard running in the browser |
-| **Day 3** | Your Terminal or Thonny showing the server running |
-| **Day 4** | Your customized dashboard (different colors, your name, etc.) |
-
-Also submit your **Day 4 written reflection** (3–5 sentences).
+| 1 | `server.py` |
+| 2 | `static/index.html` |
+| 3 | Screenshot of your dashboard on a different device |
+| 4 | Screenshot of `/api/stats` |
+| 5 | Your written reflection |
 
 **How to upload:**
 
 1. Go to the assignment in Schoology
 2. Click **Submit Assignment**
-3. Click **"Upload"** — do **NOT** click "Create" (Create is for text only and won't let you attach files)
-4. Select all your screenshot files and click **Submit**
+3. Click **"Upload"**. Do **NOT** click "Create" (Create is for text only and will not let you attach files)
+4. Select your files and click **Submit**
 
 > **Need help taking screenshots?** See the [How to Take & Submit Screenshots](../fundamentals/how_to_screenshot.md) guide.
 
@@ -1120,11 +883,14 @@ Also submit your **Day 4 written reflection** (3–5 sentences).
 
 | Category | Points | What I'm Looking For |
 |---|---|---|
-| Setup & Server | 5 | Pi is set up, server runs, page loads |
-| SSH Connection | 5 | Successfully connected remotely, screenshots prove it |
-| Dashboard Upgrade | 5 | Modern dashboard is running with live data |
-| Customization | 5 | Made at least 2 visible changes to the design |
-| Deliverables | 5 | All screenshots and reflections submitted |
+| Working Project | 10 | The server runs, the dashboard loads from a device that is not the Pi, and the numbers are live |
+| Making It Yours | 5 | At least two visible changes are your own. High school: a fifth stat wired from Python through to the page |
+| Understanding | 5 | The reflection explains the request, the response and the two-second timer without hand waving |
+| Deliverables | 5 | Both files, both screenshots and the reflection, submitted on time |
+
+**Bonus:**
+- **+3 points** for a middle school student who completes the Stretch
+- **+2 points** for a fifth stat that is not uptime, found in the psutil documentation yourself
 
 ---
 
@@ -1132,49 +898,70 @@ Also submit your **Day 4 written reflection** (3–5 sentences).
 
 | Term | What It Means |
 |---|---|
-| **Server** | A computer that serves content to other devices |
-| **[Flask](https://flask.palletsprojects.com/)** | A Python tool for building web servers |
-| **API** | A way for programs to talk to each other (our page talks to Python via `/api/stats`) |
-| **[JSON](https://www.json.org/)** | A text format for sending data between programs — looks like `{"cpu": 45}` |
-| **[SSH](https://www.raspberrypi.com/documentation/computers/remote-access.html)** | Secure Shell — remote access to another computer's terminal |
-| **IP Address** | A device's number on a network (like `192.168.1.50`) |
-| **[HTML](https://developer.mozilla.org/en-US/docs/Web/HTML)** | The structure/skeleton of a web page — uses tags like `<div>`, `<h1>`, `<p>` |
-| **[CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)** | The styling — colors, fonts, layout, animations |
-| **[JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)** | The behavior — makes the page interactive and dynamic |
-| **[DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model)** | Document Object Model — the browser's live version of your HTML that JavaScript can change |
-| **Hex Color** | A 6-character code for colors, like `#667eea` (blue) or `#ff0000` (red) |
-| **[CSS Grid](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_grid_layout)** | A layout system that arranges elements in rows and columns |
-| **[Responsive Design](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Responsive_Design)** | A page that looks good on any screen size (phone, tablet, laptop) |
-| **[SVG](https://developer.mozilla.org/en-US/docs/Web/SVG)** | Scalable Vector Graphics — drawing shapes (like our progress circles) with code |
-| **[Virtual Environment](https://docs.python.org/3/tutorial/venv.html)** | An isolated workspace for Python packages |
-| **[psutil](https://psutil.readthedocs.io/)** | A Python library that reads system stats |
-| **Full-Stack** | Working with both the server (backend) and the web page (frontend) |
+| **Server** | A computer whose job is to wait for requests and send back responses |
+| **Request** | A device asking a server for something |
+| **Response** | What the server sends back |
+| **[Flask](https://flask.palletsprojects.com/)** | The Python tool that turns a Python file into a web server |
+| **Route** | A line like `@app.route("/api/stats")` that says which request a function answers |
+| **API** | A door on a server that hands back data instead of a web page |
+| **[JSON](https://www.json.org/)** | A text format for data that programs can read, like `{"cpu": 45}` |
+| **IP Address** | A device's house number on a network, like `10.0.4.71` |
+| **Port** | The door number on that house. Ours is `5000` |
+| **localhost** | A name that always means "this computer, right here" |
+| **[SSH](https://www.raspberrypi.com/documentation/computers/remote-access.html)** | Secure Shell. Typing commands on one computer that run on another |
+| **[HTML](https://developer.mozilla.org/en-US/docs/Web/HTML)** | The structure of a page. What is on it |
+| **[CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)** | The style of a page. What it looks like |
+| **[JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)** | The behavior of a page. What it does and when |
+| **[DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model)** | The browser's live copy of your HTML, which JavaScript can change |
+| **[Virtual Environment](https://docs.python.org/3/tutorial/venv.html)** | A clean workspace holding one project's Python tools |
+| **[psutil](https://psutil.readthedocs.io/)** | The Python library that reads the computer's own CPU, memory and temperature |
+| **Full-Stack** | Working on both the server and the page. You did both |
 
 ---
 
 ## 💡 Troubleshooting
 
-**"I can't see `(pihealth)` in my terminal"**
-→ Run `source ~/pihealth/bin/activate`
+**"ModuleNotFoundError: No module named 'flask'"**
+→ Look at your prompt. Does it start with `(pihealth)`? If not, run `source ~/pihealth/bin/activate`. You need this in every new Terminal window.
 
-**"The page won't load from another device"**
-→ Make sure both devices are on the same Wi-Fi. Use `hostname -I` on the Pi to get the correct IP.
+**"Address already in use"**
+→ Your server is already running in another Terminal window. Find it and press **Ctrl + C**. If you cannot find it, run `pkill -f server.py` and start again.
 
-**"Temperature shows -- or Unavailable"**
-→ That's normal on some Pi models. Everything else should still work.
+**"The page says Not Found"**
+→ Run `ls ~/pi-dashboard/static`. If `index.html` is not in that list, you saved it in the wrong folder.
 
-**"I made a change but the page looks the same"**
-→ Stop the server (Ctrl+C), restart it, and hard-refresh the browser (Ctrl+Shift+R).
+**"My phone cannot load it"**
+→ Three things, in order. Is the phone on GHCDS? Is the server still running on the Pi? Did you type `:5000` after the IP address?
 
-**"I get 'command not found' when I try to run something"**
-→ You probably forgot to activate the virtual environment. Run `source ~/pihealth/bin/activate` first. You need to do this every time you open a new Terminal window.
+**"It loads someone else's dashboard"**
+→ You typed their IP. Run `hostname -I` on your Pi again and fix your sticky note.
 
-**"I get 'Address already in use' when starting the server"**
-→ Your server is already running in another Terminal window. Find that window and press Ctrl+C to stop it first, then try again.
+**"Temperature shows `--`"**
+→ Some Pi models do not report it. Everything else works. Leave it.
 
-**"The code won't paste into Nano"**
-→ In the Terminal, paste is usually **Ctrl+Shift+V** (not Ctrl+V). Or right-click and choose Paste.
+**"I changed the page and nothing happened"**
+→ Stop the server (**Ctrl + C**), start it again, then hard refresh the browser with **Ctrl + Shift + R**.
 
-**"I accidentally messed up the code and nothing works"**
-→ Don't worry — that happens to every programmer! You can always delete the file and start over:
-→ `rm ~/pi-health-web/system_monitor.py` then redo Step 5.
+**"Nothing appears when I type my password"**
+→ That is deliberate. The terminal hides password characters so nobody can read them over your shoulder. Type it and press Enter.
+
+**"I pasted into nano and it came out mangled"**
+→ Paste in the Terminal is **Ctrl + Shift + V**. If the file is a mess, `rm` it and start the file over. It is faster than repairing it.
+
+**"I broke it so badly I want to start over"**
+→ `rm ~/pi-dashboard/server.py` and redo Step 6. This is a normal thing that normal programmers do.
+
+<!-- ===========================================================================
+BEFORE YOU CALL IT DONE
+- [x] Every command checked against current Raspberry Pi OS behavior, 2026-09-16
+- [x] No API keys, passwords, or Wi-Fi credentials anywhere in the file
+- [x] No default pi/raspberry login assumed anywhere
+- [x] Every path uses ~ , never /home/pi
+- [x] Every checkpoint is something a student can actually see
+- [x] Base tier is readable by a 7th grader
+- [x] Safety block present
+- [ ] CONFIRM ON A REAL LAB PI before teaching: username, OS version, whether
+      the pihealth venv and flask/psutil already exist
+- [ ] Site version stands alone: leave out the rubric, the point values and the
+      Schoology upload steps per site rule 8
+=========================================================================== -->
