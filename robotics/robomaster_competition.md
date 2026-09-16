@@ -154,6 +154,18 @@ Three stages. Each one is bigger than the last, and each one finds problems with
 
 ---
 
+## Boo Bash: Propose the Booth
+
+Boo Bash, Friday 30 October, is a public demo booth at school. It is not one of the three
+competition stages above and it is not part of your crew's game. Any student or group of students
+can propose an idea for it: a game, a demo, a station, anything that works for a three hour
+walk-up crowd of families and little kids.
+
+**Mr. Krigger approves whatever actually runs.** Bring him your idea early. The date does not
+move, so an idea proposed the week of is too late to build properly.
+
+---
+
 ## 🎚️ Base and Stretch
 
 **Base, everyone does this.**
