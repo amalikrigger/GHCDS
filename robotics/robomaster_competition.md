@@ -119,6 +119,12 @@ Middle School crews of three double up two roles. The crew decides which two com
 
 ---
 
+## Need a Starting Point?
+
+Research first. Look at how other robot competitions run, and see what people build with the RoboMaster S1 at home and in real events. If your crew is stuck, Mr. Krigger has a catalog of forty sample events across six families: precision driving, vision and sensing, combat, hybrid code-and-drive, crowd events, and no-robot roles. It is a starting point, not a menu. Change one, combine two, or skip the whole list and invent something better. No two crews can build the same game, so the first crew to claim an idea keeps it.
+
+---
+
 ## The Game Design Document
 
 One form, every crew, turned in twice: a draft before Stage 1, a final version after Stage 2. Six fields are required. Test for whether a field is actually finished: **could a referee who has never met you run your game from this page alone?**
