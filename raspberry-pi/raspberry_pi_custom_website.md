@@ -6,31 +6,56 @@ FILE NAME       : raspberry_pi_custom_website.md
 PERIODS         : 4
 FIRST TAUGHT    : T1 2026
 REWRITTEN       : 2026-09-16, to the LESSON_TEMPLATE standard.
+RESTORED        : 2026-09-17. A 2026-09-16 second pass moved this file's whole
+                  walkthrough out into a separate tutorial and left this one
+                  with no steps for Days 2 and 3. Amali reversed it. The file
+                  is back to the 2026-09-16 version with four additions: VS
+                  Code, the project-named folder, the Schoology section, and
+                  the walkthrough as Day 4 Step 5. Title changed to "Your First
+                  Real Website" because the old one promised a site nobody
+                  walks you through, which is now capstone/web_project.md.
 
 WHO DOES THIS
-Not a whole-class block. This is the Software track option in Block 3, and it is
-the natural capstone combo for a student whose capstone is a site or an app.
-Prerequisite: raspberry_pi_dashboard.md. Students need to already have a Pi
-running Flask and know what a route is.
+Everyone, both sections. This is the walkthrough: four periods where every step
+is written out and every student ends with a site of their own choosing, live on
+their Pi. Prerequisite: raspberry_pi_dashboard.md. They need a Pi already
+running Flask and to know what a route is.
+
+The topic stays open, Amali's call. A student picks what the site is about and
+the steps scaffold whatever they picked. What separates this from
+capstone/web_project.md is scale and scaffolding, not topic freedom: here every
+step is given and the scope is four periods, there nothing is given and the
+scope is weeks. An oversized idea gets routed to the capstone by the "If Your
+Idea Is Bigger Than Four Periods" section, which is the thing that stops a
+student starting Chess on a Tuesday.
 
 WHERE THE WORK HAPPENS
 Students AUTHOR on a Mac or Windows computer in a real editor, and the Pi HOSTS.
 Files move over on a jump drive on Day 4. Amali's call, and it is the right one:
 nano is fine for a 40-line server and miserable for a 200-line site.
 
-MACHINE COUNT IS THE RISK
-Lab computers as of 2026-09-16: two Macs and one Windows machine. That is not
-enough for a full section at once. This assignment is fine for a handful of
-track students working in Block 3, which is what it is scoped for. If more than
-about four students pick it at the same time, they need to bring their own
-laptops or pair up, and the Day 1 to Day 3 work can be done at home since it
-needs no Pi and no network.
+MACHINE COUNT IS THE REAL PROBLEM NOW
+Lab computers as of 2026-09-16: two Macs and one Windows laptop. Three machines
+cannot run a 16-student section through a four-day build. This was survivable
+when the file was a track option for a handful of students. It is not, now that
+everyone does it.
+
+Options, none of them free:
+- Students bring their own laptops. Days 1 to 3 need no Pi and no network, so
+  any machine with a browser and a text editor works, and VS Code is free.
+- Pair them. Two students per machine, one driving and one navigating, swapping
+  every fifteen minutes. This is a real professional practice and it halves the
+  machine need, at the cost of each student typing half as much.
+- Stagger it. Half the section does Days 1 to 3 while the other half does
+  something else, then swap.
+- Run Days 1 to 3 as homework and use class time for Day 4 and help.
+Decide before this is scheduled. It is the single thing most likely to sink the
+assignment, and it is a logistics problem rather than a teaching one.
 
 PREP THE DAY BEFORE
 - [ ] Jump drives available and formatted: ____ of ____ (FAT32 or exFAT so both
       Mac and Windows and the Pi can all read them)
-- [ ] Editor on the lab machines: VS Code if installed. If not, Notepad on
-      Windows and TextEdit on Mac. TEACH THE TEXTEDIT TRAP (see below).
+- [ ] VS Code open and working on both Macs and the Windows laptop
 - [ ] Accounts or logins students need: none
 - [ ] Each student's Pi still works from the dashboard assignment
 - [ ] Test the whole build myself end to end: ____________
@@ -45,11 +70,9 @@ TIMING FOR DAY 1
 - 5 min   Save to jump drive, clean up
 
 WHERE STUDENTS GET STUCK
-- TextEdit on Mac saves rich text and names the file index.html.txt, and the
-  page opens as literal code. Format > Make Plain Text FIRST, then save, then
-  check the real filename. This burns a period if nobody warns them.
-- Windows hides file extensions, so they make index.html.txt without seeing it.
-  Turn on View > File name extensions before they start.
+- A student who opens the wrong editor. VS Code only. It colors the code,
+  underlines an unclosed tag, and does not silently save rich text the way
+  TextEdit does. That is most of why we use it.
 - Image is on the Desktop and the src points at the Desktop. Works on their
   machine, breaks on the Pi. Say: everything you use lives inside your site
   folder, or it does not exist.
@@ -75,13 +98,13 @@ AFTER TEACHING IT (fill in, this is the most valuable part)
 - Change next time:
 =========================================================================== -->
 
-# 🌐 Host Your Own Site on the Pi
+# 🌐 Your First Real Website
 
-### You built the dashboard from a recipe. Now build something nobody handed you.
+### Your idea, built step by step, live at an address you can hand to anyone
 
 > **Grades:** 7th–12th &nbsp;|&nbsp; **Time:** 4 class periods &nbsp;|&nbsp; **Difficulty:** Intermediate
 >
-> You already know how to make a Raspberry Pi serve a web page, because you did it. This time nobody gives you the page. You decide what it is, you build it on a real computer with a real editor, you carry it over to your Pi on a jump drive, and you serve it. When you are done, someone can type an address into their phone and see something that did not exist before you made it.
+> You already know how to make a Raspberry Pi serve a web page, because you did it. That one came with the code written out for you. This one is your idea. You decide what the site is, and the four days below walk you through every step of building it on a real computer with a real editor, carrying it to your Pi, and serving it. When you are done, somebody can type an address into their phone and see a thing that did not exist before you made it.
 
 ---
 
@@ -109,7 +132,7 @@ AFTER TEACHING IT (fill in, this is the most valuable part)
 
 **Build your first working version without AI.** No ChatGPT, no Claude, no Gemini, no Copilot writing your code.
 
-This is not about trust. It is about the fact that watching someone else solve a problem does not teach you to solve it. The part where you stare at a broken layout for fifteen minutes and then figure out why is the part where you actually learn something. If you skip it, you get a site and no skill.
+Watching somebody else solve a problem does not teach you to solve it. The fifteen minutes you spend staring at a broken layout before you work out why is where the learning actually happens, so skipping it leaves you with a site and no skill.
 
 **What you can use the whole time:**
 
@@ -123,9 +146,17 @@ This is not about trust. It is about the fact that watching someone else solve a
 
 ---
 
-## 🤝 Capstone Combo
+## 🤝 If Your Idea Is Bigger Than Four Periods
 
-If your idea is big enough, this can be your capstone too. One build, both grades. Bring the idea to Mr. Krigger and get it marked **Approved as Combo** on your proposal review. "Big enough" means it does something real for someone who is not you.
+Some ideas do not fit in four class periods. Chess. A full game. An app with accounts. That is not a problem with the idea, it just means the idea is a capstone.
+
+Two ways that can go:
+
+**Build something smaller here and save the big one.** You still do these four days, because they are how you learn to build and host a site at all. Your big idea then gets weeks instead of days, and a guide of its own at **`capstone/web_project.md`**.
+
+**Or combine them.** One build, both grades, if the idea is strong enough and you commit to it now. Bring it to Mr. Krigger and get it marked **Approved as Combo** on your proposal review, before you start building rather than after.
+
+"Strong enough" means it does something real for somebody who is not you, and it is a genuine step past what you could already do.
 
 ---
 
@@ -139,7 +170,9 @@ Your call. Here are four directions, and none of them is the right answer.
 
 **Something about here.** A hurricane prep checklist your family would really use. A carnival countdown. A page for a local business you like that does not have one. Tide and beach conditions. A food map of St. Croix.
 
-**Something that is just yours.** A portfolio. A link-in-bio page. A fan page for an artist, a game, a team. A quiz or trivia game. A countdown to something you care about. A playable game, and yes people in this class have built Chess, Tetris, Snake, Flappy Bird and Candy Crush before you, so that bar exists and it is reachable.
+**Something that is just yours.** A portfolio. A link-in-bio page. A fan page for an artist, a game, a team. A quiz or trivia game. A countdown to something you care about. A playable game, and yes, people in this class have built Chess, Tetris, Snake, Flappy Bird and Candy Crush before you, so that bar exists and it is reachable.
+
+> **A full game is a capstone, not four periods.** If Chess is what you want, read the section above before you pick it.
 
 > **Go look at [thinkinbits.site/projects](https://www.thinkinbits.site/projects.html) before you decide.** Every one of those was made by someone sitting where you are sitting.
 
@@ -167,10 +200,20 @@ Show Mr. Krigger before you type anything. This takes five minutes and saves you
 
 ### Step 2 — Make your folder
 
-On the computer you are building on, make a folder called `mysite`. Inside it, make three empty files and one folder:
+Make a folder on the Desktop, and **name it after your project**. Not `mysite`, not `project`, not `website`.
+
+| If you are building | Call the folder |
+|---|---|
+| Chess | `chess` |
+| A Carnival countdown | `carnival-countdown` |
+| A page about your band | `stormcrew` |
+
+Lowercase, hyphens instead of spaces. When fifteen people hand in a folder called `mysite`, nobody can find anything, including you in six months.
+
+The examples below all say `chess`. Use your own name wherever you see it. Inside the folder, make three empty files and one folder:
 
 ```
-mysite/
+chess/
 ├── index.html      ← the structure. What is on the page
 ├── styles.css      ← the look. Colors, fonts, spacing
 ├── script.js       ← the behavior. What happens when you click
@@ -180,17 +223,22 @@ mysite/
 **Two rules about filenames, and they matter more than they look:**
 
 1. **All lowercase, no spaces.** Use `beach-photo.jpg`, never `Beach Photo.jpg`. Your Pi runs Linux, and Linux thinks `Photo.jpg` and `photo.jpg` are two different files. Mac and Windows do not. So a page that works perfectly on your laptop can break the moment it reaches the Pi, and the error will not tell you why.
-2. **Everything you use lives inside `mysite/`.** If you drag in a photo from your Desktop, the page will find it on this computer and nowhere else. Copy the file into `assets/` first.
+2. **Everything you use lives inside your project folder.** If you drag in a photo from your Desktop, the page will find it on this computer and nowhere else. Copy the file into `assets/` first.
 
 ---
 
-### Step 3 — Open your editor
+### Step 3 — Open it in VS Code
 
-**If VS Code is on the machine**, use it. File > Open Folder > `mysite`.
+**File → Open Folder**, pick your project folder, and the whole thing appears in the sidebar.
 
-**On Windows with Notepad:** first turn on **View > Show > File name extensions** in File Explorer. Windows hides them by default, which means you will make a file called `index.html.txt` and never see the `.txt`. When you save in Notepad, set **Save as type: All Files**.
+Open the folder, not the file. VS Code works out what your project is from the folder and starts helping you: colors get a swatch beside them, a tag you have not closed gets underlined, and typing `<` offers a list of real tags.
 
-**On Mac with TextEdit:** open TextEdit, then immediately do **Format > Make Plain Text** before typing anything. If you skip this, TextEdit saves a rich text document, your browser shows the code as text instead of running it, and you will lose twenty minutes. After saving, check the real filename is `index.html` and not `index.html.txt`.
+Two things to turn on right now:
+
+- **Word wrap:** `Alt + Z` on Windows, `Option + Z` on Mac. Long lines stop running off the screen.
+- **Auto save:** **File → Auto Save**. Now you never refresh the browser and wonder why nothing changed.
+
+> **✅ Checkpoint:** Your three files are in the VS Code sidebar and clicking one opens it.
 
 ---
 
@@ -270,7 +318,7 @@ Build out the chunks from your sketch. The tags that do most of the work:
 ### 📝 Day 1 Deliverables
 
 - [ ] Your sketch, shown to Mr. Krigger
-- [ ] `mysite/` with three files, opening in a browser, dark background proving CSS is connected
+- [ ] Your project folder with three files, opening in a browser, dark background proving CSS is connected
 - [ ] The folder copied to your jump drive before you leave
 
 ---
@@ -447,21 +495,21 @@ Fix what they find.
 
 ### Step 1 — Copy it over
 
-Put `mysite/` on your jump drive. Plug the drive into your Pi. It shows up in the file manager.
+Put your project folder on your jump drive. Plug the drive into your Pi. It shows up in the file manager.
 
-**Drag the whole `mysite` folder into your home folder.** That is it. Or, if you would rather do it from the Terminal:
+**Drag the whole folder into your home folder.** Done. Or, from the Terminal:
 
 ```bash
-cp -r /media/$USER/YOUR-DRIVE-NAME/mysite ~/mysite
+cp -r /media/$USER/YOUR-DRIVE-NAME/chess ~/chess
 ```
 
 Check it arrived:
 
 ```bash
-ls ~/mysite
+ls ~/chess
 ```
 
-> **✅ Checkpoint:** `ls` lists `index.html`, `styles.css`, `script.js` and `assets`. If `mysite` is missing or empty, the drag did not finish. Do it again and wait for it.
+> **✅ Checkpoint:** `ls` lists `index.html`, `styles.css`, `script.js` and `assets`. If the folder is missing or empty, the drag did not finish. Do it again and wait for it.
 
 ---
 
@@ -475,7 +523,7 @@ nano ~/site_server.py
 from flask import Flask, send_from_directory
 import os
 
-SITE = os.path.expanduser("~/mysite")
+SITE = os.path.expanduser("~/chess")
 
 app = Flask(__name__)
 
@@ -493,9 +541,11 @@ def other_files(filename):
 app.run(host="0.0.0.0", port=8000)
 ```
 
+**Change `~/chess` on the `SITE` line to your own folder name.** That one line is the only thing in this file that is about your project. Everything else is the same for everybody.
+
 Save: **Ctrl + O**, Enter. Exit: **Ctrl + X**.
 
-> **Notice the port is 8000, not 5000.** Your dashboard owns 5000. Two servers cannot share a door. Now you can run both at once, which is exactly why ports exist.
+> **Notice the port is 8000, not 5000.** Your dashboard owns 5000. Two servers cannot share a door. Now you can run both at once. Ports exist for this.
 
 ---
 
@@ -539,15 +589,34 @@ Your Mac or Windows computer is case-insensitive. It treats `Sunset.JPG` and `su
 
 Linux is case-sensitive. To your Pi, those are two unrelated files, and one of them does not exist.
 
-This is why your site worked perfectly for three days and broke the minute it arrived. It is not a Pi problem and you did nothing wrong. It is a difference between operating systems that every web developer gets bitten by exactly once, and now you have had your once.
+So your site worked perfectly for three days and broke the minute it arrived, and you did nothing wrong. Every web developer gets bitten by this difference between operating systems exactly once. Now you have had your once.
 
-**The fix and the habit:** all lowercase, hyphens instead of spaces, forever. `beach-photo.jpg`.
+**The fix and the habit:** all lowercase, hyphens instead of spaces. `beach-photo.jpg`.
+
+---
+
+### Step 5 — The walkthrough
+
+Some time on Day 4, you and Mr. Krigger sit down with your code open for about three minutes. He points at parts of it and asks what they do.
+
+**You cannot revise for this.** It is a conversation about a thing you built, so if you built it you will be fine.
+
+Roughly what gets asked:
+
+- Point at a block of CSS: "what happens if I delete this?"
+- Point at a function: "what calls this?"
+- "Why is this file in this folder?"
+- "What breaks if the Pi restarts?"
+- For anything AI helped with: "change this, now, while I watch."
+
+That last one is why the AI rule has a second condition. If you understand what you shipped, changing it live takes ten seconds.
 
 ---
 
 ### 📝 Day 4 Deliverables
 
 - [ ] Your site loading from your Pi on somebody else's device
+- [ ] Walkthrough done
 - [ ] Everything on that checklist above, confirmed
 
 ---
@@ -606,6 +675,56 @@ Restart the server and check `http://YOUR-PI-IP:8000/api/random` in a browser fi
 
 ---
 
+## 📸 Getting Your Work Into Schoology
+
+Every deliverable on that list is sitting on a different machine right now. Here is how each one gets where it needs to go.
+
+### Taking the screenshots
+
+**On the Pi.** Press the **Print Screen** key. Depending on which version of Raspberry Pi OS your station runs, it either drops a `.png` into your home folder or opens a small capture window. If nothing happens at all, open **Menu → Accessories** and look for **Screenshot**.
+
+**On your phone.** iPhone is **Side button + Volume Up**. Android is **Power + Volume Down**.
+
+**On a lab computer.** Mac is **Cmd + Shift + 4**, then drag a box. Windows is **Windows + Shift + S**, then drag a box and paste it into any app to save.
+
+> Full guide for every device: [How to Take and Submit Screenshots](../fundamentals/how_to_screenshot.md)
+
+**Make sure the address bar is in the shot.** Your screenshot has to prove *where* the page was loaded from, not just that a page loaded. Crop it too tight to see `10.0.4.71:8000` and it proves nothing. Capture the whole browser window.
+
+### Finding your files
+
+Your site files are in your project folder on the Pi, and the server is one level up:
+
+```
+~/chess/index.html
+~/chess/styles.css
+~/chess/script.js
+~/site_server.py
+```
+
+In the Pi's file manager that is **Home → your project folder**. If you cannot find them:
+
+```bash
+ls ~ ~/chess
+```
+
+### Getting all of it uploaded
+
+**Your files and your Pi screenshot: submit from the Pi.** Everything is already on that machine, so this is the short path.
+
+1. Open **Chromium** on the Pi
+2. Go to Schoology and log in
+3. Open the assignment, click **Submit Assignment**, click **Upload**
+4. In the file picker, go to **Home → your project folder** and pick your files
+
+**Your phone screenshot:** email it to yourself, AirDrop it, or put it in Google Drive and download it wherever you are submitting from. You can also log in to Schoology in your phone's browser and upload straight from the camera roll.
+
+**If the Pi will not cooperate:** copy the folder to your jump drive, take it to a lab computer, submit from there.
+
+**Name your files so they are readable:** `krigger-chess-index.html`, `krigger-chess-on-phone.png`. A folder of files called `Screenshot 2026-11-04 at 10.14.22.png` helps nobody, including you.
+
+---
+
 ## 📤 How to Submit
 
 Upload the following to **Schoology**:
@@ -635,7 +754,7 @@ Upload the following to **Schoology**:
 |---|---|---|
 | Working Site | 10 | It loads from the Pi on a device that is not the Pi. Images and links all work. Nothing runs off the screen at phone width |
 | Design and Build | 5 | The structure and the design are yours, not the skeleton with the words changed. At least one working interactive thing. High school: a working API route |
-| Understanding | 5 | You can walk through any part of your code on request, including anything AI touched |
+| Understanding | 5 | The Day 4 walkthrough. You can explain any part of your own code on request, including anything AI touched |
 | Deliverables | 5 | Files, both screenshots and the reflection, submitted on time |
 
 **Bonus:**
@@ -680,7 +799,7 @@ Upload the following to **Schoology**:
 → Three things. Is `styles.css` in the same folder as `index.html`? Is the `<link>` line in the `<head>` spelled exactly right? Did the file save as `styles.css` and not `styles.css.txt`?
 
 **"My browser shows the code as text instead of the page"**
-→ TextEdit saved it as rich text. **Format > Make Plain Text**, save again, and check the filename really ends in `.html`.
+→ The file is not really an `.html` file. Look at the tab name in VS Code. If it says `index.html.txt`, rename it in the sidebar.
 
 **"My images worked on the laptop and not on the Pi"**
 → A capital letter. Check that the filename in your `src` matches the actual file exactly, letter for letter. Rename everything to lowercase and fix the `src` lines.

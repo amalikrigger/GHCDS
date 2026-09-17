@@ -9,12 +9,22 @@ REWRITTEN       : 2026-09-16, to the LESSON_TEMPLATE standard. Replaces the
                   4-day April 2026 version. See knowledge/decisions.md for the
                   full review of what was wrong with it.
 
+THE LAB RUNS TWO OS VERSIONS
+Bookworm on most stations, Trixie on some. Days 1 through 3 are deliberately
+version-neutral: no GUI menu paths, no wpa_supplicant, whoami instead of an
+assumed username, ~ instead of /home/pi. Every command in the body runs the
+same on Bullseye, Bookworm and Trixie. Version only matters in the appendix,
+which carries two separate walkthroughs, Bookworm first.
+
 WHAT CHANGED FROM THE OLD VERSION, AND WHY
-- SD card flashing is gone. The lab Pis are already imaged with monitor
-  stations, so Day 1 starts with code instead of a 15-minute apt upgrade.
-- The Wi-Fi configuration step is gone. It edited
+- SD card flashing moved to an appendix at the back rather than being cut. Day
+  1 starts with code on an already-working Pi instead of a 15-minute apt
+  upgrade, but the full from-blank-card build is still in the file for a new
+  Pi, a wiped card, or another class. Students skip it unless told otherwise.
+- The Wi-Fi configuration step is gone from the body. It edited
   /etc/wpa_supplicant/wpa_supplicant.conf, which Raspberry Pi OS stopped using
-  in Bookworm. The Pis already join GHCDS.
+  in Bookworm, October 2023. The Pis already join GHCDS. The correct modern
+  way to set Wi-Fi, the Imager OS customisation screen, is in the appendix.
 - No default pi/raspberry login anywhere. Students run whoami. Every path uses
   ~ instead of /home/pi.
 - The HTML lives in its own file from minute one instead of inside a Python
@@ -36,6 +46,8 @@ PREP THE DAY BEFORE
 - [ ] Accounts or logins students need: none
 - [ ] Software already on lab machines: a terminal with ssh (Day 2 only)
 - [ ] Posted in the room: the Pi IP sticky-note rule, and the Ctrl+C rule
+- [ ] Decide whether anyone is doing the appendix (flashing from a blank card).
+      If yes, that is its own period and it is mostly waiting.
 - [ ] Test the whole build myself end to end: ____________
 
 TIMING FOR DAY 1
@@ -147,33 +159,48 @@ That prints your Pi's **IP address**, something like `10.0.4.71`. **Write it on 
 
 ---
 
-### Step 2 — Turn on your Python workspace
+### Step 2 — Set up your Python workspace
 
-Type:
+This project needs two Python add-ons that are not installed by default. They live in a little workspace of their own called `pihealth`.
+
+**First, check whether that workspace is already on your Pi:**
 
 ```bash
-source ~/pihealth/bin/activate
+ls ~/pihealth
 ```
 
-Your prompt should now start with `(pihealth)`.
+You will get one of two answers.
 
-**If you got an error instead**, the workspace does not exist yet. Run these three commands one at a time:
+| What you see | What it means | What to do |
+|---|---|---|
+| A short list: `bin`, `include`, `lib`, `pyvenv.cfg` | The workspace is already built | Skip ahead to **Open it** |
+| `No such file or directory` | It is not built yet | Do **Build it** first |
+
+**Build it.** Two commands, one at a time. Wait for the first to finish before running the second.
 
 ```bash
 python3 -m venv ~/pihealth
 ```
 
 ```bash
+~/pihealth/bin/pip install flask psutil
+```
+
+The second one downloads for a minute and prints a lot of text. That is normal. Wait for your prompt to come back.
+
+**Open it.** Everyone runs this, whether you just built the workspace or it was already there:
+
+```bash
 source ~/pihealth/bin/activate
 ```
 
-```bash
-pip install flask psutil
-```
+> **✅ Checkpoint:** Your prompt now starts with `(pihealth)`. It looked like `krigger@raspberrypi:~ $` before and it looks like `(pihealth) krigger@raspberrypi:~ $` now.
 
-> **What just happened?** You made a **virtual environment**, which is a clean workspace that holds the extra Python tools for one project and nothing else. Then you installed two of them: **Flask**, which lets Python run a website, and **psutil**, which lets Python read the computer's own CPU and memory numbers.
+> **What did you just build?** A **virtual environment**: a box that holds one project's extra Python tools and nothing else. Two tools went in the box. **Flask** lets Python run a website. **psutil** lets Python read the computer's own CPU, memory and temperature.
+>
+> Think of it like a toolbox for one job. The rest of the Pi is not affected, and if you ever wreck it you delete the folder and build a new one in thirty seconds.
 
-> **✅ Checkpoint:** Your prompt starts with `(pihealth)`. It will stop doing that every time you open a new Terminal window, and you will have to run the `source` line again. This catches everyone at least once.
+> **⚠️ The thing that catches everyone.** Opening the box only lasts for that one Terminal window. Close it, open a new one, and you are back outside the box. The giveaway is `(pihealth)` missing from your prompt, and the symptom is `ModuleNotFoundError: No module named 'flask'`. The fix is always the same: run the `source` line again.
 
 ---
 
@@ -192,7 +219,7 @@ pi-dashboard/
     └── index.html  ← your actual web page (Step 6)
 ```
 
-The `~` means your home folder. Whatever your username is, `~` points at the right place, which is why we never type the full path.
+The `~` means your home folder. Whatever your username is, `~` points at the right place, so you never have to type the full path.
 
 ---
 
@@ -230,7 +257,7 @@ Save with **Ctrl + O**, then Enter. Exit with **Ctrl + X**.
 python3 server.py
 ```
 
-The Terminal will print a few lines and then sit there looking like it is frozen. It is not frozen. It is listening.
+The Terminal will print a few lines and then sit there looking frozen. It has not crashed, it is listening.
 
 Open **Chromium** on the Pi and go to:
 
@@ -242,7 +269,7 @@ http://localhost:5000
 
 **To stop it:** click the Terminal window and press **Ctrl + C**. Remember this. You will need it constantly.
 
-> **⚠️ You will also see a yellow warning** about a "development server" and not using it in production. Ignore it. It means "this server is built for learning, not for handling a million people at once," which is exactly what you are doing.
+> **⚠️ You will also see a yellow warning** about a "development server" and not using it in production. Ignore it. It means "this server is built for learning, not for handling a million people at once," which is what you are doing.
 
 ---
 
@@ -255,7 +282,7 @@ A server does one thing, over and over, forever:
 3. It sends that thing back. This is a **response**.
 4. Go to 1.
 
-That is it. That is the whole job. When you typed `http://localhost:5000` into Chromium, the browser sent a request to your Pi. Your six lines of Python caught it, and the line `return "<h1>My Pi is a web server.</h1>"` was the response.
+Nothing else. When you typed `http://localhost:5000` into Chromium, the browser sent a request to your Pi. Your six lines of Python caught it, and the line `return "<h1>My Pi is a web server.</h1>"` was the response.
 
 Netflix does the same thing. So does Instagram, so does your school's grade portal. They have more lines of code and more computers, but the loop is identical: wait, request, response, repeat.
 
@@ -387,6 +414,56 @@ Reload `http://localhost:5000` in Chromium.
 
 ---
 
+### 🧠 Mini Lesson — The other way to do this (optional)
+
+Your page lives in its own file, `static/index.html`, and your Python hands that file over when somebody asks for it.
+
+There is a second way, and it is worth seeing once. **HTML is just text.** Python is very good at holding text. So you can put the entire page inside the Python file, as one long string, and skip having a separate file at all.
+
+It looks like this. Three quote marks open a string that is allowed to run across many lines:
+
+```python
+from flask import Flask, render_template_string
+
+app = Flask(__name__)
+
+PAGE = """
+<!doctype html>
+<html>
+  <head><title>Pi Health</title></head>
+  <body>
+    <h1>My page lives inside the Python file.</h1>
+  </body>
+</html>
+"""
+
+
+@app.route("/")
+def home():
+    return render_template_string(PAGE)
+
+
+app.run(host="0.0.0.0", port=5000)
+```
+
+`render_template_string` means "here is a page, as text, send it." Compare that to your `send_from_directory`, which means "here is a filename, go find it and send it."
+
+**Neither one is wrong. They are good at different things.**
+
+| | One file, HTML in the string | Two files, HTML on its own |
+|---|---|---|
+| Number of files to keep track of | 1 | 2 |
+| Editing 200 lines of HTML | Painful. You are scrolling past Python to get to it | Normal |
+| Adding a stylesheet, a photo, a second page | Awkward | It already works |
+| Your editor coloring the HTML correctly | No. It thinks the whole thing is one string | Yes |
+| Handing the project to somebody else | Fine for something small | Fine at any size |
+
+We used two files because your next project is a whole website with images and a stylesheet, and that is the shape it needs. A one-file server is a real and reasonable thing to build when the page is four lines long.
+
+> **Try it if you want.** Copy your `server.py` to `server_onefile.py` first, so you still have the working one, then experiment. Nothing later in this project depends on this.
+
+---
+
 ### 📝 Day 1 Deliverables
 
 - [ ] Screenshot of your dashboard in Chromium on the Pi, with live numbers in it
@@ -479,7 +556,7 @@ Think about ordering food. You do not walk into the kitchen. You tell a waiter w
 {"cpu": 12.5, "memory": 24.8}
 ```
 
-A name, a colon, a value, commas between them, curly braces around the whole thing. That is the entire format. Almost every app on your phone is passing JSON back and forth all day.
+A name, a colon, a value, commas between them, curly braces around the whole thing. The whole format, start to finish. Almost every app on your phone is passing JSON back and forth all day.
 
 Now look at your page again. These three lines are the whole conversation:
 
@@ -547,7 +624,7 @@ python3 server.py
 
 Then open a browser on the lab computer and go to `http://YOUR-PI-IP:5000`.
 
-You just started a server on a computer across the room and loaded its page. That is the actual job of a large number of actual people.
+You just started a server on a computer across the room and loaded its page. Plenty of people do exactly this for a living.
 
 > **Heads up:** when you close the SSH window, the server stops with it. That is normal. There are ways around it, and that is a good thing to ask about if you are curious.
 
@@ -579,7 +656,7 @@ This is how IT staff fix servers they will never physically see, how your school
 
 ---
 
-> **Nothing about the Python changes today.** The server already works. You are only replacing the page it hands out. That is how real web work usually goes: the thing underneath stays put and the thing people see gets redesigned.
+> **Nothing about the Python changes today.** The server already works. You are only replacing the page it hands out. Real web work usually goes this way, with the thing underneath staying put while the thing people see gets redesigned.
 
 ### Step 1 — Start the page over
 
@@ -607,19 +684,39 @@ You now have an empty file. Nothing to select, nothing to accidentally delete ha
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pi Health</title>
 <style>
+  /* =====================================================================
+     THEME BLOCK. Everything you need to restyle this whole page lives
+     between these two lines. Change a value, save, restart, refresh.
+     ===================================================================== */
+  :root {
+    --bg-top:    #0f2027;
+    --bg-bottom: #2c5364;
+    --text:      #ffffff;
+    --muted:     rgba(255, 255, 255, 0.70);
+    --card:      rgba(255, 255, 255, 0.12);
+    --card-edge: rgba(255, 255, 255, 0.18);
+    --track:     rgba(255, 255, 255, 0.15);
+    --ok:        #4ade80;
+    --warn:      #facc15;
+    --hot:       #f87171;
+    --round:     16px;
+    --font:      system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  /* ================================================================== */
+
   * { box-sizing: border-box; }
 
   body {
     margin: 0;
     min-height: 100vh;
     padding: 32px 20px;
-    color: #fff;
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    background: linear-gradient(135deg, #0f2027, #2c5364);
+    color: var(--text);
+    font-family: var(--font);
+    background: linear-gradient(135deg, var(--bg-top), var(--bg-bottom));
   }
 
   h1 { margin: 0 0 4px; font-size: 28px; }
-  .sub { margin: 0 0 28px; opacity: 0.7; font-size: 14px; }
+  .sub { margin: 0 0 28px; color: var(--muted); font-size: 14px; }
 
   .grid {
     display: grid;
@@ -630,38 +727,38 @@ You now have an empty file. Nothing to select, nothing to accidentally delete ha
 
   .card {
     padding: 20px;
-    border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    background: rgba(255, 255, 255, 0.12);
+    border-radius: var(--round);
+    border: 1px solid var(--card-edge);
+    background: var(--card);
     backdrop-filter: blur(10px);
     transition: transform 0.15s ease;
   }
   .card:hover { transform: translateY(-4px); }
 
-  .card h2 { margin: 0 0 12px; font-size: 15px; font-weight: 600; opacity: 0.85; }
+  .card h2 { margin: 0 0 12px; font-size: 15px; font-weight: 600; color: var(--muted); }
 
   .value { font-size: 42px; font-weight: 700; line-height: 1; }
-  .unit  { font-size: 16px; font-weight: 400; opacity: 0.7; margin-left: 2px; }
+  .unit  { font-size: 16px; font-weight: 400; color: var(--muted); margin-left: 2px; }
 
   .bar {
     margin-top: 14px;
     height: 8px;
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.15);
+    background: var(--track);
     overflow: hidden;
   }
   .fill {
     width: 0%;
     height: 100%;
     border-radius: 999px;
-    background: #4ade80;
+    background: var(--ok);
     transition: width 0.4s ease, background 0.4s ease;
   }
 
-  .warn .fill  { background: #facc15; }
-  .warn .value { color: #facc15; }
-  .hot  .fill  { background: #f87171; }
-  .hot  .value { color: #f87171; }
+  .warn .fill  { background: var(--warn); }
+  .warn .value { color: var(--warn); }
+  .hot  .fill  { background: var(--hot); }
+  .hot  .value { color: var(--hot); }
 </style>
 </head>
 <body>
@@ -779,32 +876,363 @@ This says "make as many columns as fit, each at least 220px wide." Drag your bro
 box.classList.add("hot");
 ```
 
-That split matters. CSS decides how things look. JavaScript decides when. Keeping those separate is most of what makes a large site possible to work on.
+That split matters. CSS handles how things look, JavaScript handles when, and keeping the two apart is what lets a big site stay workable once there are thousands of lines of it.
 
 ---
 
-### Step 3 — Change things
+### Step 3 — Make it yours
 
-Stop the server, edit `static/index.html`, save, restart, hard refresh. Repeat. You cannot break anything that a retype will not fix.
+Here is the loop you will repeat for the rest of the period:
 
-**Challenge 1 — Your colors.** Find the `linear-gradient` line and swap the two hex codes.
+1. **Ctrl + C** in the Terminal to stop the server
+2. `nano ~/pi-dashboard/static/index.html`
+3. Change something, **Ctrl + O**, Enter, **Ctrl + X**
+4. `python3 ~/pi-dashboard/server.py`
+5. **Ctrl + Shift + R** in the browser
 
-| Vibe | Try |
+You cannot break anything here that retyping will not fix. Change one thing at a time so you know what did what.
+
+---
+
+### Level 1 — The theme block
+
+Look at the top of your CSS. Everything between the two long comment lines is the theme. Change a value there and it changes everywhere on the page at once, because every rule below reads from it instead of having its own copy of the color.
+
+| Variable | What it controls |
 |---|---|
-| Ocean | `#0093E9, #80D0C7` |
-| Sunset | `#FA8BFF, #2BD2FF` |
-| Forest | `#11998e, #38ef7d` |
-| Near black | `#0f0f0f, #1a1a2e` |
+| `--bg-top` and `--bg-bottom` | The two colors the background fades between |
+| `--text` | Every piece of normal text |
+| `--muted` | Labels and units. Dimmer than `--text` on purpose |
+| `--card` | The card's own fill. `rgba` because it is see-through |
+| `--card-edge` | The thin line around each card |
+| `--track` | The empty part of each bar |
+| `--ok`, `--warn`, `--hot` | Green, yellow and red |
+| `--round` | How rounded the corners are. `0px` is sharp, `28px` is a pill |
+| `--font` | The typeface for the whole page |
 
-Build your own at [coolors.co](https://coolors.co/).
+Try this first, so you can see how far one variable reaches:
 
-**Challenge 2 — Your icons.** Swap the emoji in the `<h2>` lines. CPU could be `🧠` or `🏎️`. Temperature could be `❄️` if you are feeling optimistic.
+```css
+--round: 0px;
+```
 
-**Challenge 3 — Your name.** Under the `<h1>`, change the `.sub` line to say whose Pi this is.
+Save, restart, refresh. Every card went square. You changed one number.
 
-**Challenge 4 — Your thresholds.** In the `CARDS` list, change `warn` and `hot`. Set CPU's `warn` to `5` and watch the card sit in yellow permanently. Then set it back and think about why a monitoring tool that always says "warning" is worse than no monitoring tool.
+---
 
-**Challenge 5 — Your layout.** Change `minmax(220px, 1fr)` to `minmax(400px, 1fr)` and see what happens to the number of columns.
+### Level 2 — Theme packs
+
+Each of these replaces your whole `:root` block. Copy one in, restart, look at it. Then take the one you like best and start changing its numbers.
+
+**Terminal.** Sharp corners, monospace, the look of a machine that does not care about your feelings.
+
+```css
+  :root {
+    --bg-top:    #000000;
+    --bg-bottom: #0a1a0a;
+    --text:      #d1fae5;
+    --muted:     rgba(209, 250, 229, 0.55);
+    --card:      rgba(34, 197, 94, 0.07);
+    --card-edge: rgba(34, 197, 94, 0.30);
+    --track:     rgba(34, 197, 94, 0.15);
+    --ok:        #22c55e;
+    --warn:      #eab308;
+    --hot:       #ef4444;
+    --round:     4px;
+    --font:      "Courier New", monospace;
+  }
+```
+
+**Midnight.** Purple, soft, easy on the eyes in a dark room.
+
+```css
+  :root {
+    --bg-top:    #16162e;
+    --bg-bottom: #4a1f6b;
+    --text:      #f3e8ff;
+    --muted:     rgba(243, 232, 255, 0.65);
+    --card:      rgba(255, 255, 255, 0.10);
+    --card-edge: rgba(216, 180, 254, 0.28);
+    --track:     rgba(255, 255, 255, 0.14);
+    --ok:        #86efac;
+    --warn:      #fde047;
+    --hot:       #fb7185;
+    --round:     20px;
+    --font:      system-ui, sans-serif;
+  }
+```
+
+**Volcano.** For a Pi that runs hot and wants you to know it.
+
+```css
+  :root {
+    --bg-top:    #1c0a08;
+    --bg-bottom: #57180f;
+    --text:      #fff7ed;
+    --muted:     rgba(255, 247, 237, 0.62);
+    --card:      rgba(255, 255, 255, 0.09);
+    --card-edge: rgba(255, 170, 120, 0.25);
+    --track:     rgba(255, 255, 255, 0.13);
+    --ok:        #7ee787;
+    --warn:      #fbbf24;
+    --hot:       #ff5c4d;
+    --round:     14px;
+    --font:      system-ui, sans-serif;
+  }
+```
+
+**Sea Glass.** Teal and calm. This one looks the most like something a company would ship.
+
+```css
+  :root {
+    --bg-top:    #042f2e;
+    --bg-bottom: #115e59;
+    --text:      #ecfeff;
+    --muted:     rgba(236, 254, 255, 0.66);
+    --card:      rgba(255, 255, 255, 0.11);
+    --card-edge: rgba(153, 246, 228, 0.26);
+    --track:     rgba(255, 255, 255, 0.14);
+    --ok:        #5eead4;
+    --warn:      #fcd34d;
+    --hot:       #fb7185;
+    --round:     18px;
+    --font:      system-ui, sans-serif;
+  }
+```
+
+**Slate.** Grey, quiet, professional. The boring one, and boring is sometimes correct.
+
+```css
+  :root {
+    --bg-top:    #1e293b;
+    --bg-bottom: #334155;
+    --text:      #f1f5f9;
+    --muted:     rgba(241, 245, 249, 0.60);
+    --card:      rgba(255, 255, 255, 0.07);
+    --card-edge: rgba(255, 255, 255, 0.14);
+    --track:     rgba(255, 255, 255, 0.12);
+    --ok:        #4ade80;
+    --warn:      #facc15;
+    --hot:       #f87171;
+    --round:     10px;
+    --font:      system-ui, sans-serif;
+  }
+```
+
+**Paper.** A light theme. Look closely at this one: the text went dark, the cards went white, and the transparent values all flipped. Nothing outside the theme block changed.
+
+```css
+  :root {
+    --bg-top:    #f8fafc;
+    --bg-bottom: #dbe3ec;
+    --text:      #0f172a;
+    --muted:     rgba(15, 23, 42, 0.60);
+    --card:      rgba(255, 255, 255, 0.75);
+    --card-edge: rgba(15, 23, 42, 0.12);
+    --track:     rgba(15, 23, 42, 0.10);
+    --ok:        #16a34a;
+    --warn:      #ca8a04;
+    --hot:       #dc2626;
+    --round:     14px;
+    --font:      system-ui, sans-serif;
+  }
+```
+
+> **🎨 Why nearly every one of these is dark.** Your page has to show green, yellow and red and have all three read clearly. Those three colors have nowhere to go on a bright orange or hot pink background, they just turn to mud. Real dashboards, the ones air traffic controllers and network engineers stare at all day, are almost always dark for this reason. If you build a bright theme anyway, check that a red card still shouts at you from across the room. If it does not, the theme is pretty and useless.
+
+Build your own palette at [coolors.co](https://coolors.co/). Pick two close colors for the background and keep your green, yellow and red bright.
+
+---
+
+### Level 3 — Real upgrades
+
+These add something that is not there yet. Do as many as you want, in any order.
+
+#### 1. A real typeface
+
+Free fonts from [Google Fonts](https://fonts.google.com/). Pick one, then add **one line** in your `<head>`, above `<style>`:
+
+```html
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap">
+```
+
+And point the theme at it:
+
+```css
+--font: "Space Grotesk", system-ui, sans-serif;
+```
+
+Swap `Space+Grotesk` for any font name from the site, with `+` instead of spaces. Good ones for a dashboard: `Space+Grotesk`, `JetBrains+Mono`, `Outfit`, `Chivo+Mono`, `Archivo`.
+
+> Keep `system-ui, sans-serif` on the end. It is the backup, covering the two seconds before the font arrives, or forever if the Wi-Fi is down.
+
+---
+
+#### 2. A background that moves
+
+Add this at the bottom of your CSS, above `</style>`:
+
+```css
+@keyframes drift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+body {
+  background: linear-gradient(135deg, var(--bg-top), var(--bg-bottom), var(--bg-top));
+  background-size: 400% 400%;
+  animation: drift 18s ease infinite;
+}
+```
+
+The gradient is stretched to four times the screen and then slid slowly back and forth. Change `18s` to `4s` to see it clearly, then put it back to something calm. A background that races is a background nobody can read in front of.
+
+---
+
+#### 3. Make the numbers glow
+
+```css
+.value {
+  text-shadow: 0 0 18px currentColor;
+}
+```
+
+`currentColor` means "whatever color this text already is." So the green numbers glow green, and the moment a card goes red the glow goes red too. One line, and it follows your thresholds for free.
+
+---
+
+#### 4. Make a hot card pulse
+
+```css
+@keyframes alarm {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(248, 113, 113, 0.55); }
+  50%      { box-shadow: 0 0 0 14px rgba(248, 113, 113, 0); }
+}
+
+.card.hot {
+  animation: alarm 1.4s ease-out infinite;
+}
+```
+
+A ring pushes outward from the card and fades. It only runs on cards your JavaScript has marked `hot`, so most of the time you will never see it. Good alarms are quiet. Open six browser tabs to drive the CPU up and watch it fire.
+
+---
+
+#### 5. A clock in the corner
+
+In your HTML, right under the `<h1>`:
+
+```html
+<p class="sub">Live from my Pi &middot; <span id="clock">--:--:--</span></p>
+```
+
+And at the bottom of your `<script>`, just above `</script>`:
+
+```javascript
+function tick() {
+  document.getElementById("clock").textContent =
+    new Date().toLocaleTimeString();
+}
+tick();
+setInterval(tick, 1000);
+```
+
+Notice this clock is the **browser's** time, not the Pi's. It never asks the server anything. If you want the Pi's own time, that is a new key in `/api/stats`, which is the Stretch.
+
+---
+
+#### 6. Show when the data last arrived
+
+Add a line under the grid in your HTML:
+
+```html
+<p class="sub" id="stamp">Waiting for the first reading.</p>
+```
+
+Then add one line inside `refresh()`, at the very end of the function, after the `for` loop closes:
+
+```javascript
+document.getElementById("stamp").textContent =
+  "Last updated " + new Date().toLocaleTimeString();
+```
+
+Now you can tell the difference between "everything is fine" and "the server died three minutes ago and these numbers are stale." Every monitoring tool worth using has this, and it is one line.
+
+---
+
+#### 7. One big card and three small ones
+
+Replace the `.grid` rule:
+
+```css
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+  max-width: 960px;
+}
+
+#card-cpu {
+  grid-column: span 2;
+}
+
+#card-cpu .value {
+  font-size: 72px;
+}
+```
+
+CPU now takes two columns and a much bigger number, so the page has a main character instead of four things shouting equally. Put the big card on whichever stat you actually care about.
+
+---
+
+#### 8. A photo behind everything
+
+Put an image in your `static` folder, then:
+
+```css
+body {
+  background-image:
+    linear-gradient(135deg, rgba(15, 32, 39, 0.85), rgba(44, 83, 100, 0.85)),
+    url("/pi-background.jpg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+```
+
+Two backgrounds stacked: your gradient on top, at 85% opacity, and the photo under it. Without that gradient layer the photo eats your text. Free photos at [unsplash.com](https://unsplash.com/).
+
+> Remember the filename rule from the server: `/pi-background.jpg` has to match the real file exactly, lowercase and all. Your server hands out anything in `static`, so the path starts with a single `/`.
+
+---
+
+#### 9. Your own warning levels
+
+In the `CARDS` list at the top of your JavaScript:
+
+```javascript
+{ key: "cpu", max: 100, warn: 50, hot: 80 },
+```
+
+Set `warn` to `5` and restart. The card sits in yellow permanently, forever, no matter what the Pi is doing.
+
+An alarm that is always on is worse than no alarm, because people stop looking at it. Real engineers argue about these two numbers for hours. Pick yours on purpose and be ready to say why in your reflection.
+
+---
+
+#### 10. Everything else
+
+- Swap the emoji in the `<h2>` lines. `⚡` `🧠` `💽` `🔥` `❄️` `🏎️` `📊` `🛰️`
+- Put your name, or your Pi's name, in the `.sub` line
+- Change `gap: 18px` to `gap: 4px` and then `gap: 40px`
+- Change `translateY(-4px)` in `.card:hover` to `scale(1.04)` and hover a card
+- Add `rotate(-1deg)` to `.card:hover` and decide whether you like chaos
+- Delete a card you do not care about. Delete its line from `CARDS` too, or the JavaScript will look for something that is not there
+
+---
+
+> **Before you screenshot it.** Step back from the monitor. Can you tell in one second which number is the worst one? If every card looks equally loud, that is a design problem, not a color problem. Make one thing bigger, or make the calm cards quieter.
 
 ---
 
@@ -853,6 +1281,62 @@ You will need `import time` at the top with the other imports. Restart the serve
    - How often does the page ask, and which line of code decides that?
    - What did you change, and what was the hardest part?
 5. **High school, and middle school going for bonus:** name the stat you added and say which two files you had to edit to make it appear.
+
+---
+
+## 📸 How to Get Everything You Need to Hand In
+
+Nothing on this list is hard, but every one of them has caught somebody. Read it before the last five minutes of class.
+
+### Taking the screenshot
+
+**On the Pi.** Press the **Print Screen** key. Depending on which version of Raspberry Pi OS your station is running, it either drops a `.png` straight into your home folder or opens a small capture window. If pressing it does nothing at all, open **Menu → Accessories** and look for **Screenshot**.
+
+**On your phone.** iPhone is **Side button + Volume Up**. Android is **Power + Volume Down**.
+
+**On a lab computer.** Mac is **Cmd + Shift + 4**, then drag a box. Windows is **Windows + Shift + S**, then drag a box, then paste it into any app and save it.
+
+> Full guide, with more options for every device: [How to Take and Submit Screenshots](../fundamentals/how_to_screenshot.md)
+
+**Make sure the address bar is in the shot.** Two of your screenshots have to prove *where* the page was loaded from, not just that a page loaded. If the shot is cropped so tight that nobody can see `10.0.4.71:5000` in the address bar, it does not prove anything. Capture the whole browser window.
+
+---
+
+### Finding your two files
+
+They are where you made them:
+
+```
+~/pi-dashboard/server.py
+~/pi-dashboard/static/index.html
+```
+
+In the Pi's file manager that is **Home → pi-dashboard**, and `index.html` is one folder deeper, inside **static**. If you cannot find them, run this in the Terminal and it will print exactly where they are:
+
+```bash
+ls ~/pi-dashboard ~/pi-dashboard/static
+```
+
+---
+
+### Getting all of it into Schoology
+
+Pick whichever fits what you are holding.
+
+**Your files and your Pi screenshots: submit from the Pi.** This is the short path, because everything is already on that machine.
+
+1. Open **Chromium** on the Pi
+2. Go to Schoology and log in
+3. Open the assignment, click **Submit Assignment**, click **Upload**
+4. When the file picker opens, go to **Home → pi-dashboard** and pick `server.py`, then repeat for `static/index.html`
+
+**Your phone screenshot: get it onto a computer first.** Email it to yourself, AirDrop it, or put it in Google Drive, then download it wherever you are submitting from. You can also just log in to Schoology in your phone's browser and upload it straight from your camera roll.
+
+**If the Pi will not cooperate:** copy the whole `pi-dashboard` folder onto a jump drive, take it to a lab computer, and submit from there.
+
+> **⚠️ Upload, never Create.** "Create" only accepts typed text. It will not take a file. This is the single most common way work in this class gets submitted as nothing.
+
+**Name your files so they are readable:** `krigger-server.py`, `krigger-dashboard-on-phone.png`, `krigger-api-stats.png`. A folder of eight files called `Screenshot 2026-11-04 at 10.14.22.png` helps nobody, including you.
 
 ---
 
@@ -951,6 +1435,179 @@ Upload the following to **Schoology**:
 **"I broke it so badly I want to start over"**
 → `rm ~/pi-dashboard/server.py` and redo Step 6. This is a normal thing that normal programmers do.
 
+---
+
+# Appendix: Setting Up a Pi From a Blank Card
+
+**Skip this unless Mr. Krigger tells you to do it.** The Pis in the lab are already set up, and Day 1 assumes yours boots to a desktop. This appendix is here for the times it does not: a brand new Pi, a card that got wiped, or a class doing the whole build from scratch.
+
+There are two walkthroughs below because the lab runs two versions of Raspberry Pi OS. **Find out which one you need before you start.** If the Pi still boots, open a Terminal and run:
+
+```bash
+cat /etc/os-release
+```
+
+Look at the `VERSION_CODENAME` line. It says either `bookworm` or `trixie`. If the card is blank and there is nothing to boot, use the Bookworm walkthrough unless you were told otherwise.
+
+---
+
+## Version A: Bookworm
+
+This is the version most of the lab is running.
+
+### A1 — Get the Imager
+
+On any Mac or Windows computer, download and install **[Raspberry Pi Imager](https://www.raspberrypi.com/software/)**. Then put the microSD card into that computer, using an adapter if you need one.
+
+### A2 — Choose the three things
+
+Open Imager. It asks you three questions.
+
+1. **Choose Device.** Pick the Pi model you are holding. It is printed on the board.
+2. **Choose OS.** Bookworm is no longer the default, so it is a few clicks in: **Raspberry Pi OS (other)**, then the 64-bit Bookworm entry. Read the description before you click, it names the version.
+3. **Choose Storage.** Pick your SD card.
+
+> **⚠️ Look hard at the storage list.** Imager erases whatever you choose, completely, with no warning you can undo. If you see an external drive in that list, make very sure you are not about to pick it.
+
+### A3 — Fill in OS customisation
+
+Imager asks whether you want to customise before writing. **Say yes.** This is the whole reason setup is easy now. Fill in:
+
+| Field | What to put |
+|---|---|
+| Hostname | Something you will recognize, like `krigger-pi` |
+| Username | Your choice. Write it down. There is no default anymore |
+| Password | Your choice. Write it down |
+| Wireless LAN | The network name and password Mr. Krigger gives you |
+| Wireless LAN country | `US` |
+| Locale and time zone | Whatever the school is on |
+
+Then open the **Services** tab and turn on **Enable SSH**, with password authentication.
+
+> **This screen replaces three old setup steps at once.** It creates your account, joins the Wi-Fi, and turns on remote access, all before the card has ever been in a Pi. Older instructions on the internet will tell you to edit a file called `wpa_supplicant.conf` to join Wi-Fi. That has not worked since 2023. This screen is how it is done now.
+
+> **Your password does not go in any file, ever.** You typed it here and you wrote it on paper. That is where it lives.
+
+### A4 — Write the card
+
+Click **Write** and wait. This takes several minutes and then verifies what it wrote, which takes several more. Leave it alone.
+
+### A5 — First boot
+
+Put the card in the Pi, connect the monitor, keyboard and mouse, then plug in the power last. The first boot takes longer than normal, and the Pi may restart itself once. Let it.
+
+You should land on a desktop with a menu bar across the top.
+
+> **✅ Checkpoint:** A desktop, and the Wi-Fi icon in the top right shows it is connected.
+
+### A6 — Update it
+
+Open the Terminal and run:
+
+```bash
+sudo apt update && sudo apt full-upgrade -y
+```
+
+```bash
+sudo reboot
+```
+
+The first command can take fifteen minutes on a fresh card, longer if a whole class is doing it at once. This is the boring part of the job and there is no way around it.
+
+- `sudo` means "run this as the administrator"
+- `apt update` checks what new versions exist
+- `full-upgrade -y` installs them, and `-y` means stop asking me to confirm
+- `reboot` restarts so the updates take effect
+
+### A7 — Confirm it is ready for Day 1
+
+```bash
+whoami
+```
+
+```bash
+hostname -I
+```
+
+The first prints the username you chose in Imager. The second prints an IP address. If either one comes back empty or wrong, fix it now rather than in the middle of Day 1.
+
+**Where things are on the Bookworm desktop**, if you need them:
+
+| What | Where |
+|---|---|
+| Terminal | The black rectangle icon on the top bar |
+| Thonny (Python editor) | **Menu → Programming → Thonny** |
+| SSH on or off | **Menu → Preferences → Raspberry Pi Configuration → Interfaces** |
+| Screenshot | **Print Screen** key |
+
+You are ready. Go to Day 1.
+
+---
+
+## Version B: Trixie
+
+Trixie is the newer Raspberry Pi OS, built on Debian 13. Some of the lab machines run it.
+
+### B1 — Everything in A1 through A4 is the same
+
+Same Imager, same three questions, same customisation screen, same Write button. **One difference:** at **Choose OS**, Trixie is the default now, so it is the plain **Raspberry Pi OS (64-bit)** entry at the top. You do not need to go into "other".
+
+Do steps **A1 through A4** exactly as written above, with that one change.
+
+### B2 — First boot
+
+Same as A5. Card in, monitor and keyboard connected, power last, wait through a slow first boot.
+
+The desktop looks different from Bookworm. It has been redrawn, so the icons and the wallpaper will not match what the student next to you is looking at. Nothing about this project changes because of it.
+
+### B3 — Update it
+
+Identical to A6:
+
+```bash
+sudo apt update && sudo apt full-upgrade -y
+```
+
+```bash
+sudo reboot
+```
+
+### B4 — Confirm it is ready for Day 1
+
+Identical to A7. Run `whoami` and `hostname -I` and write both down.
+
+**Where things are on the Trixie desktop:**
+
+| What | Where |
+|---|---|
+| Terminal | The black rectangle icon on the top bar, same as before |
+| Thonny (Python editor) | **Menu → Programming → Thonny** |
+| SSH on or off | **Menu → Preferences → Raspberry Pi Configuration → Interfaces** |
+| Screenshot | **Print Screen**. If nothing happens, **Menu → Accessories → Screenshot** |
+
+> **If a menu is not where this table says it is**, the desktop got rearranged in an update. Say so and Mr. Krigger will fix this table. Everything you do at the Terminal works identically on both versions, and that is a large part of why this project lives at the Terminal.
+
+You are ready. Go to Day 1.
+
+---
+
+## What is actually different between the two
+
+Short answer, for the curious: almost nothing you will touch.
+
+| | Bookworm | Trixie |
+|---|---|---|
+| Debian version underneath | 12 | 13 |
+| Which one Imager offers first | Under "other" | The default |
+| How the desktop looks | Older look | Redrawn |
+| Terminal, Python, Flask, SSH, `whoami`, `hostname -I` | Identical | Identical |
+| Wi-Fi setup | NetworkManager | NetworkManager |
+| Default `pi` / `raspberry` login | None | None |
+
+Every command in Days 1 through 3 runs the same on both, and that was deliberate. Commands stay stable for decades while menus get redesigned every couple of years, so the commands are the part worth learning.
+
+---
+
 <!-- ===========================================================================
 BEFORE YOU CALL IT DONE
 - [x] Every command checked against current Raspberry Pi OS behavior, 2026-09-16
@@ -962,6 +1619,9 @@ BEFORE YOU CALL IT DONE
 - [x] Safety block present
 - [ ] CONFIRM ON A REAL LAB PI before teaching: username, OS version, whether
       the pihealth venv and flask/psutil already exist
+- [ ] CONFIRM THE TRIXIE MENU PATHS in Appendix B on an actual Trixie station.
+      The Bookworm ones are known good. The Trixie table was written from the
+      documented layout, not from standing in front of one.
 - [ ] Site version stands alone: leave out the rubric, the point values and the
       Schoology upload steps per site rule 8
 =========================================================================== -->
