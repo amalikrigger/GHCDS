@@ -10,7 +10,7 @@ PREP THE DAY BEFORE
 - [ ] Hardware charged / counted: none, this is a laptop lesson
 - [ ] Accounts or logins students need: none new. They use accounts they already have.
       Do NOT require a school account for 2FA, some are managed and students cannot change them.
-- [ ] Software already on lab machines: a browser. VS Code or any text editor for the Day 2 stretch.
+- [ ] Software already on lab machines: a browser. VS Code, only for the optional Day 2 bonus.
 - [ ] Printed or posted in the room: the three phishing examples, blown up, taped to the wall
 - [ ] Test the whole build myself end to end: ____
 
@@ -25,7 +25,7 @@ TIMING FOR PERIOD 2 (Day 2: data and secrets)
 - 5 min   Hook: show a photo and find the address, school, or plate in the background
 - 10 min  Deepfake clip, then the verify-through-another-channel rule
 - 15 min  Secrets: what one is, where they leak, the taped-key comparison
-- 25 min  The .env drill. Base tier spots the leak, stretch tier builds the .env and .gitignore
+- 25 min  The .env drill. Base tier spots the leak, optional bonus builds the .env and .gitignore
 - 10 min  Reflection and clean up
 
 WHERE STUDENTS GET STUCK
@@ -36,7 +36,7 @@ WHERE STUDENTS GET STUCK
   Do not push them into the terminal.
 - "I don't have anything worth stealing" -> the SIM swap and account-resale angle usually lands.
 
-IF THEY FINISH EARLY   : the Day 2 stretch, or the haveibeenpwned audit bonus
+IF THEY FINISH EARLY   : the Day 2 optional bonus, or the haveibeenpwned audit bonus
 IF THEY NEED MORE TIME : Day 2 secrets carries into the next period. Day 1 must finish on Day 1
                          because the 2FA screenshot is the deliverable that takes longest to chase.
 
@@ -75,7 +75,7 @@ AFTER TEACHING IT (fill in, this is the most valuable part)
 
 - A computer with a web browser
 - One account you actually control and can change settings on. A personal account is fine and is usually easier than a school one.
-- A text editor for the Day 2 stretch. [VS Code](https://code.visualstudio.com/) is on the lab machines.
+- Only for the optional Day 2 bonus: [VS Code](https://code.visualstudio.com/). It is on the lab machines. No VS Code at home? Skip the bonus. Nothing else in this lesson needs it.
 - [Password strength checker](https://www.security.org/how-secure-is-my-password/), runs in the browser, nothing to install
 - [Have I Been Pwned](https://haveibeenpwned.com/), for the bonus
 
@@ -309,7 +309,7 @@ API_KEY=sk-a83ff20c9d4e1b77c5
 2. If you emailed a classmate only `app.py`, would they have your key?
 3. What would happen if you posted `.env` to GitHub?
 
-**Stretch tier, required for high school, bonus for middle school.**
+**Optional bonus, high school and middle school.** Not required for anyone. It needs VS Code, so if you do not have it, skip ahead. (Changed 2026-09-24: this used to be required for high school.)
 
 Rewritten 2026-09-10 for students who have never opened a terminal. The whole thing happens
 inside VS Code, using its built-in terminal, so `cd` never comes up and the dotfile problem
@@ -390,16 +390,16 @@ Real key leaked by a real company, real often. This is not a beginner mistake. I
 ### 📝 Day 2 Deliverables
 
 - [ ] Your three answers from the base tier
-- [ ] Stretch only: screenshot of the terminal printing the key, plus your `.gitignore`
+- [ ] Optional bonus, if you did it: screenshot of the terminal printing the key, plus your `.gitignore`
 
 ---
 
-## 🎚️ Base and Stretch
+## 🎚️ Base and Optional Bonus
 
 **Base, everyone does this.**
 Three passphrases with crack times, two-factor authentication turned on with a screenshot, the phishing red flag identified, and the three secret-handling questions answered correctly.
 
-**Stretch, required for high school, bonus for middle school.**
+**Optional bonus, high school and middle school.** Not required for anyone. It needs VS Code.
 A working `.env` setup: the `.env` file, a `.gitignore` containing it, and a script that prints the key without the key appearing anywhere in the script. Screenshot the terminal output.
 
 ---
@@ -409,7 +409,7 @@ A working `.env` setup: the `.env` file, a `.gitignore` containing it, and a scr
 1. **Three passphrases** with the crack time for each. Make up new ones, never submit a password you use.
 2. **Screenshot of two-factor authentication** enabled on an account, private details blurred
 3. **Phishing analysis**: two example messages with the red flags labeled
-4. **Secrets questions**: your three answers, or the stretch screenshots if you did the stretch
+4. **Secrets questions**: your three answers. Optional bonus: the terminal screenshot and `.gitignore` from the VS Code part
 5. **Reflection** (3 to 5 sentences): What is the biggest security mistake you have been making? What are you changing?
 
 ---
@@ -423,7 +423,7 @@ Upload the following to **Schoology**:
 | 1 | Your three passphrases with crack times |
 | 2 | Screenshot of two-factor authentication enabled, private info blurred |
 | 3 | Two phishing examples with the red flags labeled |
-| 4 | Your three secrets answers, or the stretch terminal screenshot and `.gitignore` |
+| 4 | Your three secrets answers. Optional bonus: the terminal screenshot and `.gitignore` |
 | 5 | Your written reflection (3 to 5 sentences) |
 
 **How to upload:**
@@ -442,12 +442,12 @@ Upload the following to **Schoology**:
 | Category | Points | What I'm Looking For |
 |---|---|---|
 | Accounts Secured | 10 | Strong passphrases, two-factor actually enabled with proof, phishing red flags correctly identified |
-| Secrets Handling | 5 | Base answers correct, or a working `.env` and `.gitignore` for the stretch |
+| Secrets Handling | 5 | Base answers correct |
 | Understanding | 5 | Reflection explains in your own words why these steps work |
 | Deliverables | 5 | Everything above submitted, on time |
 
 **Bonus:**
-- **+3 points** for a middle school student who completes the stretch tier
+- **+3 points** for any student, HS or MS, who completes the optional VS Code bonus
 - **+2 points** for running your email through [Have I Been Pwned](https://haveibeenpwned.com/) and reporting which breaches it appeared in
 
 ---
