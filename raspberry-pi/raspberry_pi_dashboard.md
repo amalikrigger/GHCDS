@@ -41,7 +41,7 @@ PREP THE DAY BEFORE
 - [ ] CONFIRM ON ONE PI, then fix this file if it differs:
         whoami                      -> username is: ____________
         cat /etc/os-release         -> OS is: ____________
-        source ~/pihealth/bin/activate ; python3 -c "import flask, psutil"
+        source ~/YOURNAME/venv/bin/activate ; python3 -c "import flask, psutil"
         (if that errors, the Step 2 fallback in Day 1 is the path students take)
 - [ ] Accounts or logins students need: none
 - [ ] Software already on lab machines: a terminal with ssh (Day 2 only)
@@ -61,12 +61,12 @@ TIMING FOR DAY 1
 
 WHERE STUDENTS GET STUCK
 - Forgot the venv -> "ModuleNotFoundError: flask". Say: look at your prompt.
-  Does it start with (pihealth)?
+  Does it start with (YOURNAME)?
 - Second terminal, server already running -> "Address already in use". Say:
   find the other window, Ctrl+C.
 - Typed the IP from someone else's sticky note -> loads a classmate's page.
   This is funny once and then it is a debugging lesson about IP addresses.
-- Saved index.html into ~/pi-dashboard instead of ~/pi-dashboard/static ->
+- Saved index.html into ~/YOURNAME/pi-dashboard instead of ~/YOURNAME/pi-dashboard/static ->
   404. Say: run ls static.
 - Temperature shows -- on some models. Not a bug. Say so before they ask.
 
@@ -159,14 +159,31 @@ That prints your Pi's **IP address**, something like `10.0.4.71`. **Write it on 
 
 ---
 
+### Before Step 2 — Claim your own folder
+
+Everyone in both classes shares these Pis, logged in as the same account. If two people build a folder with the same name, the second person lands inside the first person's project, sees work they did not do, and overwrites it. So before you build anything, pick a name that is only yours.
+
+**Your folder name** is your first name plus the first letter of your last name, all lowercase, no spaces. Jordan Baptiste is `jordanb`. If two of you would get the same name, one of you adds a number: `jordanb2`. Everywhere this lesson says `YOURNAME`, type your folder name. (On the site version, a box rewrites every command for you.)
+
+> **✅ Checkpoint:** your folder name is on your sticky note, under your IP address.
+
+**Sharing a Pi.** Run `ls ~` to see the folders already there. Four rules:
+
+1. Only work inside your own folder. Every command in this lesson starts with `~/YOURNAME`.
+2. Never open, edit or delete a folder that is not yours.
+3. Your name already there and it is not your work? Add a number and use that.
+4. Before you leave, stop your server with **Ctrl + C**. Only one server can use port 5000 at a time.
+
+---
+
 ### Step 2 — Set up your Python workspace
 
-This project needs two Python add-ons that are not installed by default. They live in a little workspace of their own called `pihealth`.
+This project needs two Python add-ons that are not installed by default. They live in a little workspace of their own called `venv`, inside your folder.
 
-**First, check whether that workspace is already on your Pi:**
+**First, check whether you already built it last time:**
 
 ```bash
-ls ~/pihealth
+ls ~/YOURNAME/venv
 ```
 
 You will get one of two answers.
@@ -179,47 +196,49 @@ You will get one of two answers.
 **Build it.** Two commands, one at a time. Wait for the first to finish before running the second.
 
 ```bash
-python3 -m venv ~/pihealth
+mkdir -p ~/YOURNAME && python3 -m venv --prompt YOURNAME ~/YOURNAME/venv
 ```
 
 ```bash
-~/pihealth/bin/pip install flask psutil
+~/YOURNAME/venv/bin/pip install flask psutil
 ```
 
 The second one downloads for a minute and prints a lot of text. That is normal. Wait for your prompt to come back.
 
-**Open it.** Everyone runs this, whether you just built the workspace or it was already there:
+**Open it.** Everyone runs this, whether you just built the workspace or you built it last time:
 
 ```bash
-source ~/pihealth/bin/activate
+source ~/YOURNAME/venv/bin/activate
 ```
 
-> **✅ Checkpoint:** Your prompt now starts with `(pihealth)`. It looked like `krigger@raspberrypi:~ $` before and it looks like `(pihealth) krigger@raspberrypi:~ $` now.
+> **✅ Checkpoint:** Your prompt now starts with `(YOURNAME)`, your own name. It looked like `krigger@raspberrypi:~ $` before and it looks like `(jordanb) krigger@raspberrypi:~ $` now. Someone else's name there means you opened their box: type `deactivate` and run your own `source` line.
 
 > **What did you just build?** A **virtual environment**: a box that holds one project's extra Python tools and nothing else. Two tools went in the box. **Flask** lets Python run a website. **psutil** lets Python read the computer's own CPU, memory and temperature.
 >
 > Think of it like a toolbox for one job. The rest of the Pi is not affected, and if you ever wreck it you delete the folder and build a new one in thirty seconds.
 
-> **⚠️ The thing that catches everyone.** Opening the box only lasts for that one Terminal window. Close it, open a new one, and you are back outside the box. The giveaway is `(pihealth)` missing from your prompt, and the symptom is `ModuleNotFoundError: No module named 'flask'`. The fix is always the same: run the `source` line again.
+> **⚠️ The thing that catches everyone.** Opening the box only lasts for that one Terminal window. Close it, open a new one, and you are back outside the box. The giveaway is `(YOURNAME)` missing from your prompt, and the symptom is `ModuleNotFoundError: No module named 'flask'`. The fix is always the same: run the `source` line again.
 
 ---
 
 ### Step 3 — Make your project folder
 
 ```bash
-mkdir -p ~/pi-dashboard/static && cd ~/pi-dashboard
+mkdir -p ~/YOURNAME/pi-dashboard/static && cd ~/YOURNAME/pi-dashboard
 ```
 
 You just made this:
 
 ```
-pi-dashboard/
-├── server.py       ← the Python that runs the server (next step)
-└── static/         ← the files your server hands out
-    └── index.html  ← your actual web page (Step 6)
+YOURNAME/               ← your folder, nobody else's
+├── venv/               ← your Python toolbox (Step 2)
+└── pi-dashboard/       ← this project
+    ├── server.py       ← the Python that runs the server (next step)
+    └── static/         ← the files your server hands out
+        └── index.html  ← your actual web page (Step 7)
 ```
 
-The `~` means your home folder. Whatever your username is, `~` points at the right place, so you never have to type the full path.
+The `~` means the home folder of the account you are logged in as. Everyone on this Pi shares that account, which is why your work lives one level down, in `~/YOURNAME`.
 
 ---
 
@@ -482,8 +501,8 @@ We used two files because your next project is a whole website with images and a
 Your server has to be running. If you stopped it:
 
 ```bash
-source ~/pihealth/bin/activate
-cd ~/pi-dashboard
+source ~/YOURNAME/venv/bin/activate
+cd ~/YOURNAME/pi-dashboard
 python3 server.py
 ```
 
@@ -617,8 +636,8 @@ exit
 SSH back in, then:
 
 ```bash
-source ~/pihealth/bin/activate
-cd ~/pi-dashboard
+source ~/YOURNAME/venv/bin/activate
+cd ~/YOURNAME/pi-dashboard
 python3 server.py
 ```
 
@@ -663,11 +682,11 @@ This is how IT staff fix servers they will never physically see, how your school
 Stop your server with **Ctrl + C**. Then:
 
 ```bash
-rm ~/pi-dashboard/static/index.html
+rm ~/YOURNAME/pi-dashboard/static/index.html
 ```
 
 ```bash
-nano ~/pi-dashboard/static/index.html
+nano ~/YOURNAME/pi-dashboard/static/index.html
 ```
 
 You now have an empty file. Nothing to select, nothing to accidentally delete half of.
@@ -841,8 +860,8 @@ You now have an empty file. Nothing to select, nothing to accidentally delete ha
 Save: **Ctrl + O**, Enter. Exit: **Ctrl + X**. Then run it:
 
 ```bash
-source ~/pihealth/bin/activate
-cd ~/pi-dashboard
+source ~/YOURNAME/venv/bin/activate
+cd ~/YOURNAME/pi-dashboard
 python3 server.py
 ```
 
@@ -885,9 +904,9 @@ That split matters. CSS handles how things look, JavaScript handles when, and ke
 Here is the loop you will repeat for the rest of the period:
 
 1. **Ctrl + C** in the Terminal to stop the server
-2. `nano ~/pi-dashboard/static/index.html`
+2. `nano ~/YOURNAME/pi-dashboard/static/index.html`
 3. Change something, **Ctrl + O**, Enter, **Ctrl + X**
-4. `python3 ~/pi-dashboard/server.py`
+4. `python3 ~/YOURNAME/pi-dashboard/server.py`
 5. **Ctrl + Shift + R** in the browser
 
 You cannot break anything here that retyping will not fix. Change one thing at a time so you know what did what.
@@ -1307,14 +1326,14 @@ Nothing on this list is hard, but every one of them has caught somebody. Read it
 They are where you made them:
 
 ```
-~/pi-dashboard/server.py
-~/pi-dashboard/static/index.html
+~/YOURNAME/pi-dashboard/server.py
+~/YOURNAME/pi-dashboard/static/index.html
 ```
 
-In the Pi's file manager that is **Home → pi-dashboard**, and `index.html` is one folder deeper, inside **static**. If you cannot find them, run this in the Terminal and it will print exactly where they are:
+In the Pi's file manager that is **Home → YOURNAME → pi-dashboard**, and `index.html` is one folder deeper, inside **static**. If you cannot find them, run this in the Terminal and it will print exactly where they are:
 
 ```bash
-ls ~/pi-dashboard ~/pi-dashboard/static
+ls ~/YOURNAME/pi-dashboard ~/YOURNAME/pi-dashboard/static
 ```
 
 ---
@@ -1328,7 +1347,7 @@ Pick whichever fits what you are holding.
 1. Open **Chromium** on the Pi
 2. Go to Schoology and log in
 3. Open the assignment, click **Submit Assignment**, click **Upload**
-4. When the file picker opens, go to **Home → pi-dashboard** and pick `server.py`, then repeat for `static/index.html`
+4. When the file picker opens, go to **Home → YOURNAME → pi-dashboard** and pick `server.py`, then repeat for `static/index.html`
 
 **Your phone screenshot: get it onto a computer first.** Email it to yourself, AirDrop it, or put it in Google Drive, then download it wherever you are submitting from. You can also just log in to Schoology in your phone's browser and upload it straight from your camera roll.
 
@@ -1406,13 +1425,13 @@ Upload the following to **Schoology**:
 ## 💡 Troubleshooting
 
 **"ModuleNotFoundError: No module named 'flask'"**
-→ Look at your prompt. Does it start with `(pihealth)`? If not, run `source ~/pihealth/bin/activate`. You need this in every new Terminal window.
+→ Look at your prompt. Does it start with `(YOURNAME)`? If not, run `source ~/YOURNAME/venv/bin/activate`. You need this in every new Terminal window.
 
 **"Address already in use"**
-→ Your server is already running in another Terminal window. Find it and press **Ctrl + C**. If you cannot find it, run `pkill -f server.py` and start again.
+→ Your server is already running in another Terminal window. Find it and press **Ctrl + C**. If you cannot find it, run `pkill -f YOURNAME/pi-dashboard/server.py` and start again. Never run plain `pkill -f server.py`: it stops every student's server on the Pi.
 
 **"The page says Not Found"**
-→ Run `ls ~/pi-dashboard/static`. If `index.html` is not in that list, you saved it in the wrong folder.
+→ Run `ls ~/YOURNAME/pi-dashboard/static`. If `index.html` is not in that list, you saved it in the wrong folder.
 
 **"My phone cannot load it"**
 → Three things, in order. Is the phone on GHCDS? Is the server still running on the Pi? Did you type `:5000` after the IP address?
@@ -1433,7 +1452,7 @@ Upload the following to **Schoology**:
 → Paste in the Terminal is **Ctrl + Shift + V**. If the file is a mess, `rm` it and start the file over. It is faster than repairing it.
 
 **"I broke it so badly I want to start over"**
-→ `rm ~/pi-dashboard/server.py` and redo Step 6. This is a normal thing that normal programmers do.
+→ `rm ~/YOURNAME/pi-dashboard/server.py` and redo Step 6. This is a normal thing that normal programmers do.
 
 ---
 
@@ -1618,7 +1637,7 @@ BEFORE YOU CALL IT DONE
 - [x] Base tier is readable by a 7th grader
 - [x] Safety block present
 - [ ] CONFIRM ON A REAL LAB PI before teaching: username, OS version, whether
-      the pihealth venv and flask/psutil already exist
+      the Pis share one login (the per-student ~/YOURNAME folders assume they do)
 - [ ] CONFIRM THE TRIXIE MENU PATHS in Appendix B on an actual Trixie station.
       The Bookworm ones are known good. The Trixie table was written from the
       documented layout, not from standing in front of one.
