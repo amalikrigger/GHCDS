@@ -41,7 +41,7 @@ PREP THE DAY BEFORE
 - [ ] CONFIRM ON ONE PI, then fix this file if it differs:
         whoami                      -> username is: ____________
         cat /etc/os-release         -> OS is: ____________
-        source ~/YOURNAME/venv/bin/activate ; python3 -c "import flask, psutil"
+        source ~/YOURNAME/pihealth/bin/activate ; python3 -c "import flask, psutil"
         (if that errors, the Step 2 fallback in Day 1 is the path students take)
 - [ ] Accounts or logins students need: none
 - [ ] Software already on lab machines: a terminal with ssh (Day 2 only)
@@ -61,7 +61,7 @@ TIMING FOR DAY 1
 
 WHERE STUDENTS GET STUCK
 - Forgot the venv -> "ModuleNotFoundError: flask". Say: look at your prompt.
-  Does it start with (YOURNAME)?
+  Does it start with (YOURNAME-pihealth)?
 - Second terminal, server already running -> "Address already in use". Say:
   find the other window, Ctrl+C.
 - Typed the IP from someone else's sticky note -> loads a classmate's page.
@@ -163,6 +163,15 @@ That prints your Pi's **IP address**, something like `10.0.4.71`. **Write it on 
 
 Everyone in both classes shares these Pis, logged in as the same account. If two people build a folder with the same name, the second person lands inside the first person's project, sees work they did not do, and overwrites it. So before you build anything, pick a name that is only yours.
 
+**What changed, with an example.** This lesson used to have everyone use the same two names. Now those names live inside your own folder.
+
+| | Old way (everyone the same, so people collided) | New way (example: Jordan Baptiste) |
+|---|---|---|
+| Your folder | none | `~/jordanb` |
+| Python toolbox | `~/pihealth` | `~/jordanb/pihealth` |
+| Project | `~/pi-dashboard` | `~/jordanb/pi-dashboard` |
+| Prompt shows | `(pihealth)` | `(jordanb-pihealth)` |
+
 **Your folder name** is your first name plus the first letter of your last name, all lowercase, no spaces. Jordan Baptiste is `jordanb`. If two of you would get the same name, one of you adds a number: `jordanb2`. Everywhere this lesson says `YOURNAME`, type your folder name. (On the site version, a box rewrites every command for you.)
 
 > **✅ Checkpoint:** your folder name is on your sticky note, under your IP address.
@@ -178,12 +187,12 @@ Everyone in both classes shares these Pis, logged in as the same account. If two
 
 ### Step 2 — Set up your Python workspace
 
-This project needs two Python add-ons that are not installed by default. They live in a little workspace of their own called `venv`, inside your folder.
+This project needs two Python add-ons that are not installed by default. They live in a little workspace of their own called `pihealth`, inside your folder.
 
 **First, check whether you already built it last time:**
 
 ```bash
-ls ~/YOURNAME/venv
+ls ~/YOURNAME/pihealth
 ```
 
 You will get one of two answers.
@@ -196,11 +205,11 @@ You will get one of two answers.
 **Build it.** Two commands, one at a time. Wait for the first to finish before running the second.
 
 ```bash
-mkdir -p ~/YOURNAME && python3 -m venv --prompt YOURNAME ~/YOURNAME/venv
+mkdir -p ~/YOURNAME && python3 -m venv --prompt YOURNAME-pihealth ~/YOURNAME/pihealth
 ```
 
 ```bash
-~/YOURNAME/venv/bin/pip install flask psutil
+~/YOURNAME/pihealth/bin/pip install flask psutil
 ```
 
 The second one downloads for a minute and prints a lot of text. That is normal. Wait for your prompt to come back.
@@ -208,16 +217,16 @@ The second one downloads for a minute and prints a lot of text. That is normal. 
 **Open it.** Everyone runs this, whether you just built the workspace or you built it last time:
 
 ```bash
-source ~/YOURNAME/venv/bin/activate
+source ~/YOURNAME/pihealth/bin/activate
 ```
 
-> **✅ Checkpoint:** Your prompt now starts with `(YOURNAME)`, your own name. It looked like `krigger@raspberrypi:~ $` before and it looks like `(jordanb) krigger@raspberrypi:~ $` now. Someone else's name there means you opened their box: type `deactivate` and run your own `source` line.
+> **✅ Checkpoint:** Your prompt now starts with `(YOURNAME-pihealth)`, your own name. It looked like `krigger@raspberrypi:~ $` before and it looks like `(jordanb-pihealth) krigger@raspberrypi:~ $` now. Someone else's name there means you opened their box: type `deactivate` and run your own `source` line.
 
 > **What did you just build?** A **virtual environment**: a box that holds one project's extra Python tools and nothing else. Two tools went in the box. **Flask** lets Python run a website. **psutil** lets Python read the computer's own CPU, memory and temperature.
 >
 > Think of it like a toolbox for one job. The rest of the Pi is not affected, and if you ever wreck it you delete the folder and build a new one in thirty seconds.
 
-> **⚠️ The thing that catches everyone.** Opening the box only lasts for that one Terminal window. Close it, open a new one, and you are back outside the box. The giveaway is `(YOURNAME)` missing from your prompt, and the symptom is `ModuleNotFoundError: No module named 'flask'`. The fix is always the same: run the `source` line again.
+> **⚠️ The thing that catches everyone.** Opening the box only lasts for that one Terminal window. Close it, open a new one, and you are back outside the box. The giveaway is `(YOURNAME-pihealth)` missing from your prompt, and the symptom is `ModuleNotFoundError: No module named 'flask'`. The fix is always the same: run the `source` line again.
 
 ---
 
@@ -231,7 +240,7 @@ You just made this:
 
 ```
 YOURNAME/               ← your folder, nobody else's
-├── venv/               ← your Python toolbox (Step 2)
+├── pihealth/           ← your Python toolbox (Step 2)
 └── pi-dashboard/       ← this project
     ├── server.py       ← the Python that runs the server (next step)
     └── static/         ← the files your server hands out
@@ -501,7 +510,7 @@ We used two files because your next project is a whole website with images and a
 Your server has to be running. If you stopped it:
 
 ```bash
-source ~/YOURNAME/venv/bin/activate
+source ~/YOURNAME/pihealth/bin/activate
 cd ~/YOURNAME/pi-dashboard
 python3 server.py
 ```
@@ -636,7 +645,7 @@ exit
 SSH back in, then:
 
 ```bash
-source ~/YOURNAME/venv/bin/activate
+source ~/YOURNAME/pihealth/bin/activate
 cd ~/YOURNAME/pi-dashboard
 python3 server.py
 ```
@@ -860,7 +869,7 @@ You now have an empty file. Nothing to select, nothing to accidentally delete ha
 Save: **Ctrl + O**, Enter. Exit: **Ctrl + X**. Then run it:
 
 ```bash
-source ~/YOURNAME/venv/bin/activate
+source ~/YOURNAME/pihealth/bin/activate
 cd ~/YOURNAME/pi-dashboard
 python3 server.py
 ```
@@ -1425,7 +1434,7 @@ Upload the following to **Schoology**:
 ## 💡 Troubleshooting
 
 **"ModuleNotFoundError: No module named 'flask'"**
-→ Look at your prompt. Does it start with `(YOURNAME)`? If not, run `source ~/YOURNAME/venv/bin/activate`. You need this in every new Terminal window.
+→ Look at your prompt. Does it start with `(YOURNAME-pihealth)`? If not, run `source ~/YOURNAME/pihealth/bin/activate`. You need this in every new Terminal window.
 
 **"Address already in use"**
 → Your server is already running in another Terminal window. Find it and press **Ctrl + C**. If you cannot find it, run `pkill -f YOURNAME/pi-dashboard/server.py` and start again. Never run plain `pkill -f server.py`: it stops every student's server on the Pi.
