@@ -135,24 +135,23 @@ Students use the live meter on the class website, which computes in the browser 
 
 Length beats cleverness. Every character you add multiplies the work, and multiplying gets out of hand fast, which is the one time that works in your favor.
 
-| Length | Time to crack by brute force |
+| Random characters | Time to crack by brute force |
 |---|---|
 | 6 characters | seconds |
 | 8 characters | hours |
 | 12 characters | centuries |
 | 16+ characters | effectively impossible |
 
-The easiest way to get long and still remember it is to string together four or five unrelated words.
+The easiest way to get long and still remember it is to string together six random words. Attackers who know you used words guess whole words, not letters, so each word counts as one guess from a big list. Four words falls in hours. Five takes years. Six takes centuries. Use the generator in the lesson, which picks from a list of 7,776 words.
 
 ```
-mango-bicycle-cloud-seventeen
-purple-guitar-elephant-sunrise
-Tamarind-Ferry-Lantern-42!
+abacus-quartz-lantern-pelican-ferry-thicket
+tamarind-glacier-violin-otter-harbor-nickel
 ```
 
 Unrelated is the important part. `saint-croix-high-school` is four words and still weak, because it is a phrase someone could guess about you.
 
-1. Write three passphrases of four or more unrelated words each
+1. Generate three passphrases of six random words each
 2. Test each one in the checker
 3. Write down the crack time next to each
 
@@ -164,7 +163,7 @@ Unrelated is the important part. `saint-croix-high-school` is four words and sti
 
 Schools and websites spent twenty years demanding a capital, a number, and a symbol. What they got was `Password1!`, roughly two hundred million times. Everyone follows the rule the same lazy way, so attackers just try the lazy way first.
 
-Picture a combination lock. Symbols give you more numbers on each dial. Length gives you more dials. Adding a dial multiplies everything that came before it, which is why length wins and it is not close. Four random words give you enough dials that no amount of computing power gets through in a human lifetime.
+Picture a combination lock. Symbols give you more numbers on each dial. Length gives you more dials. Adding a dial multiplies everything that came before it, which is why length wins and it is not close. Six random words give you enough dials that no amount of computing power gets through in a human lifetime.
 
 That is why a long phrase you can remember beats a short mess you have to write on a sticky note.
 
@@ -518,7 +517,7 @@ Upload the following to **Schoology**:
 
 | Category | Points | What I'm Looking For |
 |---|---|---|
-| Accounts Secured | 10 | Strong passphrases, two-factor actually enabled with proof, phishing red flags correctly identified |
+| Accounts Secured | 10 | Strong passphrases, two-factor proof (a screenshot of it enabled at home, or both in-class questions answered correctly; either earns full credit), phishing red flags correctly identified |
 | Secrets Handling | 5 | Base answers correct |
 | Understanding | 5 | Reflection explains in your own words why these steps work |
 | Deliverables | 5 | Everything above submitted, on time |
@@ -562,7 +561,7 @@ Upload the following to **Schoology**:
 → Blur everything except the confirmation that two-factor is on. That is all that is being checked.
 
 **"The checker says my passphrase is weak."**
-→ Your words are related to each other, or to you, or to something on your desk right now. The meter can tell. Pick words that have no business being in the same sentence.
+→ Your words are related to each other, or to you, or to something on your desk right now. The meter cannot tell, but anyone who knows you can. Use the generator, or pick words that have no business being in the same sentence.
 
 **"`pip install python-dotenv` says pip is not found."**
 → Try `pip3 install python-dotenv`, or `python3 -m pip install python-dotenv`.
