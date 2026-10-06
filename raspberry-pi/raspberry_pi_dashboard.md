@@ -1,5 +1,5 @@
 <!-- ===========================================================================
-TEACHER PLANNING BLOCK — delete nothing, this never renders on the site.
+TEACHER PLANNING BLOCK. Delete nothing, this never renders on the site.
 
 UNIT / FOLDER   : raspberry-pi
 FILE NAME       : raspberry_pi_dashboard.md
@@ -8,6 +8,9 @@ FIRST TAUGHT    : T1 2026
 REWRITTEN       : 2026-09-16, to the LESSON_TEMPLATE standard. Replaces the
                   4-day April 2026 version. See knowledge/decisions.md for the
                   full review of what was wrong with it.
+UPGRADED        : 2026-10-06, to match the upgraded site lesson (pi-web-server).
+                  Added Start here blocks, Meet nano, same-Pi rule, no phones,
+                  page map and nano search for Make It Yours, backup copies.
 
 THE LAB RUNS TWO OS VERSIONS
 Bookworm on most stations, Trixie on some. Days 1 through 3 are deliberately
@@ -58,6 +61,9 @@ TIMING FOR DAY 1
 - 8 min   Mini lesson: request and response
 - 20 min  Students build the real server.py and index.html, see live numbers
 - 5 min   Screenshot, clean up
+- Day 2 and Day 3 each open with a Start here block (same Pi, fresh Terminal,
+  source and cd, three checks, hostname -I). Budget 8 to 10 minutes for it and
+  do not skip it. It prevents most of the snags below.
 
 WHERE STUDENTS GET STUCK
 - Forgot the venv -> "ModuleNotFoundError: flask". Say: look at your prompt.
@@ -69,10 +75,21 @@ WHERE STUDENTS GET STUCK
 - Saved index.html into ~/YOURNAME/pi-dashboard instead of ~/YOURNAME/pi-dashboard/static ->
   404. Say: run ls static.
 - Temperature shows -- on some models. Not a bug. Say so before they ask.
+- Student sits at a different Pi on Day 2 or Day 3 -> their folder is not
+  there, "No such file or directory". Say: run ls ~. Wrong Pi. Do not rebuild.
+- nano: pressed Ctrl+O and then stopped. The file is not saved until they tap
+  the Enter key. Look for [ Wrote N lines ] at the bottom.
+- Page edit "did nothing": they did not save, or did not hard refresh
+  (Ctrl+Shift+R). Page edits need no restart. Only server.py does.
+- Theme pack swap: Ctrl+K must be tapped 14 times. Stretch fifth stat: the
+  comma traps (comma after temperature_c(), none on the new last line, same in
+  CARDS) cause a SyntaxError in Terminal 1.
+- No phones in class. The second computer must not be a Pi. Screenshots are
+  taken on, and uploaded from, the computer they were taken on.
 
 IF THEY FINISH EARLY   : Day 3 challenges 1 through 4, then the Stretch.
-IF THEY NEED MORE TIME : Day 2 SSH is the cut. The dashboard still loads from a
-                         phone without it, which is the part that matters.
+IF THEY NEED MORE TIME : Day 2 SSH is the cut. The dashboard still loads from
+                         another computer without it, which is the part that matters.
 
 ASSESSMENT
 - Category  : Formal Assessments
@@ -92,7 +109,7 @@ AFTER TEACHING IT (fill in, this is the most valuable part)
 
 > **Grades:** 7th–12th &nbsp;|&nbsp; **Time:** 3 class periods &nbsp;|&nbsp; **Difficulty:** Beginner
 >
-> Right now the Raspberry Pi in front of you is just a small computer. By the end of today it will be a **server**: it will have a web address, and anyone on the school network can type that address into their phone and see a page you built. By the end of the week that page will be showing the Pi's own CPU, memory, disk and temperature, updating live, and it will look good.
+> Right now the Raspberry Pi in front of you is just a small computer. By the end of today it will be a **server**: it will have a web address, and anyone on the school network can type that address into another computer and see a page you built. By the end of the week that page will be showing the Pi's own CPU, memory, disk and temperature, updating live, and it will look good.
 
 ---
 
@@ -109,9 +126,10 @@ AFTER TEACHING IT (fill in, this is the most valuable part)
 ## 🧰 What You Need
 
 - A Raspberry Pi at a monitor station, already set up and connected to GHCDS
-- A phone, laptop or Chromebook on the same network, for Day 2
-- A second computer in the lab with a terminal, for the SSH step on Day 2
-- No accounts. No downloads. Nothing to sign up for.
+- The **same Pi, every day**. Your folder is saved on that Pi, not in the cloud, so sit at the same one on Days 2 and 3
+- A second computer in the lab, **not a Pi**, on the school network, for Day 2. You will load your dashboard on it and use it for the SSH step
+- A sticky note and a pen
+- No phone. No accounts. No downloads. Nothing to sign up for.
 
 ---
 
@@ -125,19 +143,39 @@ AFTER TEACHING IT (fill in, this is the most valuable part)
 
 ---
 
+## How the code boxes work
+
+Every code box in this lesson is something you type or paste. Some boxes are commands for the Terminal. Some are the inside of a file, which you paste into nano. A few are examples to look at, not to paste. The line above each box tells you which.
+
+1. Copy the code from the box.
+2. Click inside the Terminal window (or inside nano, which runs in the Terminal).
+3. Paste with **Ctrl + Shift + V**. It is **not** Ctrl + V.
+4. For a command, tap the **Enter** key. Nothing runs until you do.
+
+> **Ctrl + C does not copy in the Terminal.** It stops whatever is running. Copy in the browser, paste in the Terminal with Ctrl + Shift + V, and use Ctrl + C only when you want to stop your server.
+
+---
+
 # Day 1: Make Your Pi a Server
 
 **Goal:** At the start of today your Pi is a computer. At the end of today it is a website.
 
+### 🚦 Start here (Day 1)
+
+1. **Pick a Pi and keep it.** Use the same Pi on Days 2 and 3. Your work is saved on that Pi, so a different Pi will not have it.
+2. **Open the Terminal.** It is the black rectangle icon on the top bar.
+3. **Today:** write down your username, your IP address and your folder name, build your Python workspace, then run your first web server.
+4. **Finish line:** a Chromium tab that says **My Pi is a web server.**
+
 ---
 
-### Step 1 — Find out who you are and where you are
+### Step 1: Find out who you are and where you are
 
 Open the **Terminal** on the Pi. It is the black rectangle icon on the top bar.
 
 > **🤔 What is a Terminal?** It is a way to talk to the computer by typing instead of clicking. Same computer, same files, different door. Think of it as texting your Pi instead of tapping icons.
 
-Type this and press Enter:
+Type this, then tap the **Enter** key. The Terminal does nothing until you do:
 
 ```bash
 whoami
@@ -154,12 +192,14 @@ hostname -I
 That prints your Pi's **IP address**, something like `10.0.4.71`. **Write it on a sticky note and put it on your monitor.** Everything on Day 2 depends on it.
 
 > **What is an IP address?** Your network is a neighborhood and every device on it gets a house number. That is the IP address. When someone types it into a browser they are saying "take me to that house."
+>
+> **It can change.** The network sometimes hands your Pi a new house number overnight. That is why Days 2 and 3 start by checking it again.
 
 > **✅ Checkpoint:** You have two things written down: your username and your Pi's IP address.
 
 ---
 
-### Before Step 2 — Claim your own folder
+### Before Step 2: Claim your own folder
 
 Everyone in both classes shares these Pis, logged in as the same account. If two people build a folder with the same name, the second person lands inside the first person's project, sees work they did not do, and overwrites it. So before you build anything, pick a name that is only yours.
 
@@ -185,7 +225,7 @@ Everyone in both classes shares these Pis, logged in as the same account. If two
 
 ---
 
-### Step 2 — Set up your Python workspace
+### Step 2: Set up your Python workspace
 
 This project needs two Python add-ons that are not installed by default. They live in a little workspace of their own called `pihealth`, inside your folder.
 
@@ -230,7 +270,7 @@ source ~/YOURNAME/pihealth/bin/activate
 
 ---
 
-### Step 3 — Make your project folder
+### Step 3: Make your project folder
 
 ```bash
 mkdir -p ~/YOURNAME/pi-dashboard/static && cd ~/YOURNAME/pi-dashboard
@@ -251,7 +291,32 @@ The `~` means the home folder of the account you are logged in as. Everyone on t
 
 ---
 
-### Step 4 — Write the smallest web server that works
+### Meet nano, the editor you will use all week
+
+**nano** is a text editor that runs inside the Terminal. There are no menus to click. **Mouse clicks will not move the cursor**, so use the arrow keys.
+
+The bottom of the screen lists the commands. The little `^` means the **Ctrl** key, so `^O` means **hold Ctrl and tap O**.
+
+```
+  ^O Write Out (save)   ^X Exit   ^K Cut a line   ^U Paste a line   ^W Where Is (search)   ^G Help
+```
+
+The first two are the two you need today.
+
+**Save** (do this often):
+
+1. Hold the **Ctrl** key and tap **O**. A line appears at the bottom: `File Name to Write: server.py`
+2. Tap the **Enter** key on your keyboard. That says yes to the name. The bottom now says `[ Wrote 9 lines ]`
+
+**Exit:** hold **Ctrl** and tap **X**. You are back at the Terminal prompt.
+
+> **Pressed Ctrl + X before saving?** nano asks `Save modified buffer?` Tap **Y** for yes, then the **Enter** key. Tap **N** to throw your changes away.
+
+> **✅ Checkpoint:** You saw `[ Wrote ... lines ]` before you exited. No message means nothing was saved.
+
+---
+
+### Step 4: Write the smallest web server that works
 
 ```bash
 nano server.py
@@ -273,13 +338,13 @@ def home():
 app.run(host="0.0.0.0", port=5000)
 ```
 
-Save with **Ctrl + O**, then Enter. Exit with **Ctrl + X**.
+Save: hold **Ctrl** and tap **O**, then tap the **Enter** key. Exit: hold **Ctrl** and tap **X**.
 
 > **Pasting into the Terminal is Ctrl + Shift + V**, not Ctrl + V. This trips up everyone once.
 
 ---
 
-### Step 5 — Run it
+### Step 5: Run it
 
 ```bash
 python3 server.py
@@ -299,9 +364,25 @@ http://localhost:5000
 
 > **⚠️ You will also see a yellow warning** about a "development server" and not using it in production. Ignore it. It means "this server is built for learning, not for handling a million people at once," which is what you are doing.
 
+#### What the Terminal should print
+
+When your server starts, it prints lines like these. Read them. The last `Running on` line is your Pi's IP address and port, which is the address Day 2 uses. Your numbers will differ.
+
+```
+ * Serving Flask app 'server'
+ * Debug mode: off
+WARNING: This is a development server. Do not use it in a production deployment.
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.0.4.71:5000
+Press CTRL+C to quit
+```
+
+> **Saw `ModuleNotFoundError` instead?** You are outside your toolbox. Your prompt is missing `(YOURNAME-pihealth)`. Run the `source` line from Step 2 again, then run this again.
+
 ---
 
-### 🧠 Mini Lesson — What a server actually does
+### 🧠 Mini Lesson: What a server actually does
 
 A server does one thing, over and over, forever:
 
@@ -318,15 +399,19 @@ The `@app.route("/")` line is the part that decides **which** request. `/` means
 
 ---
 
-### Step 6 — Build the real thing
+### Step 6: Build the real thing
 
-Stop your server with **Ctrl + C**, then reopen the file:
+Stop your server with **Ctrl + C**. You are replacing the whole file, so throw the old one away and open a blank one. Run these two, one at a time:
 
 ```bash
-nano server.py
+rm ~/YOURNAME/pi-dashboard/server.py
 ```
 
-Delete everything in it (hold **Ctrl + K** to cut lines until the file is empty), then type or paste this:
+```bash
+nano ~/YOURNAME/pi-dashboard/server.py
+```
+
+The nano screen is empty. Copy the code below, click inside the Terminal, and paste with **Ctrl + Shift + V**:
 
 ```python
 from flask import Flask, jsonify, send_from_directory
@@ -377,7 +462,7 @@ def stats():
 app.run(host="0.0.0.0", port=5000)
 ```
 
-Save: **Ctrl + O**, Enter. Exit: **Ctrl + X**.
+Save: hold **Ctrl** and tap **O**, then tap the **Enter** key. Exit: hold **Ctrl** and tap **X**.
 
 > **What just happened?** Your server now answers three different requests:
 > - `/` hands over the file `static/index.html`
@@ -386,7 +471,7 @@ Save: **Ctrl + O**, Enter. Exit: **Ctrl + X**.
 
 ---
 
-### Step 7 — Write the page
+### Step 7: Write the page
 
 ```bash
 nano static/index.html
@@ -428,7 +513,7 @@ Type or paste:
 </html>
 ```
 
-Save and exit. Then run it:
+Save and exit (hold **Ctrl** and tap **O**, tap the **Enter** key, then hold **Ctrl** and tap **X**). Then run it:
 
 ```bash
 python3 server.py
@@ -442,7 +527,7 @@ Reload `http://localhost:5000` in Chromium.
 
 ---
 
-### 🧠 Mini Lesson — The other way to do this (optional)
+### 🧠 Mini Lesson: The other way to do this (optional)
 
 Your page lives in its own file, `static/index.html`, and your Python hands that file over when somebody asks for it.
 
@@ -499,37 +584,81 @@ We used two files because your next project is a whole website with images and a
 
 ---
 
+### Before you leave today
+
+1. **Stop your server.** Click the Terminal and press **Ctrl + C**. Only one server can use port 5000, and the next class needs it.
+2. **Check your sticky note.** It should have three things on it: your **username**, your Pi's **IP address** and your **folder name**. Stick it on the monitor.
+3. **Remember where you sat.** Day 2 starts at this same Pi.
+
+---
+
 # Day 2: Reach It From Anywhere on the Network
 
 **Goal:** Prove it is a real server by using it from a computer that is not the Pi.
 
----
+### 🚦 Start here: get back to where you stopped
 
-### Step 1 — Load your dashboard on your phone
+A new Terminal window knows nothing about yesterday, so every day starts the same way.
 
-Your server has to be running. If you stopped it:
+1. **Sit at the same Pi as Day 1.** Open the Terminal and check your folder is here:
+
+```bash
+ls ~
+```
+
+> **Your folder name is not in the list?** Wrong Pi. Go back to yours. Do not rebuild.
+
+2. **Use a fresh Terminal window.** A new window has forgotten your toolbox and does not know which folder you are in. The next step fixes both.
+3. **Step back into your toolbox and your project.** Paste, then tap the **Enter** key:
 
 ```bash
 source ~/YOURNAME/pihealth/bin/activate
 cd ~/YOURNAME/pi-dashboard
+```
+
+**Check you are really back.** Look for these three signs before you do anything else. It takes ten seconds.
+
+| Check | You should see | If not |
+|---|---|---|
+| The start of your prompt | `(YOURNAME-pihealth)` | Run the `source` line again |
+| Type `pwd`, tap **Enter** | A path ending in `YOURNAME/pi-dashboard` | Run the `cd` line again. Check the spelling |
+| Type `ls`, tap **Enter** | `server.py` and `static` | Wrong folder or wrong Pi. Run `ls ~` |
+
+**Then check your IP address.** It can change overnight, and Day 2 depends on it:
+
+```bash
+hostname -I
+```
+
+Different from your sticky note? Cross the old one out and write the new one.
+
+**Now start your server** and leave this window alone:
+
+```bash
 python3 server.py
 ```
 
-Now take out your phone, make sure it is on the GHCDS network, and type your Pi's IP address and port into the browser:
+---
+
+### Step 1: Load your dashboard on a different computer
+
+Your server is running. Now walk to a **different computer in the lab that is not a Pi**. The one you will use for SSH later works fine. Open its web browser, click the address bar, and type your Pi's IP address and port:
 
 ```
 http://YOUR-PI-IP:5000
 ```
 
-So if your sticky note says `10.0.4.71`, you type `http://10.0.4.71:5000`.
+So if your sticky note says `10.0.4.71`, you type `http://10.0.4.71:5000` and tap the **Enter** key.
 
-> **✅ Checkpoint:** Your Pi's dashboard, on your phone, updating live. Nothing is on the internet. Your phone asked your Pi directly, across the room.
+> **✅ Checkpoint:** Your Pi's dashboard on the other computer, updating live. Nothing is on the internet. That computer asked your Pi directly, across the room.
 
-> **Loading someone else's numbers?** You typed their IP. It happens. Check your sticky note.
+> **Loading someone else's numbers?** You typed their IP. Check your sticky note.
+
+> **Nothing loads?** Check three things, in order. Is the computer on the school network? Is the server still running in the Pi's Terminal? Did you type `:5000` after the IP address? Still stuck, tell Mr. Krigger.
 
 ---
 
-### 🧠 Mini Lesson — Why `0.0.0.0` was the important part
+### 🧠 Mini Lesson: Why `0.0.0.0` was the important part
 
 Look at the last line of `server.py`:
 
@@ -537,7 +666,7 @@ Look at the last line of `server.py`:
 app.run(host="0.0.0.0", port=5000)
 ```
 
-`0.0.0.0` means **"answer requests from anywhere on the network, not just from me."** If it said `127.0.0.1` instead, the page would work in Chromium on the Pi and your phone would get nothing.
+`0.0.0.0` means **"answer requests from anywhere on the network, not just from me."** If it said `127.0.0.1` instead, the page would work in Chromium on the Pi and every other computer would get nothing.
 
 That is also the difference between the two addresses you have now used:
 
@@ -550,27 +679,47 @@ That is also the difference between the two addresses you have now used:
 
 ---
 
-### Step 2 — Look at the raw data
+### Step 2: Look at the raw data
 
-On your phone or in Chromium, go to:
+Stay on the other computer, in the same browser. You are going to add one thing to the end of the address.
+
+1. Click the address bar.
+2. Type your Pi's address again, with `/api/stats` on the end:
 
 ```
 http://YOUR-PI-IP:5000/api/stats
 ```
 
-You will see something like this, and nothing else:
+3. Tap the **Enter** key.
+
+You will see one short line of text starting with `{` and nothing else. No colors, no cards:
 
 ```json
 {"cpu":12.5,"disk":31.2,"memory":24.8,"temperature":47.1}
 ```
 
-Refresh it. The numbers change.
+Refresh the page. The numbers change. That is your server measuring itself, fresh, every time something asks.
 
-> **✅ Checkpoint:** You are looking at raw JSON. Screenshot this, you need it for your submission.
+> **Seeing a table or a box that says Pretty print instead?** Some browsers dress the data up. Click **Raw** or **Raw Data** so it is one plain line, then take your screenshot.
 
 ---
 
-### 🧠 Mini Lesson — API and JSON
+### Step 2b: Take the screenshot now
+
+You need a screenshot of this page for your hand-in. Take it while it is on screen, so you are not hunting for it on Day 3.
+
+1. Take a **whole-screen** screenshot. The shortcuts for each kind of computer are in the screenshot guide near the end of this lesson.
+2. Save it as `api-stats.png`.
+3. Open it and check: can you read your Pi's IP address in the address bar **and** the line of data underneath?
+
+- **Good:** the address bar shows your Pi's IP and `/api/stats`, and the page is one line of data.
+- **Not good:** cropped so tight that the address bar is missing. Nothing shows where the data came from, so it proves nothing.
+
+> **✅ Checkpoint:** `api-stats.png` is saved, and you can read the address bar in it.
+
+---
+
+### 🧠 Mini Lesson: API and JSON
 
 An **API** is a door on a server that hands back data instead of a web page.
 
@@ -596,7 +745,7 @@ setInterval(refresh, 2000);                   // do it again in 2 seconds
 
 ---
 
-### Step 3 — Connect to your Pi from a different computer
+### Step 3: Connect to your Pi from a different computer
 
 **SSH** lets you type commands on your Pi while sitting at a different machine. No monitor, no keyboard on the Pi at all.
 
@@ -612,13 +761,13 @@ For example:
 ssh krigger@10.0.4.71
 ```
 
-The first time, it will ask something like `Are you sure you want to continue connecting?` Type **yes** and press Enter. Then it asks for your Pi password. **Type it. Nothing will appear on screen while you type. That is on purpose.** Press Enter.
+The first time, it will ask something like `Are you sure you want to continue connecting?` Type **yes** and tap the **Enter** key. Then it asks for your Pi password. **Type it. Nothing will appear on screen while you type. That is on purpose.** Tap the **Enter** key.
 
 > **✅ Checkpoint:** Your prompt changed. It now shows your Pi's name, not the lab computer's. Every command you type from here runs on the Pi.
 
 ---
 
-### Step 4 — Prove it
+### Step 4: Prove it
 
 Still in the SSH window, run:
 
@@ -638,11 +787,13 @@ To leave:
 exit
 ```
 
+> **⚠️ Before Step 5, stop the server on the Pi.** Your server from Step 1 is still running. Go to the Pi's Terminal and press **Ctrl + C**. If you skip this, Step 5 ends in `Address already in use`, because only one server can use port 5000.
+
 ---
 
-### Step 5 — Start your server without touching the Pi
+### Step 5: Start your server without touching the Pi
 
-SSH back in, then:
+**Stop the server on the Pi first** (Ctrl + C), or you get `Address already in use`. Then SSH back in and run:
 
 ```bash
 source ~/YOURNAME/pihealth/bin/activate
@@ -650,7 +801,7 @@ cd ~/YOURNAME/pi-dashboard
 python3 server.py
 ```
 
-Then open a browser on the lab computer and go to `http://YOUR-PI-IP:5000`.
+Then open a browser on the lab computer and go to your Pi's address, `http://YOUR-PI-IP:5000`.
 
 You just started a server on a computer across the room and loaded its page. Plenty of people do exactly this for a living.
 
@@ -658,7 +809,7 @@ You just started a server on a computer across the room and loaded its page. Ple
 
 ---
 
-### 🧠 Mini Lesson — SSH
+### 🧠 Mini Lesson: SSH
 
 **SSH** stands for **Secure Shell**. Two halves:
 
@@ -673,8 +824,17 @@ This is how IT staff fix servers they will never physically see, how your school
 
 ### 📝 Day 2 Deliverables
 
-- [ ] Screenshot of your dashboard loaded on a **different device**, with the address bar showing your Pi's IP
-- [ ] Screenshot of `/api/stats` showing the raw JSON
+- [ ] Screenshot of your dashboard loaded on a **different computer**, with the address bar showing your Pi's IP
+- [ ] `api-stats.png`: the raw JSON from `/api/stats`, with your Pi's IP and `/api/stats` in the address bar
+
+---
+
+### Before you leave today
+
+1. **Check you have `api-stats.png`.** If you do not, load `/api/stats` once more and take it now.
+2. **Stop your server** with **Ctrl + C**, then close the SSH window by typing `exit` and tapping **Enter**.
+3. **Update your sticky note** if your IP address changed today. It should show your username, your IP and your folder name.
+4. **Tomorrow:** same Pi, and start with the Start here block for Day 3.
 
 ---
 
@@ -682,13 +842,36 @@ This is how IT staff fix servers they will never physically see, how your school
 
 **Goal:** Take the plain page and turn it into something you would actually show someone.
 
+### 🚦 Start here: get back to where you stopped
+
+Same start as Day 2. Only the page changes today.
+
+1. **Same Pi, fresh Terminal.** Your folder should be on it (`ls ~`). If not, wrong Pi. Do not rebuild.
+2. **Step back in.** Paste, then tap the **Enter** key:
+
+```bash
+source ~/YOURNAME/pihealth/bin/activate
+cd ~/YOURNAME/pi-dashboard
+```
+
+3. **Check the three signs.** Prompt starts with `(YOURNAME-pihealth)`. `pwd` ends in `YOURNAME/pi-dashboard`. `ls` shows `server.py` and `static`.
+4. **Prove yesterday's work runs, before you change anything.** Start the server, open `http://localhost:5000` in Chromium, see four numbers, then press **Ctrl + C** in the Terminal:
+
+```bash
+python3 server.py
+```
+
 ---
 
 > **Nothing about the Python changes today.** The server already works. You are only replacing the page it hands out. Real web work usually goes this way, with the thing underneath staying put while the thing people see gets redesigned.
 
-### Step 1 — Start the page over
+### Step 1: Start the page over
 
-Stop your server with **Ctrl + C**. Then:
+Make sure your server is stopped (**Ctrl + C**). First keep a copy of yesterday's page, just in case. Then throw the old one away and open a blank one:
+
+```bash
+cp ~/YOURNAME/pi-dashboard/static/index.html ~/YOURNAME/pi-dashboard/static/index-day2.html
+```
 
 ```bash
 rm ~/YOURNAME/pi-dashboard/static/index.html
@@ -702,7 +885,7 @@ You now have an empty file. Nothing to select, nothing to accidentally delete ha
 
 ---
 
-### Step 2 — Paste the new page
+### Step 2: Paste the new page
 
 ```html
 <!doctype html>
@@ -714,7 +897,7 @@ You now have an empty file. Nothing to select, nothing to accidentally delete ha
 <style>
   /* =====================================================================
      THEME BLOCK. Everything you need to restyle this whole page lives
-     between these two lines. Change a value, save, restart, refresh.
+     between these two lines. Change a value, save, refresh.
      ===================================================================== */
   :root {
     --bg-top:    #0f2027;
@@ -866,7 +1049,7 @@ You now have an empty file. Nothing to select, nothing to accidentally delete ha
 </html>
 ```
 
-Save: **Ctrl + O**, Enter. Exit: **Ctrl + X**. Then run it:
+Save: hold **Ctrl** and tap **O**, then tap the **Enter** key. Exit: hold **Ctrl** and tap **X**. Then run it:
 
 ```bash
 source ~/YOURNAME/pihealth/bin/activate
@@ -880,7 +1063,7 @@ python3 server.py
 
 ---
 
-### 🧠 Mini Lesson — The three new things you just used
+### 🧠 Mini Lesson: The three new things you just used
 
 **Gradient.** Instead of one flat color, a smooth blend between two:
 
@@ -908,21 +1091,90 @@ That split matters. CSS handles how things look, JavaScript handles when, and ke
 
 ---
 
-### Step 3 — Make it yours
+### Step 3: Make it yours
 
-Here is the loop you will repeat for the rest of the period:
+Now the page is yours to change. A good way to work, so you never lose a dashboard that works:
 
-1. **Ctrl + C** in the Terminal to stop the server
-2. `nano ~/YOURNAME/pi-dashboard/static/index.html`
-3. Change something, **Ctrl + O**, Enter, **Ctrl + X**
-4. `python3 ~/YOURNAME/pi-dashboard/server.py`
-5. **Ctrl + Shift + R** in the browser
+> **Your plan for the period.** Level 1 takes five minutes. Then pick one Level 2 theme pack. Then choose **any two** Level 3 upgrades. You do not need to do them all.
 
-You cannot break anything here that retyping will not fix. Change one thing at a time so you know what did what.
+**Use two Terminal windows.**
+
+| Window | Its job |
+|---|---|
+| **Terminal 1** | Runs your server. Start it, then **leave it alone**. Do not close it and do not type in it. |
+| **Terminal 2** | Opens nano so you can edit the page. Click the black rectangle icon again to get a second window. It does not need your toolbox. |
+
+Start Terminal 1 now with `python3 server.py` if it is not already running.
+
+**The loop: change, save, refresh.**
+
+1. **Terminal 2:** open the page. The `-l` shows line numbers down the side.
+
+```bash
+nano -l ~/YOURNAME/pi-dashboard/static/index.html
+```
+
+2. **Change one thing.** Arrow keys move the cursor. One change at a time, so you know what did what.
+3. **Save and exit:** hold **Ctrl** and tap **O**, tap the **Enter** key, then hold **Ctrl** and tap **X**.
+4. **Browser:** press **Ctrl + Shift + R** to reload without the old copy.
+
+> **You do not restart the server for page changes.** Your server hands out the file fresh every time something asks. The only time you restart is when you change `server.py`: click Terminal 1, press **Ctrl + C**, run `python3 server.py` again.
+
+**Your undo button.** Before each big change, save a copy that works. If it goes wrong, put the copy back. You cannot lose your dashboard this way.
+
+```bash
+cp ~/YOURNAME/pi-dashboard/static/index.html ~/YOURNAME/pi-dashboard/static/index-works.html
+```
+
+To undo, copy it back:
+
+```bash
+cp ~/YOURNAME/pi-dashboard/static/index-works.html ~/YOURNAME/pi-dashboard/static/index.html
+```
 
 ---
 
-### Level 1 — The theme block
+### The map of your page
+
+Your page is one file with four zones. Every change in Step 3 happens in one of them. The line numbers are about right. They drift as you add things, which is why the next section teaches you to search instead of counting.
+
+| About line | What is there | You edit it for |
+|---|---|---|
+| 12 to 25 | **Zone 1: the theme block.** The `:root { ... }` lines with all the colors | Level 1, Level 2, and the `--font` line |
+| 26 to 82 | **Zone 2: the rest of the CSS.** How cards, bars and text look | Mostly leave alone |
+| 83 | `</style>`, the end of the CSS | New Level 3 CSS goes on the line **above** this one |
+| 87 to 116 | **Zone 3: the HTML.** The title, then the four cards | Clock, the big card, a fifth card |
+| 118 to 156 | **Zone 4: the JavaScript.** `const CARDS` first, then `refresh()` | Warning levels, the last-updated stamp, the clock |
+
+> **Why new CSS goes at the bottom.** When two rules style the same thing, the one written later wins. Put your new rules last and they beat the old ones. Nothing has to be deleted.
+
+---
+
+### Find things fast in nano
+
+Scrolling for a line is slow. nano can jump straight to it.
+
+1. Hold **Ctrl** and tap **W**. The bottom says `Search:`
+2. Type the word from the table, then tap the **Enter** key. The cursor jumps there.
+3. Wrong one? **Ctrl + W** then **Enter** jumps to the next match.
+
+| To get to | Search for |
+|---|---|
+| The colors and the corner roundness | `--bg-top` or `--round` |
+| The font | `--font` |
+| The end of the CSS | `</style>` |
+| The title at the top of the page | `<h1>` |
+| The start of the JavaScript | `<script>` |
+| The warning levels | `CARDS` |
+| The end of the JavaScript | `</script>` |
+
+> **To put a new line above one you found:** tap the **Home** key (goes to the start of the line), paste, then tap **Enter** so the old line drops down. To put one below: tap **End**, tap **Enter**, paste. The cursor is where the text lands, so check where it is before you paste.
+
+---
+
+### Level 1: The theme block
+
+> **Where this goes:** Zone 1, about lines 12 to 25. In nano press **Ctrl + W**, type `--bg-top`, tap **Enter**. You land on the first line of the theme block.
 
 Look at the top of your CSS. Everything between the two long comment lines is the theme. Change a value there and it changes everywhere on the page at once, because every rule below reads from it instead of having its own copy of the color.
 
@@ -944,13 +1196,15 @@ Try this first, so you can see how far one variable reaches:
 --round: 0px;
 ```
 
-Save, restart, refresh. Every card went square. You changed one number.
+Save, then refresh the browser. Every card went square. You changed one number.
 
 ---
 
-### Level 2 — Theme packs
+### Level 2: Theme packs
 
-Each of these replaces your whole `:root` block. Copy one in, restart, look at it. Then take the one you like best and start changing its numbers.
+Each of these replaces your whole `:root` block. Copy one in, save, refresh, look at it. Then take the one you like best and start changing its numbers.
+
+> **How to swap one in.** Press **Ctrl + W**, type `:root`, tap **Enter**. The cursor is now on the `:root {` line. Tap **Ctrl + K** **14 times**, once per line, until the whole block is gone and the two comment lines are still above and below the gap. Then copy a pack and paste with **Ctrl + Shift + V**.
 
 **Terminal.** Sharp corners, monospace, the look of a machine that does not care about your feelings.
 
@@ -1072,11 +1326,13 @@ Build your own palette at [coolors.co](https://coolors.co/). Pick two close colo
 
 ---
 
-### Level 3 — Real upgrades
+### Level 3: Real upgrades
 
 These add something that is not there yet. Do as many as you want, in any order.
 
 #### 1. A real typeface
+
+> **Where this goes:** two edits. (1) The font link goes in the head, on the line above `<style>`. Search `<style>`, tap **Home**, paste, tap **Enter**. (2) The `--font` line is already in your theme block. Search `--font` and change it.
 
 Free fonts from [Google Fonts](https://fonts.google.com/). Pick one, then add **one line** in your `<head>`, above `<style>`:
 
@@ -1097,6 +1353,8 @@ Swap `Space+Grotesk` for any font name from the site, with `+` instead of spaces
 ---
 
 #### 2. A background that moves
+
+> **Where this goes:** CSS, at the very bottom. Search `</style>`, tap **Home**, paste, tap **Enter**.
 
 Add this at the bottom of your CSS, above `</style>`:
 
@@ -1120,6 +1378,8 @@ The gradient is stretched to four times the screen and then slid slowly back and
 
 #### 3. Make the numbers glow
 
+> **Where this goes:** CSS, at the very bottom, above `</style>`. Search `</style>`, tap **Home**, paste, tap **Enter**. Your page already has a `.value` rule. Leave it alone. A second one at the bottom adds to it.
+
 ```css
 .value {
   text-shadow: 0 0 18px currentColor;
@@ -1131,6 +1391,8 @@ The gradient is stretched to four times the screen and then slid slowly back and
 ---
 
 #### 4. Make a hot card pulse
+
+> **Where this goes:** CSS again, at the very bottom, above `</style>`.
 
 ```css
 @keyframes alarm {
@@ -1149,13 +1411,15 @@ A ring pushes outward from the card and fades. It only runs on cards your JavaSc
 
 #### 5. A clock in the corner
 
-In your HTML, right under the `<h1>`:
+> **Where this goes:** two edits, two zones. One line of HTML under the title, and one function in the JavaScript.
+
+**Edit 1, HTML.** Search `<h1>`. Tap **End**, tap **Enter**, paste:
 
 ```html
 <p class="sub">Live from my Pi &middot; <span id="clock">--:--:--</span></p>
 ```
 
-And at the bottom of your `<script>`, just above `</script>`:
+**Edit 2, JavaScript.** Search `</script>`. Tap **Home**, paste, tap **Enter**. It lands at the bottom of the script, above the closing line:
 
 ```javascript
 function tick() {
@@ -1172,13 +1436,26 @@ Notice this clock is the **browser's** time, not the Pi's. It never asks the ser
 
 #### 6. Show when the data last arrived
 
-Add a line under the grid in your HTML:
+> **Where this goes:** two edits. One line of HTML under the cards, and two lines inside `refresh()`.
+
+**Edit 1, HTML.** Search `<script>`. Tap **Home**, paste, tap **Enter**. It lands just under the cards, above the script line:
 
 ```html
 <p class="sub" id="stamp">Waiting for the first reading.</p>
 ```
 
-Then add one line inside `refresh()`, at the very end of the function, after the `for` loop closes:
+**Edit 2, JavaScript.** This one goes **inside** `refresh()`, after the `for` loop closes. Here is the end of `refresh()` so you can find the spot:
+
+```javascript
+      } else if (reading >= card.warn) {
+        box.classList.add("warn");
+      }
+    }                          // <- this closes the for loop
+                               // <- paste the two stamp lines here
+  }                            // <- this closes refresh()
+```
+
+Click at the end of the `}` that closes the for loop, tap **Enter**, paste:
 
 ```javascript
 document.getElementById("stamp").textContent =
@@ -1191,16 +1468,9 @@ Now you can tell the difference between "everything is fine" and "the server die
 
 #### 7. One big card and three small ones
 
-Replace the `.grid` rule:
+> **Where this goes:** CSS, at the very bottom. Search `</style>`, tap **Home**, paste, tap **Enter**. Your `.grid` rule is already in the page, so you only add the two `#card-cpu` rules below. Do not repeat the `.grid` rule.
 
 ```css
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 18px;
-  max-width: 960px;
-}
-
 #card-cpu {
   grid-column: span 2;
 }
@@ -1216,7 +1486,15 @@ CPU now takes two columns and a much bigger number, so the page has a main chara
 
 #### 8. A photo behind everything
 
-Put an image in your `static` folder, then:
+> **Where this goes:** two parts. Get a photo into your `static` folder, then add CSS at the bottom.
+
+**Part 1, get the photo.** Find one at [unsplash.com](https://unsplash.com/). In Chromium, right-click the photo and choose **Save image as**. Browse to **Home**, then your folder, then **pi-dashboard**, then **static**. Name it exactly `pi-background.jpg` and save. Check it landed:
+
+```bash
+ls ~/YOURNAME/pi-dashboard/static
+```
+
+**Part 2, the CSS.** Search `</style>`, tap **Home**, paste, tap **Enter**:
 
 ```css
 body {
@@ -1237,13 +1515,15 @@ Two backgrounds stacked: your gradient on top, at 85% opacity, and the photo und
 
 #### 9. Your own warning levels
 
+> **Where this goes:** Zone 4, the JavaScript. Press **Ctrl + W**, type `CARDS`, tap **Enter**.
+
 In the `CARDS` list at the top of your JavaScript:
 
 ```javascript
 { key: "cpu", max: 100, warn: 50, hot: 80 },
 ```
 
-Set `warn` to `5` and restart. The card sits in yellow permanently, forever, no matter what the Pi is doing.
+Set `warn` to `5`, save, and refresh. The card sits in yellow permanently, forever, no matter what the Pi is doing.
 
 An alarm that is always on is worse than no alarm, because people stop looking at it. Real engineers argue about these two numbers for hours. Pick yours on purpose and be ready to say why in your reflection.
 
@@ -1266,34 +1546,67 @@ An alarm that is always on is worse than no alarm, because people stop looking a
 
 ### 📝 Day 3 Deliverables
 
-- [ ] Screenshot of your customized dashboard
+- [ ] `dashboard.png`: your customized dashboard on a computer that is not the Pi, with `YOUR-PI-IP:5000` in the address bar
 - [ ] Your `server.py` and your `static/index.html` files
 
 ---
 
 ## 🎚️ Base and Stretch
 
-**Base — everyone does this.**
+**Base: everyone does this.**
 
 A working server on your Pi, serving your own dashboard, loading on a device that is not the Pi, with at least **two visible changes that are yours**. You can explain what `/api/stats` sends back and who asks for it.
 
-**Stretch — required for high school, bonus for middle school.**
+**Stretch: required for high school, bonus for middle school.**
 
 **Add a fifth stat, wired all the way through.** Not a new color. A new number that does not exist yet, traveling from the Pi's hardware to the screen.
 
-It takes three edits, one in each layer:
+It takes three edits, one in each layer. Page edits need only a save and a refresh. Only `server.py` needs a restart.
 
-**1. Python.** In `server.py`, add a line inside the `jsonify({...})` block. Uptime, in minutes, looks like this:
+**1. Python.** This goes in `server.py`, not the page. Open it in Terminal 2:
 
-```python
-"uptime": round((time.time() - psutil.boot_time()) / 60)
+```bash
+nano -l ~/YOURNAME/pi-dashboard/server.py
 ```
 
-You will need `import time` at the top with the other imports. Restart the server and check `http://YOUR-PI-IP:5000/api/stats`. **If your new name is not in that JSON, stop here and fix it before touching the HTML.**
+First, add one line under `import os`. Search `import os`, tap **End**, tap **Enter**, paste:
 
-**2. HTML.** Copy one of the four `<div class="card">` blocks, paste it at the end of the grid, and change all three ids to your new name.
+```python
+import time
+```
 
-**3. JavaScript.** Add one line to the `CARDS` list with a sensible `max`, `warn` and `hot`.
+Next, in the `jsonify` block, the old last line needs a **comma** added, and your new line goes under it with **no comma**:
+
+```python
+        "disk": psutil.disk_usage("/").percent,
+        "temperature": temperature_c(),
+        "uptime": round((time.time() - psutil.boot_time()) / 60)
+    })
+```
+
+Then restart the server, because `server.py` changed. In Terminal 1 press **Ctrl + C**, then run `python3 server.py`. Reload `http://YOUR-PI-IP:5000/api/stats` on the other computer. **If your new name is not in that JSON, stop here and fix it before touching the HTML.** A `SyntaxError` in Terminal 1 almost always means a missing comma after `temperature_c()`.
+
+**2. HTML.** In the page, add a fifth card after the temperature card. Search `bar-temperature`, tap the **Down** arrow once (that is the line closing the temperature card), tap **End**, tap **Enter**, paste:
+
+```html
+  <div class="card" id="card-uptime">
+    <h2>⏱️ Uptime</h2>
+    <div><span class="value" id="uptime">--</span><span class="unit">min</span></div>
+    <div class="bar"><div class="fill" id="bar-uptime"></div></div>
+  </div>
+```
+
+Making a different stat? Change `uptime` to your stat's name in all three ids, and change the `min` unit.
+
+**3. JavaScript.** Search `CARDS`. The old last line needs a **comma**, and the new line goes under it with **no comma**:
+
+```javascript
+    { key: "temperature", max: 90,  warn: 60, hot: 75 },
+    { key: "uptime", max: 1440, warn: 720, hot: 1200 }
+  ];
+```
+
+`max` is where the bar is full. Uptime is in minutes, so 1440 is a full day. **Your new `key` has to match the name you used in `server.py` exactly.** Save the file, refresh, and the fifth card appears.
 
 **Uptime is the worked example, so it is worth fewer points than one you find yourself.** Open the [psutil documentation](https://psutil.readthedocs.io/) and pick something else: how many processes are running, how many bytes have crossed the network, how many CPU cores are working. If you can get it out of psutil, you can put it on your page.
 
@@ -1302,8 +1615,8 @@ You will need `import time` at the top with the other imports. Restart the serve
 ## 📝 Deliverables
 
 1. **Your two files**: `server.py` and `static/index.html`
-2. **Screenshot: your dashboard on a different device**, address bar showing your Pi's IP
-3. **Screenshot: `/api/stats`** showing the raw JSON
+2. **`dashboard.png`**: your finished dashboard, taken at the end of Day 3 on a computer that is not the Pi, with `YOUR-PI-IP:5000` in the address bar
+3. **`api-stats.png`**: the raw JSON from `/api/stats`, taken on Day 2, with `YOUR-PI-IP:5000/api/stats` in the address bar
 4. **Reflection** (4 to 6 sentences). Answer all three:
    - What does `/api/stats` send back, and what asks for it?
    - How often does the page ask, and which line of code decides that?
@@ -1316,17 +1629,27 @@ You will need `import time` at the top with the other imports. Restart the serve
 
 Nothing on this list is hard, but every one of them has caught somebody. Read it before the last five minutes of class.
 
-### Taking the screenshot
+### Taking the two screenshots
 
-**On the Pi.** Press the **Print Screen** key. Depending on which version of Raspberry Pi OS your station is running, it either drops a `.png` straight into your home folder or opens a small capture window. If pressing it does nothing at all, open **Menu → Accessories** and look for **Screenshot**.
+Both screenshots are taken on the **other computer**, not on the Pi, because the address bar has to show your Pi's IP.
 
-**On your phone.** iPhone is **Side button + Volume Up**. Android is **Power + Volume Down**.
+| File name | Address bar shows | Page shows | Take it |
+|---|---|---|---|
+| `api-stats.png` | `YOUR-PI-IP:5000/api/stats` | One line of data | Day 2, as soon as it works |
+| `dashboard.png` | `YOUR-PI-IP:5000` | Your finished dashboard | End of Day 3, after your changes |
 
-**On a lab computer.** Mac is **Cmd + Shift + 4**, then drag a box. Windows is **Windows + Shift + S**, then drag a box, then paste it into any app and save it.
+**Capture the whole screen, not a piece of it.** A whole-screen capture always has the address bar in it. Cropping is how screenshots end up proving nothing.
+
+| Computer | Whole-screen shortcut | It saves to |
+|---|---|---|
+| Windows | **Windows key + Print Screen** | Pictures, then Screenshots |
+| Mac | **Cmd + Shift + 3** | The Desktop |
+| Chromebook | **Ctrl + the Show windows key** (a rectangle with two lines, top row) | Downloads |
+| Raspberry Pi | **Print Screen**. If nothing happens: Menu, then Accessories, then Screenshot | Your home folder, or a small capture window opens |
 
 > Full guide, with more options for every device: [How to Take and Submit Screenshots](../fundamentals/how_to_screenshot.md)
 
-**Make sure the address bar is in the shot.** Two of your screenshots have to prove *where* the page was loaded from, not just that a page loaded. If the shot is cropped so tight that nobody can see `10.0.4.71:5000` in the address bar, it does not prove anything. Capture the whole browser window.
+Rename it to `dashboard.png` or `api-stats.png`, then open it and check you can read the address bar. If the shot is cropped so tight that nobody can see `10.0.4.71:5000` in the address bar, it does not prove anything.
 
 ---
 
@@ -1351,20 +1674,15 @@ ls ~/YOURNAME/pi-dashboard ~/YOURNAME/pi-dashboard/static
 
 Pick whichever fits what you are holding.
 
-**Your files and your Pi screenshots: submit from the Pi.** This is the short path, because everything is already on that machine.
+**Upload each file from the computer it is on.**
 
-1. Open **Chromium** on the Pi
-2. Go to Schoology and log in
-3. Open the assignment, click **Submit Assignment**, click **Upload**
-4. When the file picker opens, go to **Home → YOURNAME → pi-dashboard** and pick `server.py`, then repeat for `static/index.html`
-
-**Your phone screenshot: get it onto a computer first.** Email it to yourself, AirDrop it, or put it in Google Drive, then download it wherever you are submitting from. You can also just log in to Schoology in your phone's browser and upload it straight from your camera roll.
-
-**If the Pi will not cooperate:** copy the whole `pi-dashboard` folder onto a jump drive, take it to a lab computer, and submit from there.
+- `server.py` and `index.html` are on the Pi. Open **Chromium** on the Pi, log in to Schoology, open the assignment, click **Submit Assignment**, click **Upload**, and pick the files from **Home, then YOURNAME, then pi-dashboard**. `index.html` is inside the `static` folder.
+- The two screenshots are on the other computer. Log in to Schoology there and upload them from there.
+- **If the Pi will not cooperate:** copy the whole `pi-dashboard` folder onto a jump drive, take it to a lab computer, and submit from there.
 
 > **⚠️ Upload, never Create.** "Create" only accepts typed text. It will not take a file. This is the single most common way work in this class gets submitted as nothing.
 
-**Name your files so they are readable:** `krigger-server.py`, `krigger-dashboard-on-phone.png`, `krigger-api-stats.png`. A folder of eight files called `Screenshot 2026-11-04 at 10.14.22.png` helps nobody, including you.
+**Name your screenshots exactly** `dashboard.png` and `api-stats.png`. A folder of eight files called `Screenshot 2026-11-04 at 10.14.22.png` helps nobody, including you.
 
 ---
 
@@ -1410,6 +1728,9 @@ Upload the following to **Schoology**:
 
 | Term | What It Means |
 |---|---|
+| **Terminal** | A window where you type commands instead of clicking. Same computer, different door |
+| **Prompt** | The text at the start of a Terminal line, waiting for you. Yours should start with `(YOURNAME-pihealth)` |
+| **nano** | A text editor that runs inside the Terminal. Save with Ctrl + O, exit with Ctrl + X |
 | **Server** | A computer whose job is to wait for requests and send back responses |
 | **Request** | A device asking a server for something |
 | **Response** | What the server sends back |
@@ -1442,8 +1763,8 @@ Upload the following to **Schoology**:
 **"The page says Not Found"**
 → Run `ls ~/YOURNAME/pi-dashboard/static`. If `index.html` is not in that list, you saved it in the wrong folder.
 
-**"My phone cannot load it"**
-→ Three things, in order. Is the phone on GHCDS? Is the server still running on the Pi? Did you type `:5000` after the IP address?
+**"The other computer cannot load my dashboard"**
+→ Three things, in order. Is that computer on the school network? Is the server still running in the Pi's Terminal? Did you type `:5000` after the IP address? Check `hostname -I` on the Pi too. The IP can change overnight.
 
 **"It loads someone else's dashboard"**
 → You typed their IP. Run `hostname -I` on your Pi again and fix your sticky note.
@@ -1452,13 +1773,34 @@ Upload the following to **Schoology**:
 → Some Pi models do not report it. Everything else works. Leave it.
 
 **"I changed the page and nothing happened"**
-→ Stop the server (**Ctrl + C**), start it again, then hard refresh the browser with **Ctrl + Shift + R**.
+→ Did you save? nano shows `[ Wrote ... lines ]` when it saves. Then hard refresh with **Ctrl + Shift + R**. If you changed `server.py`, that one needs a restart: **Ctrl + C** in the server's Terminal, then `python3 server.py`. Page edits do not.
 
 **"Nothing appears when I type my password"**
-→ That is deliberate. The terminal hides password characters so nobody can read them over your shoulder. Type it and press Enter.
+→ That is deliberate. The terminal hides password characters so nobody can read them over your shoulder. Type it and tap the **Enter** key.
 
 **"I pasted into nano and it came out mangled"**
 → Paste in the Terminal is **Ctrl + Shift + V**. If the file is a mess, `rm` it and start the file over. It is faster than repairing it.
+
+**"My prompt does not start with (YOURNAME-pihealth)"**
+→ You are outside your toolbox. Run `source ~/YOURNAME/pihealth/bin/activate`. A new Terminal window always starts outside it.
+
+**"No such file or directory"**
+→ Either a spelling slip in the folder name, or you are at a different Pi than yesterday. Run `ls ~` and look for your folder name. Not there? Find your Pi. Do not rebuild.
+
+**"nano says File Name to Write and I do not know what to do"**
+→ Tap the **Enter** key. That is it. The name is already filled in, and Enter says yes to it.
+
+**"I pressed Ctrl + X and nano asks Save modified buffer?"**
+→ That means you had unsaved changes. Tap **Y** to save them, then the **Enter** key. Tap **N** if you want to throw them away.
+
+**"Ctrl + C did not copy my text"**
+→ In the Terminal, Ctrl + C stops a running program. It does not copy. Copy in the browser, and paste in the Terminal with **Ctrl + Shift + V**.
+
+**"The Terminal looks frozen after python3 server.py"**
+→ It is not frozen, it is listening. That window is now your server. Open a second Terminal window for anything else.
+
+**"My dashboard stopped updating"**
+→ The server stopped. Look at the Terminal where you started it. If you see your prompt again, run `python3 server.py` again.
 
 **"I broke it so badly I want to start over"**
 → `rm ~/YOURNAME/pi-dashboard/server.py` and redo Step 6. This is a normal thing that normal programmers do.
@@ -1483,11 +1825,11 @@ Look at the `VERSION_CODENAME` line. It says either `bookworm` or `trixie`. If t
 
 This is the version most of the lab is running.
 
-### A1 — Get the Imager
+### A1: Get the Imager
 
 On any Mac or Windows computer, download and install **[Raspberry Pi Imager](https://www.raspberrypi.com/software/)**. Then put the microSD card into that computer, using an adapter if you need one.
 
-### A2 — Choose the three things
+### A2: Choose the three things
 
 Open Imager. It asks you three questions.
 
@@ -1497,7 +1839,7 @@ Open Imager. It asks you three questions.
 
 > **⚠️ Look hard at the storage list.** Imager erases whatever you choose, completely, with no warning you can undo. If you see an external drive in that list, make very sure you are not about to pick it.
 
-### A3 — Fill in OS customisation
+### A3: Fill in OS customisation
 
 Imager asks whether you want to customise before writing. **Say yes.** This is the whole reason setup is easy now. Fill in:
 
@@ -1516,11 +1858,11 @@ Then open the **Services** tab and turn on **Enable SSH**, with password authent
 
 > **Your password does not go in any file, ever.** You typed it here and you wrote it on paper. That is where it lives.
 
-### A4 — Write the card
+### A4: Write the card
 
 Click **Write** and wait. This takes several minutes and then verifies what it wrote, which takes several more. Leave it alone.
 
-### A5 — First boot
+### A5: First boot
 
 Put the card in the Pi, connect the monitor, keyboard and mouse, then plug in the power last. The first boot takes longer than normal, and the Pi may restart itself once. Let it.
 
@@ -1528,7 +1870,7 @@ You should land on a desktop with a menu bar across the top.
 
 > **✅ Checkpoint:** A desktop, and the Wi-Fi icon in the top right shows it is connected.
 
-### A6 — Update it
+### A6: Update it
 
 Open the Terminal and run:
 
@@ -1547,7 +1889,7 @@ The first command can take fifteen minutes on a fresh card, longer if a whole cl
 - `full-upgrade -y` installs them, and `-y` means stop asking me to confirm
 - `reboot` restarts so the updates take effect
 
-### A7 — Confirm it is ready for Day 1
+### A7: Confirm it is ready for Day 1
 
 ```bash
 whoami
@@ -1576,19 +1918,19 @@ You are ready. Go to Day 1.
 
 Trixie is the newer Raspberry Pi OS, built on Debian 13. Some of the lab machines run it.
 
-### B1 — Everything in A1 through A4 is the same
+### B1: Everything in A1 through A4 is the same
 
 Same Imager, same three questions, same customisation screen, same Write button. **One difference:** at **Choose OS**, Trixie is the default now, so it is the plain **Raspberry Pi OS (64-bit)** entry at the top. You do not need to go into "other".
 
 Do steps **A1 through A4** exactly as written above, with that one change.
 
-### B2 — First boot
+### B2: First boot
 
 Same as A5. Card in, monitor and keyboard connected, power last, wait through a slow first boot.
 
 The desktop looks different from Bookworm. It has been redrawn, so the icons and the wallpaper will not match what the student next to you is looking at. Nothing about this project changes because of it.
 
-### B3 — Update it
+### B3: Update it
 
 Identical to A6:
 
@@ -1600,7 +1942,7 @@ sudo apt update && sudo apt full-upgrade -y
 sudo reboot
 ```
 
-### B4 — Confirm it is ready for Day 1
+### B4: Confirm it is ready for Day 1
 
 Identical to A7. Run `whoami` and `hostname -I` and write both down.
 

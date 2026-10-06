@@ -18,11 +18,12 @@ TIMING FOR PERIOD 1 (Day 1: accounts)
 - 5 min   Hook: put `password1` into the checker on the projector, watch it die instantly
 - 10 min  Passphrase demo, build one together on the board
 - 15 min  Students build three passphrases and test them
-- 20 min  2FA walkthrough, students enable it on one account and screenshot
+- 20 min  2FA: explain it, assign the real setup as homework (phones stay away in class),
+          class does the two in-class multiple choice questions
 - 10 min  Spot the Phish, whole class, then clean up and exit ticket
 
 TIMING FOR PERIOD 2 (Day 2: data and secrets)
-- 5 min   Hook: show a photo and find the address, school, or plate in the background
+- 5 min   Hook: the practice photo (Step 1b). Find the address, school, or plate in the background
 - 10 min  Deepfake clip, then the verify-through-another-channel rule
 - 15 min  Secrets: what one is, where they leak, the taped-key comparison
 - 25 min  The .env drill. Base tier spots the leak, optional bonus builds the .env and .gitignore
@@ -35,10 +36,19 @@ WHERE STUDENTS GET STUCK
 - MS students find .env abstract -> stay on the base tier, spotting the leak in a screenshot.
   Do not push them into the terminal.
 - "I don't have anything worth stealing" -> the SIM swap and account-resale angle usually lands.
+- No phone in class. 2FA setup is homework with a screenshot. The in-class option is two
+  multiple choice questions (stolen password: two-factor; weakest code: text message).
+- Photos step: in class use the described practice photo. At home use the last five photos
+  posted or sent. The palm tree is harmless on purpose.
+- Password strength meter now rates a 40 character keyboard mash as strong but unmemorable.
+  That is the lead-in to the password manager mini lessons.
+- Password manager is optional and not graded. Home only, with a parent or guardian, never on
+  school computers. Bitwarden and Google accounts need age 13 or older (checked October 2026).
+- School or lab computer offers to save a password -> click Never, then log out.
 
 IF THEY FINISH EARLY   : the Day 2 optional bonus, or the haveibeenpwned audit bonus
 IF THEY NEED MORE TIME : Day 2 secrets carries into the next period. Day 1 must finish on Day 1
-                         because the 2FA screenshot is the deliverable that takes longest to chase.
+                         because the 2FA proof (a home screenshot, or the in-class answers) is the deliverable that takes longest to chase.
 
 ASSESSMENT
 - Category  : Informal Assessments
@@ -74,7 +84,8 @@ AFTER TEACHING IT (fill in, this is the most valuable part)
 ## 🧰 What You Need
 
 - A computer with a web browser
-- One account you actually control and can change settings on. A personal account is fine and is usually easier than a school one.
+- **No phone is needed in class.** Two parts of this lesson work best with your own phone and accounts, so you do them at home. Each has an in-class option, so nobody is stuck.
+- For the home parts: one account you actually control and can change settings on. A personal account is fine and is usually easier than a school one.
 - Only for the optional Day 2 bonus: [VS Code](https://code.visualstudio.com/). It is on the lab machines. No VS Code at home? Skip the bonus. Nothing else in this lesson needs it.
 - [Password strength checker](https://www.security.org/how-secure-is-my-password/), runs in the browser, nothing to install
 - [Have I Been Pwned](https://haveibeenpwned.com/), for the bonus
@@ -83,7 +94,13 @@ AFTER TEACHING IT (fill in, this is the most valuable part)
 
 # Day 1: Lock Down Your Accounts
 
-**Goal:** By the end of today you have three passphrases you can actually remember, two-factor authentication switched on somewhere real, and the ability to look at a message and say why it is fake.
+**Goal:** By the end of today you have three passphrases you can actually remember, a plan for where to keep the rest, two-factor authentication switched on somewhere real (at home, or the in-class version), and the ability to look at a message and say why it is fake.
+
+### 🚦 Start here (Day 1)
+
+1. **Nothing to set up.** You only need this page. Do not log in to anything in class.
+2. **Work down the page in order.** Each step ends with a **Checkpoint**. Do not skip ahead until you can tick it.
+3. **Never type a real password** into any tool. Type something similar.
 
 ---
 
@@ -106,6 +123,7 @@ Students use the live meter on the class website, which computes in the browser 
 1. Open the meter on the lesson page
 2. Type something close to a password they have used. Never the real one.
 3. Read the crack time
+4. Now mash your keyboard for 40 characters and test that. The meter rates it strong, and you could never remember it. Keep that thought. It is why password managers exist.
 
 > **⚠️ Never type a password you actually use into any website.** Type something similar instead. This applies to every "check your password" tool on the internet, including this one.
 
@@ -152,9 +170,35 @@ That is why a long phrase you can remember beats a short mess you have to write 
 
 ---
 
+### 🧠 Mini Lesson: where do you keep all of these?
+
+Three strong passphrases is easy. Forty accounts is not. Nobody can memorize forty, so people reuse one password everywhere. Then one leaked website opens every account at once, because attackers try each stolen password on every other site. That has a name, **credential stuffing**, and it is why reuse is the worst habit in this table.
+
+| Where | Verdict | Why |
+|---|---|---|
+| In your head, for 2 or 3 accounts | Good | Your email and your password manager. The ones that unlock everything else |
+| A password manager | Best for the rest | One strong passphrase unlocks a vault that makes and remembers a different password for every site |
+| Paper, in a drawer at home | Fine | Not on your monitor. A burglar is a much smaller risk than a hacker |
+| A note on your phone called "passwords" | Bad | Anyone who gets into that account or that phone gets everything, in plain text |
+| The same password everywhere | Worst | One leak, every account |
+
+> **⚠️ On a school or lab computer, never save a password.** When the browser offers, click **Never** or the X. It is not your computer, and the next person who sits down can use whatever it saved. Log out when you finish.
+
+---
+
+### 🧠 Mini Lesson: what a password manager actually does
+
+- **It makes the passwords.** Long, random, different on every site. You never see most of them and you never need to.
+- **It only fills the real site.** A fake site like `paypa1.com` does not match anything saved, so nothing fills in. That is your phishing alarm, for free.
+- **One passphrase to guard.** The master passphrase is the one you must never forget, and never reuse. Turn on two-factor for the manager itself.
+
+> **Not required, not graded, and not for school computers.** If you want one, set it up at home with a parent or guardian. The easy start needs nothing new: the password manager already built into Chrome, Edge, Safari or Firefox, or Apple Passwords. **Bitwarden** is a free dedicated one. Check the age rule before you sign up for anything. Bitwarden and Google accounts both require you to be 13 or older (checked October 2026).
+
+---
+
 ### Step 3: Make a stolen password useless
 
-Two-factor means logging in takes two things: something you **know** (your passphrase) and something you **have** (your phone). Someone who steals your password still cannot get in.
+Two-factor means logging in takes two things: something you **know** (your passphrase) and something you **have** (your phone, or an app, or a key). Someone who steals your password still cannot get in.
 
 | Method | Security | How it works |
 |---|---|---|
@@ -167,12 +211,25 @@ Text codes are the weakest of the four because of SIM swapping, which you will r
 
 Turn it on somewhere that matters. Email first if you can, because password resets for everything else land there.
 
+**No phones in class.** Turning on two-factor needs your own phone and your own account, so you do the real thing at home tonight. Short on time or no phone at home? Use the in-class version below.
+
+**At home, the real thing:**
+
 1. Open the security settings of an account you control
 2. Find two-factor authentication, two-step verification, or login verification. The name changes by site.
 3. Turn it on and finish the setup
 4. Screenshot the confirmation screen. Blur anything private.
 
-> **✅ Checkpoint:** A screenshot showing two-factor authentication is on.
+> **✅ Checkpoint:** A screenshot showing two-factor authentication is on, private details blurred.
+
+**In class, the in-class version.** No phone needed. If you did the home version, you can skip this. Answer both questions.
+
+1. A stranger has your password. What stops them getting in? (A longer password, two-factor authentication, or changing your username.)
+2. Which of these is the weakest way to get a code? (A text message, an authenticator app, or a hardware key.)
+
+> **Answers:** 1. Two-factor authentication. A stolen password is only the first of two things they need, and the second is on your phone, an app, or a key they do not have. 2. A text message. Someone can take over your phone number with a SIM swap, and then the codes come to them. It is still far better than no second factor at all.
+
+> **✅ Checkpoint:** Both questions answered.
 
 ---
 
@@ -220,13 +277,18 @@ Now judge these three.
 ### 📝 Day 1 Deliverables
 
 - [ ] Three passphrases with the crack time for each
-- [ ] Screenshot of two-factor authentication enabled, private parts blurred
+- [ ] Two-factor: a screenshot of it turned on (from home), or your answers to the two in-class questions
 
 ---
 
 # Day 2: Protect Your Data and Your Code
 
 **Goal:** By the end of today you know what you are giving away without meaning to, and you know where a password belongs in a project you are going to share.
+
+### 🚦 Start here (Day 2)
+
+1. **Nothing to set up for the main lesson.** Photos, voices and the secrets rule are all on this page.
+2. **The VS Code part is a bonus.** Only open VS Code if you want it. If you already made `secret-test` last time, use **File > Open Recent** to get back to it.
 
 ---
 
@@ -242,11 +304,26 @@ Here is what someone builds from pieces that each feel harmless.
 | School or workplace | Write a phishing message convincing enough to fool you |
 | Location, live | Know when your house is empty |
 
-Look at the last five photos on your phone without opening anything private. Check the backgrounds. Look for a house number, a street sign, a school logo, a license plate, a package label, a screen with a name on it.
+Check the background of a photo for a house number, a street sign, a school logo, a license plate, a package label, or a screen with a name on it. You can practice two ways. No phones in class.
+
+**In class: the practice photo.** Jordan posted a photo today with the caption "new hoodie!" It shows a student standing in front of a house. List every detail a stranger could use. Not everything counts.
+
+| Detail in the photo | What a stranger learns |
+|---|---|
+| A live location tag | Where Jordan is right now, and that the house is probably empty |
+| The house number | With the street sign, a full street address |
+| The street sign | One street, narrowed down |
+| A license plate | An owner, and a family |
+| The school name on the hoodie | Which school and team, and where to find Jordan |
+| A package label on the porch | A real name and a full address |
+| A laptop screen in the window | A name, an email address, and a birth year |
+| The palm tree | Nothing. It is harmless on purpose. Knowing what to ignore matters too, or you blur everything and post nothing |
+
+**At home: your own photos.** Look through the last five photos you posted or sent, without opening anything private, and check the backgrounds for the same things.
 
 The rules that follow from this are short. Keep profiles private. Post the vacation photos after you get home. Check the background before you post. Ask whether you would be fine with a stranger, a teacher, and an employer all seeing it.
 
-> **✅ Checkpoint:** You found at least one identifying detail in the background of a photo, yours or a classmate's.
+> **✅ Checkpoint:** You found at least one identifying detail in the background of a photo, the practice photo or one of your own.
 
 ---
 
@@ -342,13 +419,13 @@ print("Loaded key:", os.getenv("API_KEY"))
 
 Save each one. A white dot on the tab means unsaved, and that catches people out.
 
-**Step C.** Terminal > New Terminal. It opens already inside the folder. Check Python:
+**Step C.** Terminal > New Terminal. It opens already inside the folder. Check Python. Paste into the VS Code terminal with Ctrl+V (Cmd+V on a Mac), then tap the Enter key:
 
 ```bash
 python3 --version
 ```
 
-**Step D.** Install the library:
+**Step D.** Install the library. Paste, then tap the Enter key:
 
 ```bash
 pip3 install python-dotenv
@@ -357,7 +434,7 @@ pip3 install python-dotenv
 Looking for `Successfully installed`, or `already satisfied` if someone installed it on that
 machine before. If `pip3` is missing, try `pip`, then `python3 -m pip`.
 
-**Step E.** Run it:
+**Step E.** Run it. Paste, then tap the Enter key:
 
 ```bash
 python3 read_secret.py
@@ -373,7 +450,7 @@ is printed on screen and is nowhere in that file.
 | `Loaded key: None` | File is named `.env.txt`, or there are spaces around the `=` |
 | `ModuleNotFoundError: No module named 'dotenv'` | Step D did not finish |
 | `can't open file` | Wrong folder or a misspelled filename |
-| Nothing happens | Enter not pressed, or the file was never saved |
+| Nothing happens | The Enter key was not tapped, or the file was never saved |
 
 Getting an error and reading the last line of it is the actual skill being taught here.
 
@@ -397,7 +474,7 @@ Real key leaked by a real company, real often. This is not a beginner mistake. I
 ## 🎚️ Base and Optional Bonus
 
 **Base, everyone does this.**
-Three passphrases with crack times, two-factor authentication turned on with a screenshot, the phishing red flag identified, and the three secret-handling questions answered correctly.
+Three passphrases with crack times, two-factor authentication turned on (a screenshot from home, or your answers to the two in-class questions), the phishing red flag identified, and the three secret-handling questions answered correctly.
 
 **Optional bonus, high school and middle school.** Not required for anyone. It needs VS Code.
 A working `.env` setup: the `.env` file, a `.gitignore` containing it, and a script that prints the key without the key appearing anywhere in the script. Screenshot the terminal output.
@@ -407,7 +484,7 @@ A working `.env` setup: the `.env` file, a `.gitignore` containing it, and a scr
 ## 📝 Deliverables
 
 1. **Three passphrases** with the crack time for each. Make up new ones, never submit a password you use.
-2. **Screenshot of two-factor authentication** enabled on an account, private details blurred
+2. **Two-factor proof**: a screenshot of it turned on (from home), private details blurred, or your answers to the two in-class questions
 3. **Phishing analysis**: two example messages with the red flags labeled
 4. **Secrets questions**: your three answers. Optional bonus: the terminal screenshot and `.gitignore` from the VS Code part
 5. **Reflection** (3 to 5 sentences): What is the biggest security mistake you have been making? What are you changing?
@@ -421,7 +498,7 @@ Upload the following to **Schoology**:
 | # | What to Screenshot / Submit |
 |---|---|
 | 1 | Your three passphrases with crack times |
-| 2 | Screenshot of two-factor authentication enabled, private info blurred |
+| 2 | Screenshot of two-factor turned on (from home), private info blurred, or your answers to the two in-class questions |
 | 3 | Two phishing examples with the red flags labeled |
 | 4 | Your three secrets answers. Optional bonus: the terminal screenshot and `.gitignore` |
 | 5 | Your written reflection (3 to 5 sentences) |
@@ -467,6 +544,8 @@ Upload the following to **Schoology**:
 | **API Key** | A string that identifies your account to an outside service, usually attached to money or private data |
 | **.env file** | A file holding secrets, kept next to your code and never shared |
 | **.gitignore** | A list of files Git refuses to upload, which is what keeps `.env` off the internet |
+| **Credential Stuffing** | Trying a password stolen from one site on every other site, which works on anyone who reuses passwords |
+| **Password Manager** | An app that makes, stores and fills a different strong password for every site, guarded by one master passphrase |
 | **Brute Force** | Trying every possible combination until one works, which is fast when your password is short and hopeless when it is long |
 
 ---
@@ -475,6 +554,9 @@ Upload the following to **Schoology**:
 
 **"My school account will not let me turn on two-factor."**
 → It is school managed and locked down, which is IT doing its job. Use a personal account instead. Anything you actually control counts.
+
+**"I do not have a phone, or I cannot turn on two-factor at home."**
+→ Do the in-class version in Step 3: answer the two multiple choice questions and hand those in instead.
 
 **"I do not want to screenshot my real account."**
 → Blur everything except the confirmation that two-factor is on. That is all that is being checked.
