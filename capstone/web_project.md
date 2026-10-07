@@ -442,7 +442,7 @@ Fix your id back to `"go"` before you move on.
 | Filter a list of cards | `javascript filter list buttons` |
 | Quiz with a score at the end | `javascript quiz score` |
 
-**Break your own slice** before it goes further: click everything twice fast, click things out of order, make the window tiny, open it on your phone, hand it to the person next to you and say nothing. Fix what they find.
+**Break your own slice** before it goes further: click everything twice fast, click things out of order, make the window tiny, open it on another computer, hand it to the person next to you and say nothing. Fix what they find.
 
 📝 **Day 3 done when:** your vertical slice does the one thing it is supposed to do; someone else has used it and you fixed what broke.
 
@@ -450,11 +450,11 @@ Fix your id back to `"go"` before you move on.
 
 ### Day 4 — Host it on your Pi
 
-**Copy it over.** Jump drive into your Pi, drag the whole folder into your home folder, or from the Terminal:
+**Copy it over.** Jump drive into your Pi, drag the whole folder into your `YOURNAME` folder (the one you made in the dashboard lesson), or from the Terminal:
 
 ```bash
-cp -r /media/$USER/YOUR-DRIVE-NAME/chess ~/chess
-ls ~/chess
+cp -r /media/$USER/YOUR-DRIVE-NAME/chess ~/YOURNAME/chess
+ls ~/YOURNAME/chess
 ```
 
 > **✅ Checkpoint:** `ls` lists `index.html`, `styles.css`, `script.js`, `assets`.
@@ -462,14 +462,14 @@ ls ~/chess
 **Write the server.**
 
 ```bash
-nano ~/site_server.py
+nano ~/YOURNAME/site_server.py
 ```
 
 ```python
 from flask import Flask, send_from_directory
 import os
 
-SITE = os.path.expanduser("~/chess")
+SITE = os.path.expanduser("~/YOURNAME/chess")
 
 app = Flask(__name__)
 
@@ -487,15 +487,17 @@ def other_files(filename):
 app.run(host="0.0.0.0", port=8000)
 ```
 
-**Change `~/chess` on the `SITE` line to your own folder name.** Everything else is the same for everybody. Save: **Ctrl + O**, Enter. Exit: **Ctrl + X**.
+**On the `SITE` line, change `YOURNAME` to your folder name and `chess` to your project's folder name.** Everything else is the same for everybody. Save: **Ctrl + O**, Enter. Exit: **Ctrl + X**.
+
+> **Thonny works for this file too.** Open `site_server.py` with File, Open, click the green Run button, and use the red Stop button to stop it. Set Thonny's Interpreter to your `pihealth` toolbox first. The steps are on Day 1 of the dashboard lesson.
 
 > **Notice the port is 8000, not 5000.** Your dashboard owns 5000. Two servers cannot share a door, and now you can run both at once.
 
 **Run it.**
 
 ```bash
-source ~/pihealth/bin/activate
-python3 ~/site_server.py
+source ~/YOURNAME/pihealth/bin/activate
+python3 ~/YOURNAME/site_server.py
 ```
 
 Check `http://localhost:8000` on the Pi first, then get your Pi's address:
@@ -504,11 +506,11 @@ Check `http://localhost:8000` on the Pi first, then get your Pi's address:
 hostname -I
 ```
 
-Give someone `http://YOUR-PI-IP:8000` and watch them load it on their phone.
+Give someone `http://YOUR-PI-IP:8000` and watch them load it on their computer. A phone works if you are testing at home.
 
 > **✅ Checkpoint, end of Week 1:** Your slice, running, loaded by somebody else on a device that is not the Pi. **If it is not running today, that is information, not failure.** Go to your fallback today, while there is still time for the fallback to be good.
 
-**Check on that phone, not on the Pi:**
+**Check on that other computer, not on the Pi:**
 - [ ] Every image shows up
 - [ ] Every link goes somewhere
 - [ ] Your slice still works
@@ -618,32 +620,57 @@ def random_item():
 
 ### Taking the screenshots
 
-**On the Pi.** Press **Print Screen**. If nothing happens, open **Menu → Accessories** and look for **Screenshot**.
+**On the Pi.** Press **Print Screen**. If nothing happens, open **Menu → Accessories** and look for **Screenshot**. Rename it `yourname-chess-pi.png` and drag it into your `YOURNAME` folder so it travels with your project.
 
-**On your phone.** iPhone is **Side button + Volume Up**. Android is **Power + Volume Down**.
-
-**On a lab computer.** Mac is **Cmd + Shift + 4**, then drag a box. Windows is **Windows + Shift + S**, then drag a box and paste it into any app to save.
+**On a lab computer.** Load your site from the Pi's address. Mac is **Cmd + Shift + 4**, then drag a box. Windows is **Windows + Shift + S**, then drag a box and paste it into any app to save. Name it `yourname-chess-on-lab-computer.png`.
 
 > Full guide for every device: [How to Take and Submit Screenshots](../fundamentals/how_to_screenshot.md)
 
 **Make sure the address bar is in the shot.** Your screenshot has to prove *where* the page was loaded from, not just that a page loaded.
 
-### Getting it uploaded
+### Pack your project into one file
 
-**Your files and your Pi screenshot: submit from the Pi.** Open Chromium on the Pi, log in to Schoology, open the assignment, Submit Assignment → Upload, and browse to your project folder.
+A project has many files. Pack them into one zip so you only send one thing. Change `yourname` and `chess` to yours:
 
-**Your phone screenshot:** email it to yourself, AirDrop it, or log in to Schoology in your phone's browser and upload straight from the camera roll.
+```bash
+cd ~/YOURNAME && python3 -m zipfile -c yourname-chess.zip chess site_server.py
+ls ~/YOURNAME
+```
 
-**If the Pi will not cooperate:** copy the folder to your jump drive, take it to a lab computer, submit from there.
+`yourname-chess.zip` and `yourname-chess-pi.png` should both be in the list. Packed again after a change? Run the same command and it replaces the old zip.
 
-**Name your files so they are readable:** `krigger-chess-index.html`, `krigger-chess-on-phone.png`.
+### Getting it to Schoology: pick a route
+
+The zip and your Pi screenshot are on the Pi. Your lab-computer screenshot is on the lab computer. Try Route 1 first.
+
+| Route | What happens | Logins |
+|---|---|---|
+| **1. Schoology on the Pi** | Log in to Schoology on the Pi and upload from there. | Two: the Pi, then the lab computer |
+| **2. Email yourself** | Email the two files to yourself from the Pi, then open that email on a lab computer. | Email on the Pi, then Schoology on the lab computer |
+| **3. Download from the Pi** | Your Pi shares your folder for a minute. You save the two files on a lab computer. | One: Schoology on the lab computer |
+
+**Last resort:** copy the zip to a jump drive and submit from a lab computer.
+
+> **⚠️ Upload, never Create.** Create only takes typed text.
+
+**Route 1: Schoology on the Pi.** Open Chromium and press **Ctrl + Shift + N** for a Private window. Log in to Schoology. If Chromium offers to save the password, click **Never**. Open the assignment, **Submit Assignment**, **Upload**, and pick `yourname-chess.zip` and `yourname-chess-pi.png` from **Home → YOURNAME**. Submit. Then click your name at the top right, choose **Log out**, and close the Private window. Upload your lab-computer screenshot from a lab computer.
+
+**Route 2: Email yourself.** In a Private window on the Pi, log in to your email (click **Never** if asked to save the password), send the zip and the Pi screenshot to yourself, then **log out and close the Private window before doing anything else**. On a lab computer, open the email, download both files, and upload them to Schoology with your lab-computer screenshot. Many email systems refuse a zip that contains `.js` files. If yours does, use Route 1 or Route 3.
+
+**Route 3: Download from the Pi.** On the Pi, in the Terminal:
+
+```bash
+cd ~/YOURNAME && python3 -m http.server 8001
+```
+
+On the lab computer, go to `http://YOUR-PI-IP:8001`. Right-click `yourname-chess.zip` and choose **Save link as**. Do the same for `yourname-chess-pi.png`. Then click the Terminal on the Pi and press **Ctrl + C**. While it runs, anyone on the school network can read that folder. Port 8001 is used because your dashboard owns 5000 and your site owns 8000. Upload from that same computer, one login for everything.
 
 ---
 
 ## 📝 Deliverables
 
-1. **Your working code** — the whole project folder, every file it needs to run (`index.html`, `style.css`, `script.js`, anything else it depends on)
-2. **`site_server.py`** — the script that hosted it
+1. **Your working code** — the whole project folder, every file it needs to run (`index.html`, `style.css`, `script.js`, anything else it depends on), packed in the zip
+2. **`site_server.py`** — the script that hosted it, also in the zip
 3. **The address** it was served at, like `http://10.0.4.71:8000`
 4. **Screenshot** of it running on a device that is not the Pi, address bar visible
 5. **Screenshot** of your project folder on the Pi
@@ -713,7 +740,7 @@ By the capstone rubric, 100 points:
 → A capital letter. Check the filename in your `src` matches the actual file exactly, letter for letter. Rename everything to lowercase.
 
 **"Address already in use"**
-→ Something is already on that port. Your dashboard is probably on 5000, this project is on 8000. If 8000 is also taken, `pkill -f site_server.py` and start again.
+→ Something is already on that port. Your dashboard is probably on 5000, this project is on 8000. If 8000 is also taken, `pkill -f YOURNAME/site_server.py` and start again.
 
 **"My JavaScript does nothing"**
 → Press F12 and read the Console. "null is not an object" means `getElementById` could not find that id, so the name in your HTML and the name in your JS do not match. Also check `<script src="script.js"></script>` is the last thing before `</body>`.
@@ -721,8 +748,8 @@ By the capstone rubric, 100 points:
 **"The page loads but it is the old version"**
 → Hard refresh: **Ctrl + Shift + R**.
 
-**"Nothing loads from my phone"**
-→ Is the phone on GHCDS? Is the server still running on the Pi? Did you type `:8000` after the IP?
+**"Nothing loads from the other computer"**
+→ Is that computer on the school network? Is the server still running on the Pi? Did you type `:8000` after the IP?
 
 **"I cannot find my jump drive on the Pi"**
 → `ls /media/$USER/` lists what is plugged in. If it is empty, unplug and replug, then wait a few seconds.

@@ -11,6 +11,13 @@ REWRITTEN       : 2026-09-16, to the LESSON_TEMPLATE standard. Replaces the
 UPGRADED        : 2026-10-06, to match the upgraded site lesson (pi-web-server).
                   Added Start here blocks, Meet nano, same-Pi rule, no phones,
                   page map and nano search for Make It Yours, backup copies.
+UPGRADED        : 2026-10-07. Thonny added on Day 1 (open server.py, point it at
+                  the pihealth venv, run and stop from Thonny) and used for the
+                  Day 3 Stretch edit. Hand-in rewritten as three routes:
+                  Schoology on the Pi in a Private window, email to yourself,
+                  or a one-minute python3 -m http.server download from the Pi.
+                  Shared Pi: every route ends with a sign-out and closing the
+                  Private window.
 
 THE LAB RUNS TWO OS VERSIONS
 Bookworm on most stations, Trixie on some. Days 1 through 3 are deliberately
@@ -584,9 +591,66 @@ We used two files because your next project is a whole website with images and a
 
 ---
 
+### Meet Thonny, a second editor
+
+nano lives inside the Terminal. **Thonny** is a Python editor with windows and buttons, and it is already on your Pi. It colors your code, runs your program with one click, and shows errors in red with the line number. Today you learn it. On Day 3 you will use it for the Python edit.
+
+1. **Stop your server.** Click the Terminal and press **Ctrl + C**. Thonny will run its own copy, and two servers cannot share port 5000.
+2. **Open Thonny:** Menu → Programming → Thonny.
+3. **Open your server file.** Click **File**, then **Open**. Click **Home**, then **YOURNAME**, then **pi-dashboard**, then **server.py**, then **Open**.
+
+> **✅ Checkpoint:** the code from Step 6 is on screen with colored words. Under it is a window called **Shell**. If you cannot see the Shell, click **View** and tick **Shell**.
+
+### Point Thonny at your toolbox
+
+Thonny starts with its own Python, and that Python does not have Flask. It is the same problem as `ModuleNotFoundError` in the Terminal: you are outside your toolbox. Tell Thonny to use the one you built.
+
+1. Click **Tools**, then **Options**, then the **Interpreter** tab.
+2. Choose **Alternative Python 3 interpreter or virtual environment**.
+3. In the box, type this path. Thonny does not understand `~`, so write out your username. It is on your sticky note.
+
+```text
+/home/USERNAME/YOURNAME/pihealth/bin/python3
+```
+
+4. Click **OK**. The Shell restarts.
+
+> **✅ Checkpoint:** the first line in the Shell shows a Python version and a path in brackets, and the path has `pihealth` in it.
+
+### Run your server from Thonny
+
+Click the green **Run** button on the toolbar. The Shell prints the same `Running on` lines the Terminal did. Open `http://localhost:5000` in Chromium. To stop it, click the red **Stop** button.
+
+| | Terminal and nano | Thonny |
+|---|---|---|
+| Start the server | `python3 server.py` | Green Run button |
+| Stop the server | Ctrl + C | Red Stop button |
+| Save | Ctrl + O, Enter | Ctrl + S |
+| Paste | Ctrl + Shift + V | Ctrl + V |
+| Find | Ctrl + W | Ctrl + F |
+
+> **✅ Checkpoint:** your dashboard loads at `http://localhost:5000` while the server runs from Thonny, and stops loading after you click Stop.
+
+> **One server at a time.** If Run says `Address already in use`, your server is still running in the Terminal. Stop it there first.
+
+### Break it on purpose
+
+Programmers spend a lot of time reading errors, and Thonny makes them easy to read.
+
+1. Scroll to the last line, `app.run(host="0.0.0.0", port=5000)`. Delete the final `)`.
+2. Click **Run**.
+3. Read the red text in the Shell. It names the kind of error and the line number. Click the line link to jump to it.
+4. Type the `)` back, then click **Run** again.
+
+> **✅ Checkpoint:** you saw a red `SyntaxError`, fixed it, and the server ran again. Click **Stop** when you are done.
+
+Either editor works for `server.py`. Thonny can open `index.html` too, but it will not color it, so the page stays in nano.
+
+---
+
 ### Before you leave today
 
-1. **Stop your server.** Click the Terminal and press **Ctrl + C**. Only one server can use port 5000, and the next class needs it.
+1. **Stop your server.** Click the Terminal and press **Ctrl + C**. If you ran it from Thonny, click the red Stop button instead. Only one server can use port 5000, and the next class needs it.
 2. **Check your sticky note.** It should have three things on it: your **username**, your Pi's **IP address** and your **folder name**. Stick it on the monitor.
 3. **Remember where you sat.** Day 2 starts at this same Pi.
 
@@ -1569,6 +1633,8 @@ It takes three edits, one in each layer. Page edits need only a save and a refre
 nano -l ~/YOURNAME/pi-dashboard/server.py
 ```
 
+**Thonny works well for this edit.** Open it, click **File**, **Open**, and pick `server.py` in your `pi-dashboard` folder. Search with **Ctrl + F** instead of **Ctrl + W**, and paste with **Ctrl + V**. A missing comma shows up as a red `SyntaxError` with a line number when you click **Run**. The Interpreter step is on Day 1.
+
 First, add one line under `import os`. Search `import os`, tap **End**, tap **Enter**, paste:
 
 ```python
@@ -1584,7 +1650,7 @@ Next, in the `jsonify` block, the old last line needs a **comma** added, and you
     })
 ```
 
-Then restart the server, because `server.py` changed. In Terminal 1 press **Ctrl + C**, then run `python3 server.py`. Reload `http://YOUR-PI-IP:5000/api/stats` on the other computer. **If your new name is not in that JSON, stop here and fix it before touching the HTML.** A `SyntaxError` in Terminal 1 almost always means a missing comma after `temperature_c()`.
+Then restart the server, because `server.py` changed. In Terminal 1 press **Ctrl + C**, then run `python3 server.py`. In Thonny, click the red **Stop** button, then the green **Run** button. Reload `http://YOUR-PI-IP:5000/api/stats` on the other computer. **If your new name is not in that JSON, stop here and fix it before touching the HTML.** A `SyntaxError` in Terminal 1 almost always means a missing comma after `temperature_c()`.
 
 **2. HTML.** In the page, add a fifth card after the temperature card. Search `bar-temperature`, tap the **Down** arrow once (that is the line closing the temperature card), tap **End**, tap **Enter**, paste:
 
@@ -1670,17 +1736,53 @@ ls ~/YOURNAME/pi-dashboard ~/YOURNAME/pi-dashboard/static
 
 ---
 
-### Getting all of it into Schoology
+### Getting all of it into Schoology: pick a route
 
-Pick whichever fits what you are holding.
+Your two files are on the Pi. Your screenshots are on the other computer. Try Route 1 first.
 
-**Upload each file from the computer it is on.**
+| Route | What happens | Logins |
+|---|---|---|
+| **1. Schoology on the Pi** | Log in to Schoology on the Pi and upload the two files from there. | Two: the Pi, then the other computer for the screenshots |
+| **2. Email yourself** | Email the two files to yourself from the Pi, then open that email on another computer. | Email on the Pi, then Schoology on the other computer |
+| **3. Download from the Pi** | Your Pi shares your folder for a minute. You save the files on the other computer. | One: Schoology on the other computer |
 
-- `server.py` and `index.html` are on the Pi. Open **Chromium** on the Pi, log in to Schoology, open the assignment, click **Submit Assignment**, click **Upload**, and pick the files from **Home, then YOURNAME, then pi-dashboard**. `index.html` is inside the `static` folder.
-- The two screenshots are on the other computer. Log in to Schoology there and upload them from there.
-- **If the Pi will not cooperate:** copy the whole `pi-dashboard` folder onto a jump drive, take it to a lab computer, and submit from there.
+**Last resort:** copy the whole `pi-dashboard` folder onto a jump drive, take it to a lab computer, and submit from there.
 
 > **⚠️ Upload, never Create.** "Create" only accepts typed text. It will not take a file. This is the single most common way work in this class gets submitted as nothing.
+
+**Route 1: Schoology on the Pi**
+
+1. Open **Chromium** on the Pi and press **Ctrl + Shift + N**. That opens a **Private window** (Chromium calls it Incognito). It forgets your login when you close it.
+2. Log in to Schoology. If Chromium offers to save the password, click **Never**. Do not tick any box that says remember me.
+3. Open the assignment, click **Submit Assignment**, then **Upload**.
+4. Pick `server.py` from **Home → YOURNAME → pi-dashboard**. Upload `index.html` from the `static` folder inside it.
+5. Check both names are in the list, then submit.
+6. **Before you walk away:** click your name at the top right of Schoology and choose **Log out**. Then close the Private window with the X. The next student uses this Pi.
+
+Then log in on the other computer and upload the two screenshots there.
+
+**Route 2: Email yourself**
+
+1. On the Pi, press **Ctrl + Shift + N** in Chromium for a Private window.
+2. Log in to your email. If Chromium offers to save the password, click **Never**.
+3. Write a new message to yourself. Click the paperclip and attach `server.py` from `pi-dashboard`, then `index.html` from the `static` folder inside it.
+4. Send it. Wait until your email says the message was sent.
+5. **Log out of your email, then close the Private window.** Do this before anything else.
+6. On the other computer, open the email, download both files, and upload them to Schoology with your screenshots.
+
+> **Never leave your email open on a shared Pi.** If a file is refused, use Route 1 or Route 3.
+
+**Route 3: Download from the Pi**
+
+Your Pi can hand out your files the same way it hands out your dashboard. On the Pi, in the Terminal:
+
+```bash
+cd ~/YOURNAME/pi-dashboard && python3 -m http.server 8001
+```
+
+It prints `Serving HTTP on 0.0.0.0 port 8001` and sits there listening. On the other computer, go to `http://YOUR-PI-IP:8001`. You see `server.py` and `static/`. Right-click `server.py` and choose **Save link as**. Click `static/`, then right-click `index.html` and **Save link as**.
+
+**Now stop it.** Click the Terminal on the Pi and press **Ctrl + C**. While it runs, anyone on the school network can read that folder. Port 8001 is used because your dashboard owns 5000. Upload the files and your screenshots to Schoology from the other computer.
 
 **Name your screenshots exactly** `dashboard.png` and `api-stats.png`. A folder of eight files called `Screenshot 2026-11-04 at 10.14.22.png` helps nobody, including you.
 
@@ -1753,6 +1855,18 @@ Upload the following to **Schoology**:
 ---
 
 ## 💡 Troubleshooting
+
+**"Thonny says No module named 'flask'"**
+→ Thonny is using its own Python, not your toolbox. Click **Tools**, **Options**, **Interpreter**, choose **Alternative Python 3 interpreter or virtual environment**, and enter `/home/USERNAME/YOURNAME/pihealth/bin/python3` with your own username and folder name. Click **OK**.
+
+**"Thonny says Address already in use"**
+→ Another copy of your server is running, either in a Terminal window or in another Thonny window. Stop that one with **Ctrl + C** or the red Stop button, then click Run again.
+
+**"I cannot see the Shell in Thonny"**
+→ Click **View** and tick **Shell**.
+
+**"My email will not take a file, or says it was blocked"**
+→ Some email systems refuse certain file types. Use Route 1 or Route 3 in the hand-in section instead.
 
 **"ModuleNotFoundError: No module named 'flask'"**
 → Look at your prompt. Does it start with `(YOURNAME-pihealth)`? If not, run `source ~/YOURNAME/pihealth/bin/activate`. You need this in every new Terminal window.
