@@ -1,4 +1,4 @@
-# 🤖 RoboMaster: Navigate the Room — Exit Ticket Quiz
+# 🤖 RoboMaster: Navigate the Room, Exit Ticket Quiz
 
 **Name:** ______________________________ &nbsp;&nbsp; **Date:** ______________
 
@@ -10,7 +10,7 @@
 
 A) The robot is controlled by a joystick
 
-B) The robot moves on its own using code, without human control
+B) The robot runs on its program with nobody touching the controls
 
 C) The robot is connected to Wi-Fi
 
@@ -18,33 +18,57 @@ D) The robot can talk
 
 ---
 
-**2. When debugging your RoboMaster program, what's the best approach?**
+**2. Your Circle program works, except the robot turns too far at one corner. The rotate block says 90°. What do you try first?**
 
-A) Change 5 things at once and test
+A) Change every angle in the program to 85°
 
-B) Delete everything and start over
+B) Lower that one angle a few degrees and run it again
 
-C) Change ONE thing, test, and see what happens
+C) Delete the program and start over
 
-D) Ask someone else to fix it
+D) Double the speed
 
 ---
 
-**3. Your robot is turning too far at a corner. The rotation block says 90°. What should you try?**
+**3. Your five number-card blocks are all built correctly, but the robot never reacts to any card. What did you most likely forget?**
 
-A) Increase it to 95°
+A) A wait block at the end
 
-B) Decrease it to 85-87°
+B) The block that enables marker identification
 
-C) Remove the rotation block entirely
+C) A faster speed
 
-D) Add more forward movement
+D) A sixth color
+
+---
+
+**4. Your Figure 8 clears the first table, then clips the second one. Where do you look first?**
+
+A) The very last block of the program
+
+B) The crossing, where the robot lines up for the second loop
+
+C) The LED colors
+
+D) The first block of loop one
+
+---
+
+**5. Your robot finishes the Circle about 40 cm past the X. The corners look fine. What do you adjust?**
+
+A) The LED color
+
+B) The last side, shortened a little
+
+C) Every turn angle
+
+D) The number cards
 
 ---
 
 ### Short Answer
 
-**4. Why is it important to plan your route on paper before writing any code?**
+**6. Why is it important to plan your route on paper before you write any code?**
 
 ______________________________________________________________________________
 
@@ -52,13 +76,13 @@ ______________________________________________________________________________
 
 ---
 
-**5. Why should you add a "wait 0.5 seconds" block between every move and turn?**
+**7. Why should you change only one thing between test runs?**
 
 ______________________________________________________________________________
 
 ---
 
-**6. Your robot completes the loop but stops 50cm away from the starting tape. What would you adjust and how?**
+**8. Your robot has no map of the room. Explain why the last side of a long loop is the hardest one to get right.**
 
 ______________________________________________________________________________
 
@@ -68,14 +92,18 @@ ______________________________________________________________________________
 
 ## Answer Key (Teacher Copy)
 
-1. **B** — The robot moves on its own using code, without human control
+1. **B**: The robot runs on its program with nobody touching the controls.
 
-2. **C** — Change ONE thing, test, and see what happens. Changing multiple things at once makes it impossible to know which fix worked.
+2. **B**: Lower that one angle a few degrees and run it again. One corner is wrong, so fix that corner. Changing every angle breaks the corners that already work.
 
-3. **B** — Decrease it to 85-87°. The robot is overshooting the turn, so it needs fewer degrees. Floor friction can cause turns to vary from the exact number.
+3. **B**: Marker identification is off until the program turns it on. The event blocks cannot fire if the camera is not looking for anything.
 
-4. Planning on paper helps you estimate distances and angles before coding. Without a plan, you'd be guessing at every distance and turn, which wastes time. It's like giving someone directions — you need to know the route before you can describe it.
+4. **B**: The crossing. Loop one worked, so the trouble starts between the loops. A small error at the crossing sends the robot at the second table at the wrong angle.
 
-5. The wait block gives the robot time to fully stop before starting the next action. Without it, the robot might still be moving when it starts turning, which makes the turn inaccurate. Small errors compound over a long route.
+5. **B**: The last side. The corners are fine, so the extra distance is in a straight run, and the last side holds the pile of every earlier error.
 
-6. The robot isn't traveling far enough on the final segment. I would increase the distance on the last "move forward" block by a small amount (maybe 0.3-0.5m) and test again. I might also check if earlier segments are slightly off, since small errors from earlier add up.
+6. Planning on paper lets you estimate distances and angles before you code. Without a plan you are guessing at every side and turn, which wastes time. A robot follows directions exactly, so you need to know the route before you can give it. Accept any answer that says the robot cannot work out the route for itself.
+
+7. If you change several things at once and the run improves, you cannot tell which change helped. One change per test shows you what each change does. Full marks for naming the "which one worked" problem.
+
+8. The robot only counts how far its wheels have turned. Wheels slip a little, so every move is slightly off, and each new move starts from the wrong spot and adds its own error. By the last side, all of those errors have piled up. Accept any answer that says small errors add up, and award extra credit for the term **dead reckoning**.
