@@ -41,7 +41,7 @@ WHERE STUDENTS GET STUCK
 - Two crews want the same colors -> fine, colors are their choice.
 - One student does all the coding -> pass the iPad every run. Everyone submits their own screenshots.
 
-IF THEY FINISH EARLY   : Stretch. Reverse Circle, Number moves, or Card chooses the course.
+IF THEY FINISH EARLY   : Stretch (Reverse Circle, Number moves, or Card chooses the course), or the Day 3 Rainbow bonus task. Rainbow is not graded.
 IF THEY NEED MORE TIME : Finish the Circle first, even if it eats into Day 2. Number Lights is a separate program so it can wait. Cut the Day 2 stress tests, not the five colors. The Figure 8 can slip a period.
 
 ASSESSMENT
@@ -338,10 +338,25 @@ In the Circle, every turn went the same direction. Here the robot turns one way 
 
 ---
 
+### 🌈 Bonus task: Rainbow (not graded)
+
+Figure 8 done early, or just want a victory lap? Make the robot cycle through colors like a rainbow. **This one is not graded.** It is a bonus task you can do for the fun of it, and for the pleasure of showing Mr. Krigger.
+
+**The job:** the robot's light changes through **at least 4 colors in a row**, one after another, in an order you choose. You pick the colors. Red, orange, yellow, green, blue, purple is a classic.
+
+- You already know the pieces: the LED block and the `wait` block. Set a color, wait, set the next one.
+- Too fast to see? Make the waits longer. Too slow to feel like a rainbow? Make them shorter.
+- Want a harder version? Put it **inside your Figure 8**, so the robot changes color as it drives.
+
+> **✅ Checkpoint:** Four or more colors, in order, and you can see each one.
+
+---
+
 ### 📝 Day 3 Deliverables
 
 - [ ] The Figure 8 works: around both tables, touching neither, ending on the X
 - [ ] A screenshot of your Figure 8 program
+- [ ] Optional: your Rainbow, shown to Mr. Krigger
 - [ ] Robot powered off and back on the charging station
 
 The Figure 8 is the autonomous division of the **Figure 8 Grand Prix**, the other Open Event in the RoboMaster Competition.
@@ -451,6 +466,9 @@ The **exit ticket** is a separate Schoology item, taken in class. Both have to b
 
 **"The LED does not change color."**
 → Make sure the LED block is set to the chassis you are looking at, with the effect set to solid.
+
+**"My rainbow flashes by too fast to see."**
+→ Make the `wait` block between colors longer. One second per color is easy to see. A tenth of a second is a blur.
 
 **"It never reacts to a number card."**
 → Three suspects. Did the program enable marker identification first? Is the card within the distance you set, at most 3 meters? Is the room bright enough that the camera can see the card clearly?
