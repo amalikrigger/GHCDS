@@ -1,4 +1,4 @@
-# 🖨️ 3D Printing — Exit Ticket Quiz
+# 🖨️ 3D Printing: Make Something Real, Exit Ticket Quiz
 
 **Name:** ______________________________ &nbsp;&nbsp; **Date:** ______________
 
@@ -6,59 +6,81 @@
 
 ### Multiple Choice
 
-**1. What file format do 3D printers use?**
+**1. You are washing a print and a drop of liquid resin lands on your wrist. What do you do?**
 
-A) .PDF
+A) Wipe it off with IPA from the wash station
 
-B) .STL
+B) Rub it off with hand sanitizer
 
-C) .DOCX
+C) Wash it off with soap and water straight away, then tell Mr. Krigger
 
-D) .MP4
-
----
-
-**2. What does "slicing" mean in 3D printing?**
-
-A) Cutting the finished print into pieces
-
-B) Converting a 3D model into layer-by-layer instructions the printer can follow
-
-C) Downloading a model from the internet
-
-D) Removing supports from the print
+D) Leave it. It will harden and peel off.
 
 ---
 
-**3. What is the main difference between MakerBot (FDM) and Formlabs (SLA) printers?**
+**2. Which gloves do you wear for liquid resin, IPA, and unwashed prints?**
 
-A) MakerBot uses liquid resin, Formlabs uses plastic filament
+A) Latex gloves
 
-B) MakerBot uses plastic filament (PLA), Formlabs uses liquid resin that hardens with UV light
+B) Nitrile or neoprene gloves
 
-C) MakerBot is faster but Formlabs is cheaper
+C) Cloth gloves
 
-D) There is no difference
+D) No gloves, as long as you wash your hands after
+
+---
+
+**3. Every part in the class queue has to be under 25 mm tall. Why does height matter more than how many parts are on the plate?**
+
+A) Tall parts use more colors
+
+B) The software cannot open tall files
+
+C) Tall parts are always uglier
+
+D) A resin plate takes as long as its tallest part, because every part's layer is built at the same moment
+
+---
+
+**4. You designed a 5.0 mm hole for a 5.0 mm cable. The print comes out and the cable will not go in. What do you change?**
+
+A) Make the hole about 5.4 mm, then print it again
+
+B) Make the hole 4.6 mm
+
+C) Print the same file again and hope
+
+D) Make the whole part twice as big
+
+---
+
+**5. Where do paper towels and gloves with resin on them go?**
+
+A) Down the sink with lots of water
+
+B) The regular trash can
+
+C) The recycling bin
+
+D) The marked resin waste container
+
+---
+
+**6. What does a slicer like PreForm or MakerBot Print do?**
+
+A) Cuts your finished print into pieces
+
+B) Turns your 3D model into layers and instructions the printer can follow
+
+C) Downloads models from Printables
+
+D) Cleans resin off a print
 
 ---
 
 ### Short Answer
 
-**4. You're using the MakerBot. Put these steps in the correct order:**
-
-___ Plug USB into printer and select file
-
-___ Export .makerbot file and save to USB
-
-___ Load filament into extruder
-
-___ Upload STL to Ultimaker Digital Factory
-
-___ Remove print from cooled build plate
-
----
-
-**5. What are "supports" in 3D printing and why would you need them?**
+**7. A resin print grows upside down from the build platform. Explain why most resin parts need supports.**
 
 ______________________________________________________________________________
 
@@ -66,11 +88,7 @@ ______________________________________________________________________________
 
 ---
 
-**6. A classmate who has never used a 3D printer asks you: "How do I load filament into the MakerBot?" Explain it in 3-4 steps.**
-
-______________________________________________________________________________
-
-______________________________________________________________________________
+**8. You walk up to the wash station and the IPA bottle is open next to the Form Wash. What is the danger, and what do you do?**
 
 ______________________________________________________________________________
 
@@ -80,21 +98,18 @@ ______________________________________________________________________________
 
 ## Answer Key (Teacher Copy)
 
-1. **B** — .STL (Standard Tessellation Language) is the standard format for 3D printing.
+1. **C**: Soap and water, straight away, then tell Mr. Krigger. Formlabs says never to wash skin with alcohol products like IPA or hand sanitizer. Repeated skin contact can make a person allergic to resin for life.
 
-2. **B** — Converting a 3D model into layer-by-layer instructions the printer can follow. The slicing software calculates exactly where the printer needs to deposit material for each layer.
+2. **B**: Nitrile or neoprene. Formlabs specifies these, and says not latex.
 
-3. **B** — MakerBot uses plastic filament (PLA) that melts and builds up layers. Formlabs uses liquid resin that hardens when exposed to UV light, producing smoother results but requiring wash and cure post-processing.
+3. **D**: The laser draws every part's layer before the platform moves up, so twenty short parts take about as long as one short part. One tall part makes the whole plate take longer.
 
-4. Correct order:
-   - **4** Upload STL to Ultimaker Digital Factory
-   - **2** Export .makerbot file and save to USB
-   - **3** Load filament into extruder
-   - **1** Plug USB into printer and select file
-   - **5** Remove print from cooled build plate
+4. **A**: Printed holes come out a little small. Add 0.3 to 0.5 mm and print again. This is what a fit test is for.
 
-   (Note: Loading filament can happen before or after preparing the file — either 2 or 3 is acceptable in second/third position as long as the overall sequence makes sense.)
+5. **D**: The marked resin waste container. Liquid resin and anything with resin on it is never poured down a drain or put in the regular trash.
 
-5. Supports are temporary structures printed underneath overhanging parts of a model — parts that stick out horizontally with nothing below them. Without supports, those parts would droop or collapse during printing because there's nothing to build on. You snap or cut them off after printing.
+6. **B**: It slices the model into layers and writes the instructions the printer follows layer by layer.
 
-6. Acceptable answer: (1) On the printer screen, tap Filament → Load Filament. (2) Wait for the printer to heat up. (3) Put the filament spool on the holder and feed the filament through the tube. (4) Push the filament into the extruder — push firmly until the extruder grabs it and filament starts oozing out of the nozzle.
+7. (2 points) The part hangs upside down from the platform and is pulled up out of the resin one layer at a time. Any part of the model that sticks out over nothing has no layer underneath to build on, so it would droop or fall into the tank. Supports hold those parts up until the print is done, then they are clipped off. One point for "parts that stick out have nothing to build on", one for "supports hold the part up while it prints".
+
+8. (2 points) IPA is flammable and its vapor can catch fire, so the bottle stays closed and away from heat or flame. Close the bottle (with gloves on if it has resin in it), close the Form Wash lid, and tell Mr. Krigger. One point for "flammable", one for closing it and telling Mr. Krigger.
