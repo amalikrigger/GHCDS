@@ -1,6 +1,6 @@
 # 3D Printing: Make Something Real, Schoology setup (draft for Amali's approval)
 
-Nothing here has been posted. Read the live Schoology state first, then paste into both sections (MS 01YR and Comp Sci/Robotics 01T1) once approved.
+POSTED 2026-10-19 in both sections, Fabrication folder: assignment and exit ticket. See cs-elective-ops/knowledge/schoology.md for item ids. Edit Schoology directly from now on and keep this file in step.
 
 ## Assignment
 
@@ -10,7 +10,7 @@ Nothing here has been posted. Read the live Schoology state first, then paste in
 - **Grading period:** Trimester 1
 - **Due:** Wed Nov 4, 11:59 pm (type the date, then click the time field and type 11:59PM)
 - **Submissions:** upload
-- **Folder:** a new Fabrication folder, or Robotics if you prefer (your call)
+- **Folder:** Fabrication (decided 2026-10-19)
 
 ### Description (paste as is)
 
