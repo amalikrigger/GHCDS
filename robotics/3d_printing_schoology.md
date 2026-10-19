@@ -59,7 +59,7 @@ Bonus: +3 for a middle school student who levels up Print 2 (required of high sc
 | Q7 | Short answer, why resin parts need supports | 2 |
 | Q8 | Short answer, open IPA bottle: the danger and what you do | 2 |
 
-Q1, Q2, Q5 and Q8 are the safety questions. A student who misses Q1 or Q2 retakes the printer safety check before handling resin.
+Q1, Q2, Q5 and Q8 are the safety questions. Q6 (revised 2026-10-19) is the MakerBot .makerbot-file question. A student who misses Q1 or Q2 retakes the printer safety check before handling resin.
 
 Short answer items have no points field in their own editor. Save the item first, then set points in the question list on the Questions tab.
 

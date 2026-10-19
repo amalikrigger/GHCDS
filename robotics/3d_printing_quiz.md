@@ -66,15 +66,15 @@ D) The marked resin waste container
 
 ---
 
-**6. What does a slicer like PreForm or MakerBot Print do?**
+**6. You put your file on the flash drive and plug it into the MakerBot, but your file does not show up on the printer's screen. What is the most likely reason?**
 
-A) Cuts your finished print into pieces
+A) The flash drive is too full
 
-B) Turns your 3D model into layers and instructions the printer can follow
+B) You copied the STL, not the .makerbot file that MakerBot Print exports
 
-C) Downloads models from Printables
+C) The printer is out of filament
 
-D) Cleans resin off a print
+D) Your initials are in the file name
 
 ---
 
@@ -108,7 +108,7 @@ ______________________________________________________________________________
 
 5. **D**: The marked resin waste container. Liquid resin and anything with resin on it is never poured down a drain or put in the regular trash.
 
-6. **B**: It slices the model into layers and writes the instructions the printer follows layer by layer.
+6. **B**: The printer cannot read an STL. MakerBot Print slices the STL into layers and exports a `.makerbot` file, and that file has to sit at the top level of the flash drive.
 
 7. (2 points) The part hangs upside down from the platform and is pulled up out of the resin one layer at a time. Any part of the model that sticks out over nothing has no layer underneath to build on, so it would droop or fall into the tank. Supports hold those parts up until the print is done, then they are clipped off. One point for "parts that stick out have nothing to build on", one for "supports hold the part up while it prints".
 
