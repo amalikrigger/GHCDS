@@ -14,19 +14,18 @@ Nothing here has been posted. Read the live Schoology state first, then paste in
 
 ### Description (paste as is)
 
-Print a model to learn the printer, then design and print a part that fixes a real problem for a real person. Full lesson, with the safety rules and every step: https://www.thinkinbits.site/cs/fabrication/3d-printing/
+Print a model you find, then design and print one of your own. Full lesson, with the safety rules and every step for both printers: https://www.thinkinbits.site/cs/fabrication/3d-printing/
 
-Pass the printer safety check before you touch the printer, the resin, the wash or the cure.
+Pass the printer safety check before you touch a printer, the resin, the wash or the cure.
 
 **What you turn in:**
 
-1. Your Print Card, as a PDF or a clear photo
+1. Your Print Card, as a PDF or a clear photo, with photos of both prints
 2. Print 2's STL file
-3. A photo of Print 2 in use (on the card or as its own file)
-4. High school: Make It Fit. Your fit test and version 2 numbers on the card. Middle school: optional, and worth bonus points.
-5. AI Lab only (optional bonus): a screenshot of your OpenSCAD code or the STL, and the AI line on your card
 
-Print 1 and Print 2 themselves are shown to Mr. Krigger in class. There is no slide deck and no printer guide.
+Print 1 and Print 2 themselves are shown to Mr. Krigger in class. High school: Print 2 must be levelled up (a nameplate with two extra features, or a part that fixes a problem). Middle school: a nameplate is fine, and levelling up is worth bonus points.
+
+Bonus challenges (real-world test, Make It Fit, AI Lab) are optional and not part of what you turn in. Show them to Mr. Krigger in class.
 
 **How to upload:** click Submit Assignment, then Upload. Do NOT click Create. Create is for typing text and will not let you attach a file. Select all your files at once, then Submit.
 
@@ -36,12 +35,12 @@ The exit ticket is a separate item. Both have to be done.
 
 | Category | Points | What Mr. Krigger is looking for |
 |---|---|---|
-| The Objects | 10 | Print 1 printed and finished (3). Print 2 printed, finished, and it works on the real problem (7). A print that failed twice for a reason that is not your design counts when the STL, slicer screenshot and a failure photo are submitted. |
-| Design Choices | 5 | Print 2 is your own design, measured against the real thing, follows the design rules, fits 40 x 40 x 25 mm |
+| The Prints | 10 | Print 1 printed and finished (4). Print 2 printed and finished (6). A print that failed twice for a reason that is not your design counts when the STL, slicer screenshot and a failure photo are submitted. |
+| Design | 5 | Print 2 is your own Tinkercad design, follows the design rules, fits 40 x 40 x 25 mm. HS: levelled up or fixes a problem. |
 | Print Card | 5 | Every box filled in. "What went wrong" shows real thinking. Print 1's designer is credited. |
-| Safety and Workflow | 5 | Passed the safety check, gloves and glasses every time, station left clean, files named and queued correctly |
+| Safety and Workflow | 5 | Passed the safety check, gloves and glasses every time, printer left ready for the next person, files named and queued correctly |
 
-Bonus: +3 for a middle school student who completes Make It Fit (required of high school). +2 for the AI Lab, when every line can be explained on request. +2 for a part from the "things the lab needs" list that ends up in daily use.
+Bonus: +3 for a middle school student who levels up Print 2 (required of high school). +2 each for a bonus challenge shown in class: real-world test, Make It Fit, AI Lab.
 
 ### Attach
 
