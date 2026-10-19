@@ -9,8 +9,9 @@ RUNS ALONGSIDE  : another unit. Part of the class is on this while the rest is e
 
 PRINTERS
 - Formlabs Form 3 / 3+ with Form Wash and Form Cure: LIVE.
-- MakerBot Replicator+ with MakerBot Print: ON HOLD until repaired. The track is fully written. To switch it on, change
-  data-default and the "on hold" flag on the site page (cs/robotics/3d-printing/index.html), and the On hold line in this file.
+- MakerBot Replicator+ with MakerBot Print: its own track. Students pick a printer and follow that printer's tab on the site page
+  (cs/fabrication/3d-printing/, tabs Formlabs and MakerBot), or that track's sections on Day 3 here. Changed 2026-10-19 from an
+  in-page switch with MakerBot "on hold". If a printer is down, students switch tracks; the STL does not change.
 - Formlabs plates may run overnight. The MakerBot never runs without an adult in the room.
 
 PREP THE DAY BEFORE
@@ -107,7 +108,7 @@ AFTER TEACHING IT (fill in, this is the most valuable part)
 
 - A lab computer with a web browser
 - **Tinkercad**, joined with the class code Mr. Krigger gives you and a nickname. **No account, no email, no password.**
-- The lab's printer. Right now that is the **Formlabs Form 3**, a resin printer. The **MakerBot Replicator+** filament printer is **on hold until it is repaired**. Both are written into this lesson, so if it comes back you switch over and keep going.
+- One of the lab's two printers, your pick: the **Formlabs Form 3** (resin) or the **MakerBot Replicator+** (filament). Check with Mr. Krigger which is running today. If yours is down, switch tracks. Your STL does not change.
 - A ruler or calipers, and the real object your design has to work with
 - Nitrile or neoprene gloves and safety glasses at the wash station. Mr. Krigger has them ready.
 
@@ -148,11 +149,12 @@ These are non-negotiable. Breaking one on purpose costs you printer access and e
 
 ## 🧾 How the Printer Queue Works
 
-There is one working printer and a lot of you. Here is how everyone gets a print.
+There are two printers and a lot of you. Here is how everyone gets a print.
 
 - **Every part fits in a 40 x 40 x 25 mm box.** That is about the size of a matchbox standing up.
 - **One plate holds a whole class.** On a resin printer, a plate with twenty small parts takes the same time as a plate with one, because the printer builds every part's layer at the same moment. Time depends on how **tall** the tallest part is, not how many parts there are. That is why the height limit matters most.
-- **Plates run overnight.** Get your file into the queue by the end of class and it prints that night.
+- **Formlabs plates run overnight.** Get your file into the queue by the end of class and it prints that night.
+- **The MakerBot prints one part at a time**, under 60 minutes, only while an adult is in the room. Its queue is the same sheet, in order.
 - **To join the queue:** save your STL into the right folder on the PreForm computer, named like this, then write the same name on the Print Queue sheet.
 
 ```
@@ -194,7 +196,6 @@ Both printers build a shape one thin layer at a time, bottom to top. They do it 
 
 | | **Formlabs Form 3** (resin) | **MakerBot Replicator+** (filament) |
 |---|---|---|
-| Status | **Live** | **On hold until repaired** |
 | Builds with | Liquid resin that a laser hardens | Plastic string (PLA) melted through a hot nozzle |
 | How it builds | The part grows **upside down**, pulled up out of a tank of resin | A nozzle draws each layer like a hot glue gun |
 | Looks like | Smooth, fine detail | Visible lines, a bit rougher |
@@ -343,13 +344,13 @@ Build it a piece at a time, and measure in Tinkercad against your sketch as you 
 
 **Start here:** check the Print Queue sheet. If your Print 1 is printed, you start at the wash station with Mr. Krigger. If not, start with Print 2.
 
-> **Printer tracks.** Every step below has a Formlabs version (live) and a MakerBot version (on hold until repaired). Follow the one for the printer your print is on.
+> **Pick your track.** Every step below has a Formlabs version and a MakerBot version. Follow the one for the printer you picked. On the site, each printer has its own tab at the top of the page.
 
 ---
 
 ### Step 1: Slice Print 2
 
-#### Formlabs track (live): PreForm
+#### Formlabs track: PreForm
 
 1. On the PreForm computer, open **PreForm**. It is already signed in. Do not sign in with your own account.
 2. **File > Open** and choose your Print 2 STL.
@@ -360,7 +361,7 @@ Build it a piece at a time, and measure in Tinkercad against your sketch as you 
 7. Take a **screenshot** of your part on the build platform with its supports. It goes on your Print Card.
 8. Save your STL into the next plate's queue folder and write it on the sheet. Mr. Krigger lays the whole plate out and starts it.
 
-#### MakerBot track (on hold until the printer is repaired): MakerBot Print
+#### MakerBot track: MakerBot Print
 
 1. On the lab computer, open **MakerBot Print**. It is already signed in.
 2. Check the printer is the **Replicator+**.
@@ -377,7 +378,7 @@ Build it a piece at a time, and measure in Tinkercad against your sketch as you 
 
 ### Step 2: Finish Print 1
 
-#### Formlabs track (live): wash, dry, cure, clip
+#### Formlabs track: wash, dry, cure, clip
 
 **Gloves and safety glasses on first.** Everything here is wet with resin until the cure is done.
 
@@ -395,7 +396,7 @@ Build it a piece at a time, and measure in Tinkercad against your sketch as you 
 6. **Clip the supports** with flush cutters, glasses on, pointing away from people. Sand the small bumps if you want.
 7. Gloves, paper towels and support bits go in the **resin waste container**. Close the IPA and the Form Wash lid.
 
-#### MakerBot track (on hold until the printer is repaired): cool and peel
+#### MakerBot track: cool and peel
 
 1. **Wait** for the build plate to cool. The screen tells you when the print is done. The plate is still hot.
 2. Lift out the flexible build plate and **bend it gently**. The print pops loose.
@@ -634,10 +635,10 @@ Print 1 and Print 2 themselves are shown to Mr. Krigger in class. The **exit tic
 **"I spilled resin or IPA."**
 → Step back, tell Mr. Krigger, and keep gloves on. Do not wipe it with bare hands. Used paper towels go in the resin waste container.
 
-**"MakerBot (when it is back): the print is not sticking to the plate."**
+**"MakerBot: the print is not sticking to the plate."**
 → The plate may be dirty or not level, or the raft is off. Tell Mr. Krigger. Do not reach in while it moves.
 
-**"MakerBot (when it is back): the print time is over 60 minutes."**
+**"MakerBot: the print time is over 60 minutes."**
 → Make the part smaller, or lower the infill, or check you did not leave something huge on the plate.
 
 <!-- ===========================================================================
