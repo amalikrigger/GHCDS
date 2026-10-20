@@ -55,9 +55,9 @@ IF THEY NEED MORE TIME : the lab audit drops from five machines to three. Do not
 
 ASSESSMENT
 - Category  : Informal Assessments
-- Points    : 25 (proposed, awaiting sign off)
+- Points    : 25
 - Exit ticket: separate Schoology Test/Quiz, `how_computers_work_quiz.md`
-- Schoology : ____   Section(s): both
+- Schoology : POSTED 2026-10-20, both sections, Fundamentals folder. Assignment 25 pts Informal Assessments, due Fri Oct 30 11:59 pm (HS 8616785848, MS 8616788344). Exit ticket 10 pts Formal Assessments, same due date (HS 8616279813, MS 8616286029). Grades not auto-published.
 
 NOTE ON PLACEMENT
 This is Fundamentals lesson 1 and it should stay first. Every later unit refers back to
