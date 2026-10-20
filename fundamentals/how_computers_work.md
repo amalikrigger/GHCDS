@@ -12,6 +12,9 @@ PREP THE DAY BEFORE
       so every machine should be visible and reachable, powered off is fine.
 - [ ] Accounts or logins students need: none
 - [ ] Software already on lab machines: a browser
+- [ ] Headphones, or the sound activity played at low volume. Check that sound works on the lab machines.
+- [ ] Netflix: the "Coding" episode of *Explained* needs a Netflix account. Decide whether
+      students watch at home or in class, and whether you will have the account logged in.
 - [ ] Printed or posted in the room: the four jobs, large, on the wall. It gets
       referenced in every unit after this one.
 - [ ] Decide in advance what you will say the Glowforge stores. It is genuinely
@@ -22,6 +25,9 @@ TIMING FOR PERIOD 1 (the four jobs and binary)
 - 12 min  The four jobs, then the table
 - 15 min  Binary and the bits converter, students type their own names
 - 15 min  The CPU stepper. Step it together on the projector first, then let them run it
+          (the numbers-become-color, photo and sound activities and the cut-the-power demo
+          are new and will push Period 1 long. Run color and one of photo or sound in class
+          and leave the rest as work they can do when they finish)
 - 10 min  Fast and stupid, tie back to password cracking, clean up
 
 TIMING FOR PERIOD 2 (the lab audit)
@@ -81,6 +87,7 @@ class website: **thinkinbits.site/cs/fundamentals/how-computers-work/**
 
 - The four jobs every computer does: **input**, **processing**, **output**, **storage**
 - Why everything inside is **binary**, and what that actually means
+- How a **color**, a **photo** and a **sound** are all built from numbers, and how to change them
 - The difference between **memory** and **storage**, which almost everyone gets wrong
 - What a **program** is and what happens when one runs
 - How to look at any machine in this lab and name its four jobs
@@ -110,18 +117,30 @@ Students use the converter on the site to see their own name as bytes.
 
 > **✅ Checkpoint:** they can read off the byte for one letter of their name.
 
+**Numbers become color, a photo, and sound.** Three hands-on activities on the site, each followed by a short "What you just saw" panel:
+- **Color:** red, green and blue are one byte each. Students move sliders and flip the eight switches (128, 64, 32 … 1) and watch the number and the color change. There is a Match game.
+- **Photo:** a sunset with a sailboat shown as 4×4 up to 96×96 squares. Students read and edit one pixel's three numbers, and use Brighter, Invert and Gray to see that a filter is arithmetic on every number.
+- **Sound:** students change how often the sound is measured and how precisely, draw their own wave, and listen. Tell them to turn the volume down first.
+
+> **✅ Checkpoint:** they can make a color with lots of red and no green or blue, find the brightest pixel and read its three numbers, and hear why 1,000 measurements a second sounds worse than 44,100.
+
 ### Step 3: Memory and storage are not the same thing
 
 RAM is the desk: fast, small, wiped when power stops. Storage is the filing cabinet: slower, bigger, survives being switched off. This is why unsaved work dies, and it is worth saying plainly, because it will happen to someone this term.
 
+On the site, **Try it: cut the power** lets students type on the desk, save to the cabinet, cut the power and open the file back. Ask them to predict what survives before they press anything. Autosave shows why most apps rarely lose work now.
+
+> **✅ Checkpoint:** they can say what survives a power cut and what they would have to do to keep the rest.
+
 ### Step 4: Watch a program actually run
 
-The stepper on the site runs a real loop one instruction at a time, showing memory changing. It takes 20 steps to add four numbers.
+The stepper on the site runs a real loop one instruction at a time, showing memory changing. It takes 20 steps to add four numbers. Students can turn the dial from 1 to 10 numbers and guess the step count first: it is always 4 steps per number plus 4 more.
 
-> **✅ Checkpoint:** they can say why line 3 runs four times before giving up.
+> **✅ Checkpoint:** they can say why line 3 runs five times, even though the loop only goes round four times.
 
 ### 📝 Day 1 Deliverables
 - [ ] Name converted to bits, screenshotted
+- [ ] Made a color from its three numbers and read the numbers of one pixel
 - [ ] Stepped the program to the end and can explain the loop
 
 ---
@@ -132,7 +151,7 @@ The stepper on the site runs a real loop one instruction at a time, showing memo
 
 ### Step 1 and 2: Same machine, different clothes
 
-Two worked examples given (phone, MakerBot). Students then audit the Glowforge, a RoboMaster, a micro:bit, a Raspberry Pi, and one machine not in this room.
+Two worked examples given (phone, MakerBot). A short **Warm-up: sort the parts** activity on the site then lets students tap the job each part of a Glowforge, RoboMaster S1, micro:bit, Raspberry Pi or laptop does, with a check. Students then audit the Glowforge, a RoboMaster, a micro:bit, a Raspberry Pi, and one machine not in this room.
 
 Two are deliberately awkward: the micro:bit's storage is tiny and strange, and the RoboMaster's camera feeds decisions. Where a machine does not fit, that is the interesting part.
 
@@ -143,7 +162,7 @@ Two are deliberately awkward: the micro:bit's storage is tiny and strange, and t
 ## 🎚️ Base and Stretch
 
 **Base, everyone does this.**
-Five machines audited with four jobs each, plus a paragraph on what the machine becomes if you remove one of its four jobs.
+Five machines audited with four jobs each, plus a short paragraph: take one machine, remove one of its four jobs, and say what it becomes.
 
 **Stretch, required for high school, bonus for middle school.**
 Find something in this room that stores information without being a computer at all. Explain what it stores, how it survives losing power, and why it is not a computer.
@@ -154,9 +173,10 @@ Find something in this room that stores information without being a computer at 
 
 1. **Your name in bits**, screenshotted from the converter
 2. **The lab audit**: five machines, four jobs each, including one from outside this room
-3. **What did not fit**: at least one machine where a job was awkward to name, and why
-4. **Your paragraph**: the missing job, or the stretch
-5. **Reflection** (3 to 5 sentences): what did you think a computer was before today, and what changed?
+3. **What did not fit**: one part or job that was hard to place, and why, in two sentences
+4. **Your paragraph**: remove one job from one machine and say what it becomes. High school adds the stretch.
+5. **Watch notes**: three sentences on *Explained*, "Coding" (Netflix, Season 2): one thing that surprised you, one thing that connects to the four jobs or to numbers, and one question you still have.
+6. **Reflection** (3 to 5 sentences): what did you think a computer was before today, and what changed?
 
 ---
 
@@ -200,6 +220,8 @@ Upload to **Schoology**, then take the exit ticket, which is a separate item.
 | **Storage** | The drive. Slower, bigger, still there tomorrow |
 | **Program** | A list of instructions, stored as numbers like everything else |
 | **Loop** | Instructions that send the CPU back to repeat a section |
+| **Pixel** | One square of a picture, stored as three numbers: red, green and blue |
+| **Sample** | One measurement of a sound. A recording is thousands of them every second |
 
 <!-- ===========================================================================
 BEFORE YOU CALL IT DONE
