@@ -2,29 +2,29 @@
 
 **Name:** ______________________________ &nbsp;&nbsp; **Date:** ______________
 
-Covers both days. Day 1 is the four jobs and binary, Day 2 is the lab audit.
+Covers both days. Day 1 is the four jobs, numbers (color, photos, sound), memory vs storage and the program stepper. Day 2 is the lab audit. 10 points.
 
 ---
 
-### Multiple Choice
+### Multiple Choice (1 point each)
 
-**1. What are the four jobs every computer does?**
+**1. A Glowforge receives a design file over Wi-Fi. Which of the four jobs is that?**
 
-A) Type, click, save, print
+A) Output
 
-B) Input, processing, output, storage
+B) Processing
 
-C) Power, screen, keyboard, internet
+C) Input
 
-D) Open, edit, close, delete
+D) Storage
 
 ---
 
-**2. You are working on a document and the power cuts before you save. Why is the work gone?**
+**2. You are typing a document and the power cuts before you save. Why is the work gone?**
 
 A) The file was corrupted by the power cut
 
-B) It only existed in memory, which is wiped when power stops. Saving copies it to storage.
+B) It only existed in memory, which is wiped when power stops. Saving would have copied it to storage.
 
 C) The computer deleted it to protect itself
 
@@ -32,45 +32,57 @@ D) It is still there, you just have to find it
 
 ---
 
-**3. How many bits are in a byte, and roughly what can one byte hold?**
+**3. On a screen, a pixel has red 255, green 255 and blue 0. What color is it?**
 
-A) 4 bits, one number
+A) Black
 
-B) 8 bits, one basic character
+B) White
 
-C) 16 bits, one word
+C) Green
 
-D) 100 bits, one sentence
+D) Yellow
 
 ---
 
-**4. A photo, a song, a program and your name are stored using...**
+**4. A photo, a song, a program and your name are all stored using...**
 
-A) Four completely different systems
+A) Numbers, in every case. Only what we agree the numbers mean is different.
 
-B) Numbers, in every case. Only the meaning we assign them differs.
+B) Four completely different systems
 
 C) Letters for text and pictures for images
 
-D) Whatever format the app chooses
+D) Whatever format the app picks
 
 ---
 
-**5. In the stepper, why does the program keep going back to check the condition instead of just repeating four times?**
+**5. A recording is measured 8,000 times a second instead of 44,100. What changes?**
 
-A) It is a bug
+A) It sounds the same, only louder
 
-B) Because the condition has to be tested every pass, otherwise it would never know when to stop
+B) It is described by fewer numbers, so it sounds rougher and takes less space
 
-C) To make it slower so you can see it
+C) It gets stored as letters instead of numbers
 
-D) Because the CPU forgets what it did
+D) It can only be played on a phone
 
 ---
 
-### Short Answer
+**6. A program takes 4 steps for every number it adds, plus 4 more steps. How many steps does it take to add 10 numbers?**
 
-**6. Pick any machine in the lab and name its four jobs. One sentence each.**
+A) 14
+
+B) 40
+
+C) 44
+
+D) 104
+
+---
+
+### Short Answer (2 points each)
+
+**7. Pick one machine in the lab. Name its four jobs, one sentence each.**
 
 ______________________________________________________________________________
 
@@ -78,7 +90,7 @@ ______________________________________________________________________________
 
 ---
 
-**7. A computer took 20 steps to add four numbers, which you could do instantly. Explain why computers are still useful.**
+**8. Explain how a photo is stored as numbers. Use the words pixel, red, green and blue.**
 
 ______________________________________________________________________________
 
@@ -88,18 +100,18 @@ ______________________________________________________________________________
 
 ## Answer Key (Teacher Copy)
 
-1. **B.** Input, processing, output, storage.
+1. **C.** A file coming in is input, the same as a keystroke. A is the common guess because the Glowforge's job is cutting.
 
-2. **B.** The work lived in RAM only. Saving is the act of copying it to storage. Watch for students who say the power cut "deleted" it, which is the wrong mental model. Nothing was deleted, the only copy simply stopped existing.
+2. **B.** The work lived in RAM only. Saving is the act of copying it to storage. Watch for students who say the power cut "deleted" it. Nothing was deleted, the only copy simply stopped existing.
 
-3. **B.** Eight bits, one basic character. Answer A is the common guess.
+3. **D.** Red plus green light makes yellow. Screens mix light, not paint, so students who think of paint will say green or brown.
 
-4. **B.** Numbers in every case. This is the point of the whole day. Full credit only for B.
+4. **A.** Numbers in every case. This is the point of Day 1.
 
-5. **B.** The condition is tested every pass. This is the difference between a loop and just writing the line four times, and it is why an infinite loop is possible.
+5. **B.** Fewer measurements means fewer numbers to describe the wave, so it sounds rougher and the file is smaller. Phone calls use 8,000 a second, CDs use 44,100.
 
-6. Any lab machine, four jobs named. Look for the Glowforge answer, where output is a cut object and storage is genuinely debatable. A student who says "I am not sure what it stores, and here is why" has understood more than one who confidently invents an answer.
-   *Full credit needs all four jobs, not three plus a guess.*
+6. **C.** 10 x 4 + 4 = 44. A is the common guess from adding 10 and 4. This is the stepper dial.
 
-7. Speed and stamina. Each step is trivial, but the machine does billions per second, never loses its place and never gets bored. Strong answers connect this to something they have seen: password cracking is billions of tiny guesses, and an AI predicting a word is one simple operation at enormous scale.
-   *Look for the idea that computers are not smarter than us, only relentless.*
+7. **2 points.** Any lab machine, four jobs named. 1 point for all four jobs named for one real machine. 1 point for specific, accurate parts (a camera, a motor, a card), not just the words. Look for the Glowforge or micro:bit answer where storage is genuinely debatable. A student who writes "I am not sure what it stores, and here is why" has understood more than one who confidently invents an answer.
+
+8. **2 points.** Model answer: A photo is a grid of tiny squares called pixels. Each pixel is stored as three numbers, one for how much red, one for green and one for blue, each from 0 to 255. 1 point for the grid of pixels. 1 point for three numbers per pixel (red, green, blue). Do not require 0 to 255.
